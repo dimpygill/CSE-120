@@ -1,0 +1,430 @@
+<!-- VS Code + Python Setup Guide — Canvas compatible, no JS, all OS -->
+
+<!-- Shared styles for OS badges (inline-safe) -->
+<!-- WIN badge = blue, MAC badge = green, LINUX badge = orange -->
+
+<!-- HERO -->
+<div style="padding:24px 24px 0;max-width:860px;margin:0 auto;">
+  <div style="background:linear-gradient(135deg,#0F1E3D 0%,#1A3A6B 55%,#2655A8 100%);border-radius:16px;padding:44px 48px 40px;color:#fff;">
+    <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:14px;">Setup Guide</div>
+    <h2 style="font-family:Arial,sans-serif;font-size:30px;font-weight:700;line-height:1.15;margin:0 0 14px 0;color:#ffffff;">Run Python in VS Code.</h2>
+    <p style="font-family:Arial,sans-serif;font-size:15px;color:rgba(255,255,255,.75);margin:0 0 22px 0;line-height:1.65;max-width:520px;">A step-by-step walkthrough — from a fresh machine to running your first Python file. Instructions are provided for all three operating systems.</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;">
+      <span style="font-family:Arial,sans-serif;font-size:12px;background:rgba(0,122,204,.4);border:1px solid rgba(0,122,204,.6);color:#fff;padding:4px 12px;border-radius:20px;">🪟 Windows</span>
+      <span style="font-family:Arial,sans-serif;font-size:12px;background:rgba(34,134,58,.4);border:1px solid rgba(34,134,58,.6);color:#fff;padding:4px 12px;border-radius:20px;">🍎 macOS</span>
+      <span style="font-family:Arial,sans-serif;font-size:12px;background:rgba(180,83,9,.4);border:1px solid rgba(180,83,9,.6);color:#fff;padding:4px 12px;border-radius:20px;">🐧 Linux</span>
+      <span style="font-family:Arial,sans-serif;font-size:13px;color:rgba(255,255,255,.6);">● 7 steps &nbsp;·&nbsp; ~15 minutes</span>
+    </div>
+  </div>
+</div>
+
+<!-- OS LEGEND -->
+<div style="max-width:860px;margin:0 auto;padding:16px 24px 0;">
+  <div style="background:#F7F8FA;border:1px solid #E4E4E8;border-radius:10px;padding:14px 18px;display:flex;gap:20px;flex-wrap:wrap;align-items:center;">
+    <span style="font-family:Arial,sans-serif;font-size:13px;font-weight:700;color:#1A1917;">Follow your OS:</span>
+    <span style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;background:#007ACC;color:#fff;padding:3px 10px;border-radius:4px;">WIN</span>
+    <span style="font-family:Arial,sans-serif;font-size:12px;color:#5A5854;">Windows</span>
+    <span style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;background:#22863A;color:#fff;padding:3px 10px;border-radius:4px;">MAC</span>
+    <span style="font-family:Arial,sans-serif;font-size:12px;color:#5A5854;">macOS</span>
+    <span style="font-family:Arial,sans-serif;font-size:12px;font-weight:700;background:#B45309;color:#fff;padding:3px 10px;border-radius:4px;">LINUX</span>
+    <span style="font-family:Arial,sans-serif;font-size:12px;color:#5A5854;">Linux (Ubuntu/Debian)</span>
+  </div>
+</div>
+
+<!-- STEPS -->
+<div style="max-width:860px;margin:0 auto;padding:20px 24px 48px;">
+
+  <!-- ── STEP 1 ── -->
+  <div style="background:#ffffff;border:1.5px solid #007ACC;border-radius:12px;padding:22px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div style="width:34px;height:34px;border-radius:50%;background:#007ACC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="color:#fff;font-family:'Courier New',monospace;font-size:14px;font-weight:700;">1</span>
+      </div>
+      <h3 style="font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#1A1917;margin:0;">Install Python</h3>
+    </div>
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 16px;line-height:1.65;">Go to the official Python website and download Python for your operating system:</p>
+    <div style="background:#F5F5F5;border:1px solid #E4E4E8;border-radius:8px;padding:11px 14px;margin:0 0 16px;">
+      <code style="font-family:'Courier New',monospace;font-size:13px;color:#1A1917;">python.org/downloads</code>
+    </div>
+
+    <!-- Windows -->
+    <div style="border-left:4px solid #007ACC;padding-left:16px;margin-bottom:16px;">
+      <div style="margin-bottom:8px;"><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;background:#007ACC;color:#fff;padding:2px 8px;border-radius:4px;">WIN</span></div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 8px;line-height:1.65;">Click the yellow <strong>Download Python</strong> button to get the Windows installer (.exe). Run it.</p>
+      <div style="background:#FEF3E2;border:1px solid #F9C97C;border-radius:8px;padding:11px 14px;font-size:13px;color:#B45309;font-family:Arial,sans-serif;line-height:1.65;">
+        <strong>⚠ Critical:</strong> On the very first screen, check <strong>"Add Python to PATH"</strong> before clicking Install Now. Do not skip this.
+      </div>
+      <!-- Installer mockup -->
+      <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;margin:10px 0 0;">
+        <div style="background:#3C3C3C;padding:7px 12px;display:flex;align-items:center;gap:6px;">
+          <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:#FFBD2E;display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:#28CA41;display:inline-block;"></span>
+          <span style="font-family:'Courier New',monospace;font-size:11px;color:#9D9D9D;margin-left:6px;">Python 3.12.x Installer</span>
+        </div>
+        <div style="background:#1E1E1E;padding:13px 16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.9;">
+          <div style="color:#fff;font-size:13px;font-weight:700;">Python 3.12.4 (64-bit) Setup</div>
+          <div style="color:#9D9D9D;margin-top:8px;">☑&nbsp; Install launcher for all users</div>
+          <div style="color:#4EC9B0;font-weight:700;">☑&nbsp; Add Python 3.12 to PATH &nbsp;← check this!</div>
+          <div style="color:#9D9D9D;margin-top:8px;">[ Install Now ]&nbsp;&nbsp;[ Customize installation ]</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- macOS -->
+    <div style="border-left:4px solid #22863A;padding-left:16px;margin-bottom:16px;">
+      <div style="margin-bottom:8px;"><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;background:#22863A;color:#fff;padding:2px 8px;border-radius:4px;">MAC</span></div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 8px;line-height:1.65;">Click <strong>Download Python</strong> to get the macOS installer (.pkg). Open it and follow the prompts — click Continue, Agree, and Install. No extra checkboxes needed.</p>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 8px;line-height:1.65;">After installing, open <strong>Terminal</strong> (search for it in Spotlight with ⌘+Space) and verify it worked:</p>
+      <div style="border:1px solid #E4E4E8;border-radius:8px;overflow:hidden;">
+        <div style="background:#3C3C3C;padding:7px 12px;display:flex;align-items:center;gap:6px;">
+          <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:#FFBD2E;display:inline-block;"></span>
+          <span style="width:9px;height:9px;border-radius:50%;background:#28CA41;display:inline-block;"></span>
+          <span style="font-family:'Courier New',monospace;font-size:11px;color:#9D9D9D;margin-left:6px;">Terminal</span>
+        </div>
+        <div style="background:#1E1E1E;padding:12px 16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.9;">
+          <div><span style="color:#007ACC;">$</span> <span style="color:#fff;">python3 --version</span></div>
+          <div style="color:#4EC9B0;">Python 3.12.4</div>
+        </div>
+      </div>
+      <div style="background:#E8F5EB;border:1px solid #A5D6B0;border-radius:8px;padding:11px 14px;font-size:13px;color:#1A5C2A;font-family:Arial,sans-serif;line-height:1.65;margin-top:10px;">
+        <strong>Note for Mac:</strong> Always use <code style="font-family:'Courier New',monospace;font-size:12px;background:#d4edda;padding:1px 5px;border-radius:4px;">python3</code> instead of <code style="font-family:'Courier New',monospace;font-size:12px;background:#d4edda;padding:1px 5px;border-radius:4px;">python</code> on macOS.
+      </div>
+    </div>
+
+    <!-- Linux -->
+    <div style="border-left:4px solid #B45309;padding-left:16px;">
+      <div style="margin-bottom:8px;"><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;background:#B45309;color:#fff;padding:2px 8px;border-radius:4px;">LINUX</span></div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 8px;line-height:1.65;">Python is likely already installed. Open a Terminal and check:</p>
+      <div style="border:1px solid #E4E4E8;border-radius:8px;overflow:hidden;margin-bottom:10px;">
+        <div style="background:#1E1E1E;padding:12px 16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.9;">
+          <div><span style="color:#007ACC;">$</span> <span style="color:#fff;">python3 --version</span></div>
+          <div style="color:#4EC9B0;">Python 3.12.x</div>
+        </div>
+      </div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 8px;line-height:1.65;">If you see a version number, you're done. If not, install it with:</p>
+      <div style="border:1px solid #E4E4E8;border-radius:8px;overflow:hidden;">
+        <div style="background:#1E1E1E;padding:12px 16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.9;">
+          <div><span style="color:#007ACC;">$</span> <span style="color:#fff;">sudo apt update</span></div>
+          <div><span style="color:#007ACC;">$</span> <span style="color:#fff;">sudo apt install python3</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 2 ── -->
+  <div style="background:#ffffff;border:1.5px solid #E4E4E8;border-radius:12px;padding:22px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div style="width:34px;height:34px;border-radius:50%;background:#007ACC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="color:#fff;font-family:'Courier New',monospace;font-size:14px;font-weight:700;">2</span>
+      </div>
+      <h3 style="font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#1A1917;margin:0;">Install VS Code</h3>
+    </div>
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 12px;line-height:1.65;">Download VS Code from Microsoft's official site:</p>
+    <div style="background:#F5F5F5;border:1px solid #E4E4E8;border-radius:8px;padding:11px 14px;margin:0 0 16px;">
+      <code style="font-family:'Courier New',monospace;font-size:13px;color:#1A1917;">code.visualstudio.com</code>
+    </div>
+
+    <!-- Windows -->
+    <div style="border-left:4px solid #007ACC;padding-left:16px;margin-bottom:16px;">
+      <div style="margin-bottom:8px;"><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;background:#007ACC;color:#fff;padding:2px 8px;border-radius:4px;">WIN</span></div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 8px;line-height:1.65;">Click <strong>Download for Windows</strong>. Run the .exe installer and keep clicking <strong>Next</strong> through all the default settings, then click <strong>Install</strong>.</p>
+      <div style="background:#E8F4FD;border:1px solid #B3D9F5;border-radius:8px;padding:11px 14px;font-size:13px;color:#00507A;font-family:Arial,sans-serif;line-height:1.65;">
+        <strong>Tip:</strong> When the installer finishes, keep <strong>"Launch Visual Studio Code"</strong> checked and click Finish — VS Code opens automatically.
+      </div>
+    </div>
+
+    <!-- macOS -->
+    <div style="border-left:4px solid #22863A;padding-left:16px;margin-bottom:16px;">
+      <div style="margin-bottom:8px;"><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;background:#22863A;color:#fff;padding:2px 8px;border-radius:4px;">MAC</span></div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 8px;line-height:1.65;">Click <strong>Download for macOS</strong>. Open the downloaded .zip — it will extract <strong>Visual Studio Code.app</strong>. Drag that file into your <strong>Applications</strong> folder, then open it from there.</p>
+      <div style="background:#E8F5EB;border:1px solid #A5D6B0;border-radius:8px;padding:11px 14px;font-size:13px;color:#1A5C2A;font-family:Arial,sans-serif;line-height:1.65;">
+        <strong>Tip:</strong> Right-click the VS Code icon in your dock and choose <strong>Options → Keep in Dock</strong> for easy access.
+      </div>
+    </div>
+
+    <!-- Linux -->
+    <div style="border-left:4px solid #B45309;padding-left:16px;">
+      <div style="margin-bottom:8px;"><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;background:#B45309;color:#fff;padding:2px 8px;border-radius:4px;">LINUX</span></div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 8px;line-height:1.65;">Download the <strong>.deb</strong> package (for Ubuntu/Debian). Then install it by running:</p>
+      <div style="border:1px solid #E4E4E8;border-radius:8px;overflow:hidden;margin-bottom:10px;">
+        <div style="background:#1E1E1E;padding:12px 16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.9;">
+          <div><span style="color:#007ACC;">$</span> <span style="color:#fff;">sudo dpkg -i code_*.deb</span></div>
+        </div>
+      </div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0;line-height:1.65;">Then launch VS Code by typing <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">code</code> in the terminal, or find it in your application menu.</p>
+    </div>
+  </div>
+
+  <!-- ── STEP 3 ── -->
+  <div style="background:#ffffff;border:1.5px solid #E4E4E8;border-radius:12px;padding:22px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div style="width:34px;height:34px;border-radius:50%;background:#007ACC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="color:#fff;font-family:'Courier New',monospace;font-size:14px;font-weight:700;">3</span>
+      </div>
+      <h3 style="font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#1A1917;margin:0;">Install the Python extension</h3>
+    </div>
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 12px;line-height:1.65;">This step is <strong>identical on all operating systems.</strong> Open VS Code, then on the left sidebar click the <strong>Extensions icon</strong> (four squares). Search for <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">Python</code> and install the one published by <strong>Microsoft</strong> (120M+ installs).</p>
+    <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;margin:14px 0;">
+      <div style="background:#3C3C3C;padding:7px 12px;display:flex;align-items:center;gap:6px;">
+        <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#FFBD2E;display:inline-block;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#28CA41;display:inline-block;"></span>
+        <span style="font-family:'Courier New',monospace;font-size:11px;color:#9D9D9D;margin-left:6px;">Extensions: Marketplace</span>
+      </div>
+      <div style="background:#1E1E1E;padding:13px 16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.9;">
+        <div style="color:#9D9D9D;">Search Extensions in Marketplace</div>
+        <div style="color:#fff;margin-top:8px;">──────────────────────────────────</div>
+        <div style="margin-top:8px;"><span style="color:#007ACC;font-weight:700;">Python</span> <span style="color:#9D9D9D;font-size:11px;margin-left:8px;">Microsoft · 120M+ installs</span></div>
+        <div style="color:#6A9955;font-size:11px;">IntelliSense, linting, debugging, Jupyter</div>
+        <div style="margin-top:8px;"><span style="background:#007ACC;color:#fff;padding:3px 12px;border-radius:4px;font-size:11px;">Install</span></div>
+      </div>
+    </div>
+    <div style="background:#E8F4FD;border:1px solid #B3D9F5;border-radius:8px;padding:12px 15px;font-size:13px;color:#00507A;font-family:Arial,sans-serif;line-height:1.65;">
+      <strong>What this gives you:</strong> syntax highlighting, auto-complete, the ability to run files with a click, and error underlining.
+    </div>
+  </div>
+
+  <!-- ── STEP 4 ── -->
+  <div style="background:#ffffff;border:1.5px solid #E4E4E8;border-radius:12px;padding:22px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div style="width:34px;height:34px;border-radius:50%;background:#007ACC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="color:#fff;font-family:'Courier New',monospace;font-size:14px;font-weight:700;">4</span>
+      </div>
+      <h3 style="font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#1A1917;margin:0;">Open your project folder</h3>
+    </div>
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 16px;line-height:1.65;">First create a folder for your work, then open it in VS Code. The process is the same on all systems — only where you create the folder differs.</p>
+
+    <!-- Windows -->
+    <div style="border-left:4px solid #007ACC;padding-left:16px;margin-bottom:16px;">
+      <div style="margin-bottom:8px;"><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;background:#007ACC;color:#fff;padding:2px 8px;border-radius:4px;">WIN</span></div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0;line-height:1.65;">Create a folder on your <strong>Desktop</strong> named <strong>my-python-project</strong>.</p>
+    </div>
+
+    <!-- macOS -->
+    <div style="border-left:4px solid #22863A;padding-left:16px;margin-bottom:16px;">
+      <div style="margin-bottom:8px;"><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;background:#22863A;color:#fff;padding:2px 8px;border-radius:4px;">MAC</span></div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0;line-height:1.65;">Create a folder in your <strong>Documents</strong> named <strong>my-python-project</strong>.</p>
+    </div>
+
+    <!-- Linux -->
+    <div style="border-left:4px solid #B45309;padding-left:16px;margin-bottom:16px;">
+      <div style="margin-bottom:8px;"><span style="font-family:Arial,sans-serif;font-size:11px;font-weight:700;background:#B45309;color:#fff;padding:2px 8px;border-radius:4px;">LINUX</span></div>
+      <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 8px;line-height:1.65;">Create a folder in your home directory named <strong>my-python-project</strong>, or run:</p>
+      <div style="border:1px solid #E4E4E8;border-radius:8px;overflow:hidden;">
+        <div style="background:#1E1E1E;padding:11px 16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.9;">
+          <div><span style="color:#007ACC;">$</span> <span style="color:#fff;">mkdir ~/my-python-project</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All OS -->
+    <div style="background:#F7F8FA;border:1px solid #E4E4E8;border-radius:8px;padding:14px 16px;font-family:Arial,sans-serif;font-size:14px;color:#5A5854;line-height:1.65;">
+      <strong style="color:#1A1917;">Then on all systems:</strong> In VS Code go to <strong>File → Open Folder</strong>, navigate to your new folder, and click <strong>Select Folder</strong>.
+    </div>
+  </div>
+
+  <!-- ── STEP 5 ── -->
+  <div style="background:#ffffff;border:1.5px solid #E4E4E8;border-radius:12px;padding:22px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div style="width:34px;height:34px;border-radius:50%;background:#007ACC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="color:#fff;font-family:'Courier New',monospace;font-size:14px;font-weight:700;">5</span>
+      </div>
+      <h3 style="font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#1A1917;margin:0;">Create a .py file</h3>
+    </div>
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 12px;line-height:1.65;"><strong>Same on all systems.</strong> In the Explorer panel on the left, click the <strong>New File</strong> icon and name it <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">hello.py</code>. Then type this code:</p>
+    <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;margin:14px 0;">
+      <div style="background:#3C3C3C;padding:7px 12px;display:flex;align-items:center;gap:6px;">
+        <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#FFBD2E;display:inline-block;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#28CA41;display:inline-block;"></span>
+        <span style="font-family:'Courier New',monospace;font-size:11px;color:#9D9D9D;margin-left:6px;">hello.py</span>
+      </div>
+      <div style="background:#1E1E1E;padding:14px 16px;font-family:'Courier New',monospace;font-size:13px;line-height:1.9;">
+        <div style="color:#6A9955;"># hello.py</div>
+        <div style="margin-top:4px;"><span style="color:#DCDCAA;">print</span><span style="color:#fff;">(</span><span style="color:#CE9178;">"Hello, world!"</span><span style="color:#fff;">)</span></div>
+        <div><span style="color:#569CD6;">name</span><span style="color:#fff;"> = </span><span style="color:#CE9178;">"Ada"</span></div>
+        <div><span style="color:#DCDCAA;">print</span><span style="color:#fff;">(</span><span style="color:#CE9178;">"Hello, " + name + "!"</span><span style="color:#fff;">)</span></div>
+        <div style="margin-top:4px;"><span style="color:#569CD6;">for</span><span style="color:#fff;"> i </span><span style="color:#569CD6;">in</span><span style="color:#fff;"> </span><span style="color:#DCDCAA;">range</span><span style="color:#fff;">(</span><span style="color:#B5CEA8;">3</span><span style="color:#fff;">):</span></div>
+        <div style="padding-left:20px;"><span style="color:#DCDCAA;">print</span><span style="color:#fff;">(</span><span style="color:#CE9178;">"Count: " + str(i)</span><span style="color:#fff;">)</span></div>
+      </div>
+    </div>
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0;line-height:1.65;">Save the file before running — VS Code shows a dot (●) on the tab if there are unsaved changes.</p>
+
+    <!-- Save shortcut by OS -->
+    <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+      <div style="background:#F7F8FA;border:1px solid #E4E4E8;border-radius:8px;padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;">
+        <span style="font-size:11px;font-weight:700;background:#007ACC;color:#fff;padding:2px 7px;border-radius:4px;margin-right:8px;">WIN</span>
+        Save: <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">Ctrl+S</code>
+      </div>
+      <div style="background:#F7F8FA;border:1px solid #E4E4E8;border-radius:8px;padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;">
+        <span style="font-size:11px;font-weight:700;background:#22863A;color:#fff;padding:2px 7px;border-radius:4px;margin-right:8px;">MAC</span>
+        Save: <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">⌘+S</code>
+      </div>
+      <div style="background:#F7F8FA;border:1px solid #E4E4E8;border-radius:8px;padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;">
+        <span style="font-size:11px;font-weight:700;background:#B45309;color:#fff;padding:2px 7px;border-radius:4px;margin-right:8px;">LINUX</span>
+        Save: <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">Ctrl+S</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── STEP 6 ── -->
+  <div style="background:#ffffff;border:1.5px solid #E4E4E8;border-radius:12px;padding:22px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div style="width:34px;height:34px;border-radius:50%;background:#007ACC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="color:#fff;font-family:'Courier New',monospace;font-size:14px;font-weight:700;">6</span>
+      </div>
+      <h3 style="font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#1A1917;margin:0;">Select your Python interpreter</h3>
+    </div>
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 16px;line-height:1.65;">VS Code needs to know which Python to use. Open the Command Palette, then type and select <strong>Python: Select Interpreter</strong>.</p>
+
+    <!-- Command Palette shortcut by OS -->
+    <div style="margin-bottom:14px;display:flex;gap:10px;flex-wrap:wrap;">
+      <div style="background:#F7F8FA;border:1px solid #E4E4E8;border-radius:8px;padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;">
+        <span style="font-size:11px;font-weight:700;background:#007ACC;color:#fff;padding:2px 7px;border-radius:4px;margin-right:8px;">WIN</span>
+        <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">Ctrl+Shift+P</code>
+      </div>
+      <div style="background:#F7F8FA;border:1px solid #E4E4E8;border-radius:8px;padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;">
+        <span style="font-size:11px;font-weight:700;background:#22863A;color:#fff;padding:2px 7px;border-radius:4px;margin-right:8px;">MAC</span>
+        <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">⌘+Shift+P</code>
+      </div>
+      <div style="background:#F7F8FA;border:1px solid #E4E4E8;border-radius:8px;padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;">
+        <span style="font-size:11px;font-weight:700;background:#B45309;color:#fff;padding:2px 7px;border-radius:4px;margin-right:8px;">LINUX</span>
+        <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">Ctrl+Shift+P</code>
+      </div>
+    </div>
+
+    <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div style="background:#3C3C3C;padding:7px 12px;display:flex;align-items:center;gap:6px;">
+        <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#FFBD2E;display:inline-block;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#28CA41;display:inline-block;"></span>
+        <span style="font-family:'Courier New',monospace;font-size:11px;color:#9D9D9D;margin-left:6px;">Select Interpreter</span>
+      </div>
+      <div style="background:#1E1E1E;padding:13px 16px;font-family:'Courier New',monospace;font-size:12px;line-height:1.9;">
+        <div style="color:#9D9D9D;">Enter interpreter path or pick one below</div>
+        <div style="margin-top:10px;color:#fff;background:#264F78;padding:4px 10px;border-radius:3px;display:inline-block;">★ Python 3.12.x &nbsp;← select this</div>
+      </div>
+    </div>
+    <div style="background:#E8F4FD;border:1px solid #B3D9F5;border-radius:8px;padding:12px 15px;font-size:13px;color:#00507A;font-family:Arial,sans-serif;line-height:1.65;">
+      <strong>Tip:</strong> You only need to do this once per folder. VS Code will remember your choice.
+    </div>
+  </div>
+
+  <!-- ── STEP 7 ── -->
+  <div style="background:#ffffff;border:1.5px solid #E4E4E8;border-radius:12px;padding:22px 24px;margin-bottom:16px;">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div style="width:34px;height:34px;border-radius:50%;background:#007ACC;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <span style="color:#fff;font-family:'Courier New',monospace;font-size:14px;font-weight:700;">7</span>
+      </div>
+      <h3 style="font-family:Arial,sans-serif;font-size:17px;font-weight:700;color:#1A1917;margin:0;">Run the file</h3>
+    </div>
+    <p style="font-family:Arial,sans-serif;font-size:14px;color:#5A5854;margin:0 0 12px;line-height:1.65;">Make sure <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 6px;border-radius:4px;">hello.py</code> is open and saved, then click the <strong>▶ Play button</strong> in the top-right corner of VS Code. This works the same on all systems.</p>
+    <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;margin:14px 0;">
+      <div style="background:#3C3C3C;padding:7px 12px;display:flex;align-items:center;gap:6px;">
+        <span style="width:9px;height:9px;border-radius:50%;background:#FF5F57;display:inline-block;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#FFBD2E;display:inline-block;"></span>
+        <span style="width:9px;height:9px;border-radius:50%;background:#28CA41;display:inline-block;"></span>
+        <span style="font-family:'Courier New',monospace;font-size:11px;color:#9D9D9D;margin-left:6px;">hello.py</span>
+      </div>
+      <div style="background:#1E1E1E;padding:13px 16px;font-family:'Courier New',monospace;font-size:13px;line-height:1.9;">
+        <div><span style="color:#DCDCAA;">print</span><span style="color:#fff;">(</span><span style="color:#CE9178;">"Hello, world!"</span><span style="color:#fff;">)</span></div>
+        <div><span style="color:#569CD6;">name</span><span style="color:#fff;"> = </span><span style="color:#CE9178;">"Ada"</span></div>
+        <div><span style="color:#DCDCAA;">print</span><span style="color:#fff;">(</span><span style="color:#CE9178;">"Hello, " + name + "!"</span><span style="color:#fff;">)</span></div>
+      </div>
+      <div style="border-top:1px solid #3C3C3C;background:#1E1E1E;padding:12px 16px;">
+        <div style="font-family:'Courier New',monospace;font-size:10px;color:#6A9955;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Terminal</div>
+        <div style="font-family:'Courier New',monospace;font-size:12px;line-height:1.9;">
+          <div><span style="color:#007ACC;">$</span> <span style="color:#fff;">python hello.py</span></div>
+          <div style="color:#4EC9B0;">Hello, world!</div>
+          <div style="color:#4EC9B0;">Hello, Ada!</div>
+          <div style="color:#4EC9B0;">Count: 0</div>
+          <div style="color:#4EC9B0;">Count: 1</div>
+          <div style="color:#4EC9B0;">Count: 2</div>
+        </div>
+      </div>
+    </div>
+    <div style="background:#E8F5EB;border:1px solid #A5D6B0;border-radius:8px;padding:12px 15px;font-size:13px;color:#1A5C2A;font-family:Arial,sans-serif;line-height:1.65;margin-bottom:10px;">
+      <strong>🎉 You did it!</strong> If you see the output in the Terminal panel at the bottom of VS Code, Python is working perfectly.
+    </div>
+    <div style="background:#E8F5EB;border:1px solid #A5D6B0;border-radius:8px;padding:12px 15px;font-size:13px;color:#1A5C2A;font-family:Arial,sans-serif;line-height:1.65;">
+      <strong>Mac/Linux note:</strong> If the play button uses <code style="font-family:'Courier New',monospace;font-size:12px;background:#d4edda;padding:1px 5px;border-radius:4px;">python3</code> instead of <code style="font-family:'Courier New',monospace;font-size:12px;background:#d4edda;padding:1px 5px;border-radius:4px;">python</code> in the terminal output — that's completely normal and correct.
+    </div>
+  </div>
+
+  <!-- ── QUICK REFERENCE ── -->
+  <div style="margin-top:32px;border-top:2px solid #E4E4E8;padding-top:28px;">
+    <h3 style="font-family:Arial,sans-serif;font-size:18px;font-weight:700;color:#1A1917;margin:0 0 6px;">Quick reference — keyboard shortcuts</h3>
+    <p style="font-family:Arial,sans-serif;color:#5A5854;font-size:14px;margin:0 0 16px;">Where Mac differs from Windows/Linux, both are shown.</p>
+    <table style="width:100%;border-collapse:collapse;border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;">
+      <tr style="background:#F7F8FA;">
+        <th style="padding:10px 14px;text-align:left;font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:#5A5854;border-bottom:1px solid #E4E4E8;">Action</th>
+        <th style="padding:10px 14px;text-align:left;font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:#5A5854;border-bottom:1px solid #E4E4E8;"><span style="background:#007ACC;color:#fff;padding:2px 7px;border-radius:4px;font-size:10px;">WIN</span> &amp; <span style="background:#B45309;color:#fff;padding:2px 7px;border-radius:4px;font-size:10px;">LINUX</span></th>
+        <th style="padding:10px 14px;text-align:left;font-family:Arial,sans-serif;font-size:12px;font-weight:700;color:#5A5854;border-bottom:1px solid #E4E4E8;"><span style="background:#22863A;color:#fff;padding:2px 7px;border-radius:4px;font-size:10px;">MAC</span></th>
+      </tr>
+      <tr>
+        <td style="padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;border-bottom:1px solid #E4E4E8;">Save file</td>
+        <td style="padding:10px 14px;font-family:'Courier New',monospace;font-size:12px;color:#007ACC;border-bottom:1px solid #E4E4E8;">Ctrl+S</td>
+        <td style="padding:10px 14px;font-family:'Courier New',monospace;font-size:12px;color:#22863A;border-bottom:1px solid #E4E4E8;">⌘+S</td>
+      </tr>
+      <tr style="background:#F7F8FA;">
+        <td style="padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;border-bottom:1px solid #E4E4E8;">Command Palette</td>
+        <td style="padding:10px 14px;font-family:'Courier New',monospace;font-size:12px;color:#007ACC;border-bottom:1px solid #E4E4E8;">Ctrl+Shift+P</td>
+        <td style="padding:10px 14px;font-family:'Courier New',monospace;font-size:12px;color:#22863A;border-bottom:1px solid #E4E4E8;">⌘+Shift+P</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;border-bottom:1px solid #E4E4E8;">Extensions panel</td>
+        <td style="padding:10px 14px;font-family:'Courier New',monospace;font-size:12px;color:#007ACC;border-bottom:1px solid #E4E4E8;">Ctrl+Shift+X</td>
+        <td style="padding:10px 14px;font-family:'Courier New',monospace;font-size:12px;color:#22863A;border-bottom:1px solid #E4E4E8;">⌘+Shift+X</td>
+      </tr>
+      <tr style="background:#F7F8FA;">
+        <td style="padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;border-bottom:1px solid #E4E4E8;">Open Terminal</td>
+        <td style="padding:10px 14px;font-family:'Courier New',monospace;font-size:12px;color:#007ACC;border-bottom:1px solid #E4E4E8;">Ctrl+`</td>
+        <td style="padding:10px 14px;font-family:'Courier New',monospace;font-size:12px;color:#22863A;border-bottom:1px solid #E4E4E8;">⌃+`</td>
+      </tr>
+      <tr>
+        <td style="padding:10px 14px;font-family:Arial,sans-serif;font-size:13px;color:#1A1917;">Run Python file</td>
+        <td style="padding:10px 14px;font-family:'Courier New',monospace;font-size:12px;color:#007ACC;" colspan="2">▶ Play button (top-right) — same on all systems</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- ── COMMON ERRORS ── -->
+  <div style="margin-top:32px;border-top:2px solid #E4E4E8;padding-top:28px;">
+    <h3 style="font-family:Arial,sans-serif;font-size:18px;font-weight:700;color:#1A1917;margin:0 0 18px;">Common errors &amp; fixes</h3>
+
+    <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div style="background:#FFF0F0;padding:11px 14px;font-family:'Courier New',monospace;font-size:12px;color:#C0392B;border-bottom:1px solid #FECACA;">'python' is not recognized as an internal or external command</div>
+      <div style="padding:13px 16px;font-size:13px;color:#5A5854;font-family:Arial,sans-serif;line-height:1.65;">
+        <span style="font-size:11px;font-weight:700;background:#007ACC;color:#fff;padding:2px 7px;border-radius:4px;margin-right:6px;">WIN</span>
+        <strong style="color:#1A1917;">Fix:</strong> Re-run the Python installer and check <strong>"Add Python to PATH"</strong> on the first screen.
+      </div>
+    </div>
+
+    <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div style="background:#FFF0F0;padding:11px 14px;font-family:'Courier New',monospace;font-size:12px;color:#C0392B;border-bottom:1px solid #FECACA;">command not found: python</div>
+      <div style="padding:13px 16px;font-size:13px;color:#5A5854;font-family:Arial,sans-serif;line-height:1.65;">
+        <span style="font-size:11px;font-weight:700;background:#22863A;color:#fff;padding:2px 7px;border-radius:4px;margin-right:6px;">MAC</span>
+        <span style="font-size:11px;font-weight:700;background:#B45309;color:#fff;padding:2px 7px;border-radius:4px;margin-right:6px;">LINUX</span>
+        <strong style="color:#1A1917;">Fix:</strong> Use <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 5px;border-radius:4px;">python3</code> instead of <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 5px;border-radius:4px;">python</code>. On Mac and Linux, Python 3 is always called <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 5px;border-radius:4px;">python3</code>.
+      </div>
+    </div>
+
+    <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div style="background:#FFF0F0;padding:11px 14px;font-family:'Courier New',monospace;font-size:12px;color:#C0392B;border-bottom:1px solid #FECACA;">SyntaxError: invalid syntax</div>
+      <div style="padding:13px 16px;font-size:13px;color:#5A5854;font-family:Arial,sans-serif;line-height:1.65;"><strong style="color:#1A1917;">All systems. Cause:</strong> A typo in your code — missing colon, mismatched bracket, or misspelled keyword. <strong style="color:#1A1917;">Fix:</strong> Look for the red underline in VS Code and check your spelling and punctuation on that line.</div>
+    </div>
+
+    <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;margin-bottom:12px;">
+      <div style="background:#FFF0F0;padding:11px 14px;font-family:'Courier New',monospace;font-size:12px;color:#C0392B;border-bottom:1px solid #FECACA;">Changes to my file aren't showing when I run it</div>
+      <div style="padding:13px 16px;font-size:13px;color:#5A5854;font-family:Arial,sans-serif;line-height:1.65;"><strong style="color:#1A1917;">All systems. Fix:</strong> Save first. Windows/Linux: <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 5px;border-radius:4px;">Ctrl+S</code> &nbsp;·&nbsp; Mac: <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 5px;border-radius:4px;">⌘+S</code>. A dot (●) on the tab means unsaved changes.</div>
+    </div>
+
+    <div style="border:1px solid #E4E4E8;border-radius:10px;overflow:hidden;">
+      <div style="background:#FFF0F0;padding:11px 14px;font-family:'Courier New',monospace;font-size:12px;color:#C0392B;border-bottom:1px solid #FECACA;">The ▶ Play button isn't showing up</div>
+      <div style="padding:13px 16px;font-size:13px;color:#5A5854;font-family:Arial,sans-serif;line-height:1.65;"><strong style="color:#1A1917;">All systems. Fix:</strong> The play button only appears for <code style="font-family:'Courier New',monospace;font-size:12px;background:#F5F5F5;padding:1px 5px;border-radius:4px;">.py</code> files when the Python extension is installed. Go back to Step 3 and install the Microsoft Python extension.</div>
+    </div>
+  </div>
+
+</div>
