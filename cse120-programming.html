@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSE 120 — Module 1: Software &amp; Programming</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --navy: #003767;
+  --blue: #0074b7;
+  --blue-light: #ddeaf5;
+  --bg: #f2f6fb;
+  --white: #ffffff;
+  --ink: #1a2a3a;
+  --ink-soft: #4a5568;
+  --border: #d0dce8;
+  --green: #1a5c2a;
+  --green-bg: #e8f5eb;
+  --green-border: #a5d6b0;
+  --amber: #7c4a00;
+  --amber-bg: #fff3e0;
+  --amber-border: #f9c97c;
+  --red: #c0392b;
+  --red-bg: #fff0f0;
+  --red-border: #fecaca;
+  --purple: #4a1d8c;
+  --purple-bg: #f3eeff;
+  --purple-border: #c4b0ef;
+  --teal: #00507a;
+  --teal-bg: #e8f4fd;
+  --teal-border: #b3d9f5;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', Arial, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; font-size: 15px; }
+
+/* ── LAYOUT ── */
+.page-wrap { max-width: 900px; margin: 0 auto; padding: 0 20px 60px; }
+
+/* ── HERO ── */
+.hero-outer { padding: 28px 20px 0; max-width: 900px; margin: 0 auto; }
+.hero {
+  background: linear-gradient(135deg, #0F1E3D 0%, #1A3A6B 55%, #2655A8 100%);
+  border-radius: 18px; padding: 48px 52px 44px; color: #fff; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(59,111,212,.22) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-kicker { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.5); margin-bottom: 16px; }
+.hero h1 { font-size: clamp(24px, 3.5vw, 36px); font-weight: 700; line-height: 1.15; letter-spacing: -.02em; margin-bottom: 14px; }
+.hero p { color: rgba(255,255,255,.78); font-size: 15px; max-width: 540px; margin-bottom: 24px; }
+.hero-pills { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-pill { font-size: 12px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: rgba(255,255,255,.8); padding: 4px 14px; border-radius: 20px; }
+
+/* ── STICKY NAV ── */
+.sticky-nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.96); backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--border); padding: 0 20px;
+}
+.sticky-nav-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; gap: 16px; height: 52px; overflow-x: auto; }
+.sticky-nav a { font-size: 12.5px; font-weight: 600; color: var(--navy); text-decoration: none; white-space: nowrap; padding: 4px 2px; border-bottom: 2px solid transparent; transition: border-color .15s; }
+.sticky-nav a:hover { border-color: var(--blue); }
+.progress-pill { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-soft); background: var(--bg); border: 1px solid var(--border); padding: 3px 10px; border-radius: 20px; margin-left: auto; flex-shrink: 0; }
+
+/* ── TOC ── */
+.toc { background: var(--white); border: 1.5px solid var(--border); border-radius: 12px; padding: 24px 28px; margin: 28px 0; }
+.toc h2 { font-size: 15px; color: var(--navy); margin-bottom: 14px; font-weight: 700; }
+.toc ol { padding-left: 20px; }
+.toc li { margin-bottom: 6px; }
+.toc a { color: var(--blue); text-decoration: none; font-size: 14px; }
+.toc a:hover { text-decoration: underline; }
+
+/* ── SECTION ── */
+.section { background: var(--white); border-radius: 14px; padding: 36px 40px; margin-bottom: 24px; border: 1px solid var(--border); }
+.section-label { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+.section h2 { font-size: 22px; font-weight: 700; color: var(--navy); margin-bottom: 18px; padding-bottom: 12px; border-bottom: 2px solid var(--blue-light); }
+.section h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin: 24px 0 10px; }
+.section h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin: 18px 0 8px; }
+.section p { color: var(--ink-soft); margin-bottom: 14px; }
+.section ul, .section ol { color: var(--ink-soft); padding-left: 22px; margin-bottom: 14px; }
+.section li { margin-bottom: 6px; }
+
+/* ── CODE BLOCKS ── */
+.code-block { background: #1e2a3a; border-radius: 10px; overflow: hidden; margin: 14px 0; }
+.code-header { background: #2d3d50; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; }
+.code-lang { font-family: 'DM Mono', monospace; font-size: 11px; color: #7ba3c0; letter-spacing: .08em; }
+.copy-btn { font-family: 'DM Mono', monospace; font-size: 11px; background: transparent; border: 1px solid #4a6580; color: #7ba3c0; padding: 3px 10px; border-radius: 5px; cursor: pointer; }
+.copy-btn:hover { background: #4a6580; color: #fff; }
+.code-body { padding: 16px 18px; font-family: 'DM Mono', monospace; font-size: 13.5px; line-height: 1.85; color: #e0e8f0; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
+.kw { color: #569CD6; } .fn { color: #DCDCAA; } .str { color: #CE9178; }
+.cmt { color: #6A9955; } .num { color: #B5CEA8; } .var { color: #9CDCFE; }
+.out { color: #4EC9B0; } .err { color: #F44747; }
+
+/* inline code */
+code { font-family: 'DM Mono', monospace; font-size: 13px; background: var(--blue-light); color: var(--navy); padding: 2px 6px; border-radius: 4px; }
+
+/* ── ACTIVITY BOXES ── */
+.box { border-radius: 10px; padding: 18px 22px; margin: 18px 0; border-left: 4px solid; }
+.box-title { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px; }
+.box p { margin-bottom: 8px; }
+.box p:last-child { margin-bottom: 0; }
+
+.predict { background: var(--purple-bg); border-color: var(--purple); }
+.predict .box-title { color: var(--purple); }
+.tryit { background: var(--teal-bg); border-color: var(--teal); }
+.tryit .box-title { color: var(--teal); }
+.debug { background: var(--red-bg); border-color: var(--red); }
+.debug .box-title { color: var(--red); }
+.think { background: var(--amber-bg); border-color: #d97706; }
+.think .box-title { color: #b45309; }
+.trace { background: #f5f0ff; border-color: #7c3aed; }
+.trace .box-title { color: #5b21b6; }
+.modify { background: var(--teal-bg); border-color: #0284c7; }
+.modify .box-title { color: #0369a1; }
+.engineering { background: var(--green-bg); border-color: var(--green); }
+.engineering .box-title { color: var(--green); }
+.misconception { background: #fff8e1; border-color: #f59e0b; }
+.misconception .box-title { color: #92400e; }
+.check { background: var(--bg); border-color: var(--border); }
+.check .box-title { color: var(--ink); }
+
+/* ── DETAILS / SOLUTIONS ── */
+details { margin: 12px 0; }
+summary {
+  background: var(--navy); color: #fff; padding: 10px 16px;
+  border-radius: 8px; cursor: pointer; font-size: 13.5px; font-weight: 600;
+  list-style: none; display: flex; align-items: center; gap: 8px;
+  user-select: none;
+}
+summary::before { content: '▶'; font-size: 11px; transition: transform .2s; }
+details[open] summary::before { transform: rotate(90deg); }
+summary::-webkit-details-marker { display: none; }
+.solution-body { background: var(--green-bg); border: 1.5px solid var(--green-border); border-radius: 0 0 8px 8px; padding: 18px 20px; }
+.solution-body p { color: var(--ink-soft); margin-bottom: 10px; }
+
+/* ── TRACE TABLE ── */
+.trace-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13.5px; }
+.trace-table th { background: var(--navy); color: #fff; padding: 9px 14px; text-align: left; font-family: 'DM Mono', monospace; font-size: 12px; }
+.trace-table td { padding: 8px 14px; border-bottom: 1px solid var(--border); font-family: 'DM Mono', monospace; }
+.trace-table tr:nth-child(even) { background: var(--bg); }
+.blank { color: #ccc; font-style: italic; }
+
+/* ── DIAGRAM ── */
+.diagram { background: #1e2a3a; color: #e0e8f0; font-family: 'DM Mono', monospace; font-size: 13px; padding: 18px 22px; border-radius: 10px; margin: 14px 0; line-height: 2; white-space: pre; overflow-x: auto; }
+.diagram .arrow { color: #4EC9B0; }
+.diagram .box-d { color: #DCDCAA; }
+
+/* ── FLOW CHART ASCII ── */
+.flow { background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; padding: 18px 22px; font-family: 'DM Mono', monospace; font-size: 13px; margin: 14px 0; line-height: 2; white-space: pre; overflow-x: auto; color: var(--ink); }
+
+/* ── INLINE HIGHLIGHT ── */
+.hl-blue { background: var(--blue-light); color: var(--navy); padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+.hl-green { background: var(--green-bg); color: var(--green); padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+.hl-red { background: var(--red-bg); color: var(--red); padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+.hl-amber { background: var(--amber-bg); color: var(--amber); padding: 1px 6px; border-radius: 4px; font-weight: 600; }
+
+/* ── PART HEADER ── */
+.part-badge { display: inline-block; background: var(--navy); color: #fff; font-family: 'DM Mono', monospace; font-size: 11px; padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; letter-spacing: .06em; }
+
+/* ── CALLOUT ── */
+.callout { background: var(--blue-light); border: 1px solid #b3c8e0; border-radius: 10px; padding: 14px 18px; margin: 14px 0; font-size: 14px; color: var(--navy); }
+.callout strong { display: block; margin-bottom: 4px; }
+
+/* ── BACK TO TOP ── */
+.back-top { display: inline-block; font-size: 12.5px; color: var(--blue); text-decoration: none; margin-top: 20px; }
+.back-top:hover { text-decoration: underline; }
+
+/* ── KNOWLEDGE CHECK ── */
+.quiz-q { background: var(--white); border: 1.5px solid var(--border); border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; }
+.quiz-q .qnum { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--blue); font-weight: 700; margin-bottom: 6px; }
+.quiz-q p { margin-bottom: 10px; }
+.quiz-options li { margin-bottom: 4px; }
+
+/* ── CHALLENGE ── */
+.challenge-section { background: linear-gradient(135deg, #0F1E3D 0%, #1A3A6B 60%, #2655A8 100%); border-radius: 14px; padding: 36px 40px; margin-bottom: 24px; color: #fff; }
+.challenge-section h2 { font-size: 22px; margin-bottom: 12px; }
+.challenge-section p { color: rgba(255,255,255,.8); margin-bottom: 14px; }
+.challenge-step { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); border-radius: 10px; padding: 16px 20px; margin-bottom: 12px; }
+.challenge-step h4 { color: #fff; margin-bottom: 8px; }
+.challenge-step p { color: rgba(255,255,255,.8); margin-bottom: 0; }
+
+@media (max-width: 680px) {
+  .hero { padding: 32px 24px; }
+  .section { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero-outer">
+  <div class="hero">
+    <div class="hero-kicker">CSE 120 · Module 1</div>
+    <h1>Software &amp; Programming</h1>
+    <p>Your first steps into programming — no experience required. We'll go slowly, explain everything, and give you lots of chances to practice.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">9 Parts</span>
+      <span class="hero-pill">50+ Exercises</span>
+      <span class="hero-pill">Debugging Lab</span>
+      <span class="hero-pill">Final Challenge</span>
+      <span class="hero-pill">Knowledge Check</span>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY NAV -->
+<nav class="sticky-nav">
+  <div class="sticky-nav-inner">
+    <a href="#part1">1. What Is Programming?</a>
+    <a href="#part2">2. Problem → Program</a>
+    <a href="#part3">3. Variables</a>
+    <a href="#part4">4. Data Types</a>
+    <a href="#part5">5. Input &amp; Output</a>
+    <a href="#part6">6. Operators</a>
+    <a href="#part7">7. Decisions</a>
+    <a href="#part8">8. Loops</a>
+    <a href="#part9">9. Debugging</a>
+    <a href="#challenge">Challenge</a>
+    <a href="#quiz">Quiz</a>
+    <span class="progress-pill" id="progress-pill">0 / 10</span>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+<!-- TOC -->
+<div class="toc">
+  <h2>📋 What You'll Learn in This Module</h2>
+  <ol>
+    <li><a href="#part1">What Is Programming?</a> — programs, code, Python, running code</li>
+    <li><a href="#part2">From a Problem to a Program</a> — algorithms and problem decomposition</li>
+    <li><a href="#part3">Variables</a> — storing and changing values</li>
+    <li><a href="#part4">Data Types</a> — int, float, str, bool</li>
+    <li><a href="#part5">Input and Output</a> — print(), input(), type conversion</li>
+    <li><a href="#part6">Expressions and Operators</a> — arithmetic in Python</li>
+    <li><a href="#part7">Decisions with if</a> — making choices in code</li>
+    <li><a href="#part8">Loops</a> — repeating actions with for and while</li>
+    <li><a href="#part9">Debugging</a> — reading errors, finding bugs, fixing them</li>
+    <li><a href="#challenge">Final Integrated Challenge</a></li>
+    <li><a href="#quiz">Knowledge Check</a></li>
+  </ol>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PART 1 — WHAT IS PROGRAMMING?
+════════════════════════════════════════════ -->
+<div class="section" id="part1">
+  <div class="part-badge">Part 1</div>
+  <div class="section-label">Foundation</div>
+  <h2>What Is Programming?</h2>
+
+  <h3>Computers only do what they are told — exactly</h3>
+  <p>A computer is incredibly fast and precise, but on its own it does nothing. It needs <strong>instructions</strong>. A <strong>computer program</strong> is simply a list of instructions that tells a computer what to do, step by step.</p>
+  <p>Think of a recipe. A recipe tells a cook: first do this, then do that, if this happens do this instead. A computer program works the same way — except the "cook" is the computer and the instructions have to be written in a language the computer can understand.</p>
+
+  <h3>What is a programming language?</h3>
+  <p>Computers don't understand English (or any human language). They understand patterns of electrical signals that represent 1s and 0s. Writing instructions directly in 1s and 0s is possible, but exhausting and error-prone.</p>
+  <p>A <strong>programming language</strong> is a middle ground — a formal language that humans can learn to write, which can then be translated into something the computer can execute. Python, Java, C++, and JavaScript are all programming languages.</p>
+
+  <div class="callout">
+    <strong>Analogy</strong>
+    If you speak English and your friend speaks only Mandarin, you might use a translator. A programming language is like that translator — you write instructions in a readable form, and the computer converts them into actions it can perform.
+  </div>
+
+  <h3>What is Python?</h3>
+  <p>Python is a programming language created in 1991 and designed to be as readable as possible. Python code looks a lot like plain English, which is one reason it is one of the most popular first languages to learn.</p>
+  <p>Engineers, scientists, data analysts, AI researchers, and web developers all use Python regularly. It is also free, runs on Windows, Mac, and Linux, and has a huge community of users who have built thousands of helpful tools you can use.</p>
+
+  <h3>What is source code?</h3>
+  <p>When you write instructions in Python, what you type is called <strong>source code</strong> (or just "code"). It's the human-readable version of the program — before the computer runs it.</p>
+
+  <h3>What does it mean to "run" a program?</h3>
+  <p>When you <strong>run</strong> a program, you are telling the computer to read your source code and execute it — to actually carry out the instructions. The result is whatever the program is designed to do: print text, calculate a value, ask a question, and so on.</p>
+
+  <h3>The Python interpreter</h3>
+  <p>Python uses something called an <strong>interpreter</strong>. The interpreter reads your code one line at a time, from top to bottom, and executes each line before moving on to the next. This is different from languages like C++ that compile all the code first before running any of it.</p>
+  <p>Think of the interpreter as someone reading your recipe out loud and cooking each step as they read it, rather than reading the whole recipe before starting.</p>
+
+  <h3>Your first program</h3>
+  <p>By tradition, the very first program anyone writes in any language is "Hello, world!" Here it is in Python:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="fn">print</span>(<span class="str">"Hello, world!"</span>)
+</div>
+  </div>
+
+  <p>Let's break down every single part of this line:</p>
+  <ul>
+    <li><code>print</code> — this is a <strong>built-in function</strong> (a tool Python gives you for free). Its job is to display something on the screen. Don't worry too much about the term "function" — for now, just know that <code>print</code> means "show this".</li>
+    <li><code>( )</code> — the parentheses tell Python where the function's instructions begin and end. Whatever is inside the parentheses is what you want to display.</li>
+    <li><code>"Hello, world!"</code> — the quotation marks tell Python this is a piece of text (called a <strong>string</strong>). Everything between the quotes is treated as literal text, not a command.</li>
+  </ul>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict</div>
+    <p>Before running anything, what do you think this code will display on the screen?</p>
+    <div class="code-block" style="margin:10px 0;">
+      <div class="code-body">
+<span class="fn">print</span>(<span class="str">"Hello, world!"</span>)
+</div>
+    </div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p>It displays exactly:<br><strong>Hello, world!</strong></p>
+        <p>Python prints exactly what is between the quotation marks. Nothing more, nothing less.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="box tryit">
+    <div class="box-title">✏️ Try It — Modify the message</div>
+    <p>Change the program so it prints your own name instead of "Hello, world!"</p>
+    <p>For example, if your name is Maria, the output should be: <code>Hello, Maria!</code></p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block">
+          <div class="code-body">
+<span class="fn">print</span>(<span class="str">"Hello, Maria!"</span>)
+</div>
+        </div>
+        <p>You just changed the text inside the quotes. That is all! Python doesn't care what the message says — it prints whatever you put in there.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="box tryit">
+    <div class="box-title">✏️ Try It — Print two separate messages</div>
+    <p>Write a program that prints two separate lines:</p>
+    <pre style="background:var(--bg);padding:10px 14px;border-radius:6px;margin:8px 0;font-family:'DM Mono',monospace;font-size:13px;">I am learning Python.
+This is my first program.</pre>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block">
+          <div class="code-body">
+<span class="fn">print</span>(<span class="str">"I am learning Python."</span>)
+<span class="fn">print</span>(<span class="str">"This is my first program."</span>)
+</div>
+        </div>
+        <p>Each <code>print()</code> statement produces one line of output. Two <code>print()</code> calls produce two lines.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="box check">
+    <div class="box-title">✅ Check Your Understanding</div>
+    <p>True or False — The Python interpreter reads your entire program first, then runs all of it at once.</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>False.</strong> The Python interpreter reads and executes your code <em>one line at a time</em>, from top to bottom. It runs each line before moving on to the next.</p>
+      </div>
+    </details>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PART 2 — FROM A PROBLEM TO A PROGRAM
+════════════════════════════════════════════ -->
+<div class="section" id="part2">
+  <div class="part-badge">Part 2</div>
+  <div class="section-label">Problem Solving</div>
+  <h2>From a Problem to a Program</h2>
+
+  <h3>Programming is problem solving first</h3>
+  <p>Here's something many beginners don't realize: most of programming has nothing to do with typing code. The hard part — the part that takes real skill — is <strong>figuring out what steps to take</strong> to solve the problem. The code comes after.</p>
+  <p>Before you write a single line of Python, it pays to think through:</p>
+  <ul>
+    <li>What is the problem I'm trying to solve?</li>
+    <li>What information do I start with? (Inputs)</li>
+    <li>What do I need to produce? (Outputs)</li>
+    <li>What steps transform the inputs into the outputs? (Process)</li>
+  </ul>
+
+  <h3>What is an algorithm?</h3>
+  <p>An <strong>algorithm</strong> is just a step-by-step plan for solving a problem. You already use algorithms every day without calling them that. A recipe is an algorithm. Directions to a destination are an algorithm. Your morning routine is an algorithm.</p>
+  <p>In programming, we write algorithms in plain English first — then translate them into code.</p>
+
+  <div class="callout">
+    <strong>The beginner workflow</strong>
+    Problem → Inputs → Process → Outputs → Algorithm (plain English) → Code → Test → Debug
+  </div>
+
+  <h3>Example: Calculating component cost</h3>
+  <p>Let's walk through the full workflow for a simple engineering problem.</p>
+
+  <div class="box engineering">
+    <div class="box-title">🌎 Engineering Connection</div>
+    <p><strong>Problem:</strong> You are ordering electronic components for a lab. Each resistor costs $0.15. You are ordering 40 resistors. What is the total cost?</p>
+  </div>
+
+  <h4>Step 1 — Identify inputs and outputs</h4>
+  <table class="trace-table">
+    <tr><th>What</th><th>Value</th></tr>
+    <tr><td>Input: price per resistor</td><td>$0.15</td></tr>
+    <tr><td>Input: quantity</td><td>40</td></tr>
+    <tr><td>Output: total cost</td><td>?</td></tr>
+  </table>
+
+  <h4>Step 2 — Write the algorithm in plain English</h4>
+  <ol>
+    <li>Set the price to 0.15</li>
+    <li>Set the quantity to 40</li>
+    <li>Multiply price × quantity to get the total</li>
+    <li>Display the total</li>
+  </ol>
+
+  <h4>Step 3 — Translate to Python</h4>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="cmt"># Step 1: Set the inputs</span>
+<span class="var">price</span> = <span class="num">0.15</span>
+<span class="var">quantity</span> = <span class="num">40</span>
+
+<span class="cmt"># Step 2: Calculate</span>
+<span class="var">total</span> = <span class="var">price</span> * <span class="var">quantity</span>
+
+<span class="cmt"># Step 3: Display the result</span>
+<span class="fn">print</span>(<span class="str">"Total cost: $"</span>, <span class="var">total</span>)
+</div>
+  </div>
+
+  <p>Don't worry if every part of this code is not clear yet — we'll explain variables, operators, and print() in detail over the next few parts. The important idea here is: <strong>we planned first, then coded.</strong></p>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict</div>
+    <p>What do you think this program will display when it runs?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Total cost: $ 6.0</strong></p>
+        <p>0.15 × 40 = 6.0. Python multiplied the two numbers and printed the result.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="box think">
+    <div class="box-title">🧠 Think Like a Programmer</div>
+    <p>Before writing any code, identify the <strong>Input</strong>, <strong>Process</strong>, and <strong>Output</strong> for this problem:</p>
+    <p><em>A sensor measures temperature every hour for 5 hours. You want to find the average temperature.</em></p>
+    <p>Write your answer in plain English — no code yet.</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Inputs:</strong> 5 temperature readings (numbers)</p>
+        <p><strong>Process:</strong> Add all 5 readings together, then divide by 5</p>
+        <p><strong>Output:</strong> One number — the average temperature</p>
+        <p><strong>Algorithm:</strong></p>
+        <ol>
+          <li>Collect 5 temperature readings</li>
+          <li>Add them together to get a total</li>
+          <li>Divide the total by 5</li>
+          <li>Display the average</li>
+        </ol>
+      </div>
+    </details>
+  </div>
+
+  <div class="box think">
+    <div class="box-title">🧠 Think Like a Programmer — Arrange the steps</div>
+    <p>The steps below for a "battery checker" program are scrambled. Put them in the correct order:</p>
+    <ul>
+      <li>A. Display "Low battery" or "Battery OK"</li>
+      <li>B. Get the battery percentage from the user</li>
+      <li>C. Compare the percentage to 20%</li>
+      <li>D. Convert the input to a number</li>
+    </ul>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p>Correct order: <strong>B → D → C → A</strong></p>
+        <p>First get the input (B), convert it to a number so we can do math (D), compare it (C), then display the result (A). We'll build this exact program in Parts 5 and 7.</p>
+      </div>
+    </details>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PART 3 — VARIABLES
+════════════════════════════════════════════ -->
+<div class="section" id="part3">
+  <div class="part-badge">Part 3</div>
+  <div class="section-label">Storing Values</div>
+  <h2>Variables</h2>
+
+  <h3>What is a variable?</h3>
+  <p>Imagine a labeled box. You can put a value inside the box, take it out later, or swap it for a different value. In programming, a <strong>variable</strong> is exactly that — a named location in the computer's memory where you can store a value.</p>
+  <p>Why do we need variables? Because programs need to remember things. A program that calculates your electricity bill needs to remember the meter reading. A program that runs a traffic light needs to remember how many seconds have passed.</p>
+
+  <div class="diagram">temperature
+     ↓
+┌─────────────┐
+│     72      │
+└─────────────┘</div>
+
+  <p>The box is labeled <code>temperature</code>. Inside it is the value <code>72</code>.</p>
+
+  <h3>Creating a variable in Python</h3>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">temperature</span> = <span class="num">72</span>
+</div>
+  </div>
+
+  <p>This line does one thing: it creates a box labeled <code>temperature</code> and stores the value <code>72</code> in it.</p>
+  <ul>
+    <li><code>temperature</code> — the <strong>variable name</strong> (the label on the box)</li>
+    <li><code>=</code> — the <strong>assignment operator</strong>. This does NOT mean "equals" in the mathematical sense. It means "take the value on the right and store it in the variable on the left."</li>
+    <li><code>72</code> — the <strong>value</strong> being stored</li>
+  </ul>
+
+  <div class="box misconception">
+    <div class="box-title">⚠️ Common Misconception — What does = mean?</div>
+    <p>In math class, <code>x = 5</code> means "x and 5 are equal." In Python, <code>x = 5</code> means "store the value 5 in a variable called x." They look the same but mean very different things.</p>
+    <p>A math equation <code>x = x + 1</code> makes no sense mathematically. But in Python it means: "take whatever is in x right now, add 1 to it, and store the result back in x." This is completely valid Python.</p>
+  </div>
+
+  <h3>Using a variable</h3>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">temperature</span> = <span class="num">72</span>
+<span class="fn">print</span>(<span class="var">temperature</span>)
+</div>
+  </div>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict</div>
+    <p>What does this program display?</p>
+    <div class="code-block" style="margin:10px 0;"><div class="code-body">
+<span class="var">temperature</span> = <span class="num">72</span>
+<span class="fn">print</span>(<span class="var">temperature</span>)
+</div></div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p>It displays: <strong>72</strong></p>
+        <p>Notice there are no quotes around <code>temperature</code> in the print statement. When you leave out the quotes, Python looks up the variable and prints its value. When you include quotes, Python prints the text literally.</p>
+        <div class="code-block"><div class="code-body">
+<span class="fn">print</span>(<span class="var">temperature</span>)     <span class="cmt"># prints: 72</span>
+<span class="fn">print</span>(<span class="str">"temperature"</span>)  <span class="cmt"># prints: temperature</span>
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <h3>Changing a variable's value</h3>
+  <p>You can store a new value in a variable at any time. The old value is simply replaced.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">temperature</span> = <span class="num">72</span>
+<span class="fn">print</span>(<span class="var">temperature</span>)   <span class="cmt"># displays 72</span>
+
+<span class="var">temperature</span> = <span class="num">75</span>
+<span class="fn">print</span>(<span class="var">temperature</span>)   <span class="cmt"># displays 75</span>
+</div>
+  </div>
+
+  <div class="box trace">
+    <div class="box-title">🔍 Trace It</div>
+    <p>Fill in the missing values as Python reads each line:</p>
+    <table class="trace-table">
+      <tr><th>Line</th><th>Value of temperature</th></tr>
+      <tr><td>temperature = 72</td><td class="blank">?</td></tr>
+      <tr><td>print(temperature)</td><td class="blank">?  ← what is displayed?</td></tr>
+      <tr><td>temperature = 75</td><td class="blank">?</td></tr>
+      <tr><td>print(temperature)</td><td class="blank">?  ← what is displayed?</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>Line</th><th>Value of temperature</th></tr>
+          <tr><td>temperature = 72</td><td>72</td></tr>
+          <tr><td>print(temperature)</td><td>displays: 72</td></tr>
+          <tr><td>temperature = 75</td><td>75 (72 is gone)</td></tr>
+          <tr><td>print(temperature)</td><td>displays: 75</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <h3>Variable naming rules</h3>
+  <ul>
+    <li>Variable names can contain letters, numbers, and underscores</li>
+    <li>They cannot start with a number: <span class="hl-red">1sensor</span> is invalid, <span class="hl-green">sensor1</span> is fine</li>
+    <li>They cannot contain spaces: use underscores instead — <code>room_temperature</code></li>
+    <li>They are case-sensitive: <code>Voltage</code> and <code>voltage</code> are two different variables</li>
+    <li>Choose descriptive names: <code>speed</code> is better than <code>s</code>, <code>battery_level</code> is better than <code>bl</code></li>
+  </ul>
+
+  <div class="box tryit">
+    <div class="box-title">✏️ Try It — Variable swap</div>
+    <p>What does this code print? Trace it on paper first, then check.</p>
+    <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="num">10</span>
+<span class="var">y</span> = <span class="num">20</span>
+<span class="var">x</span> = <span class="var">y</span>
+<span class="fn">print</span>(<span class="var">x</span>)
+<span class="fn">print</span>(<span class="var">y</span>)
+</div></div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p>Output:<br><strong>20</strong><br><strong>20</strong></p>
+        <p>When we write <code>x = y</code>, we copy the <em>value</em> of y (which is 20) into x. After this line, x holds 20. y is unchanged and still holds 20.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="box trace">
+    <div class="box-title">🔍 Trace It — Step by step</div>
+    <p>Fill in every value as you go:</p>
+    <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="num">2</span>
+<span class="var">x</span> = <span class="var">x</span> + <span class="num">3</span>
+<span class="var">x</span> = <span class="var">x</span> * <span class="num">2</span>
+<span class="fn">print</span>(<span class="var">x</span>)
+</div></div>
+    <table class="trace-table">
+      <tr><th>Line</th><th>Value of x</th></tr>
+      <tr><td>x = 2</td><td class="blank">?</td></tr>
+      <tr><td>x = x + 3</td><td class="blank">?</td></tr>
+      <tr><td>x = x * 2</td><td class="blank">?</td></tr>
+      <tr><td>print(x)</td><td class="blank">displays ?</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>Line</th><th>Value of x</th></tr>
+          <tr><td>x = 2</td><td>2</td></tr>
+          <tr><td>x = x + 3</td><td>5 (2 + 3)</td></tr>
+          <tr><td>x = x * 2</td><td>10 (5 × 2)</td></tr>
+          <tr><td>print(x)</td><td>displays: 10</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PART 4 — DATA TYPES
+════════════════════════════════════════════ -->
+<div class="section" id="part4">
+  <div class="part-badge">Part 4</div>
+  <div class="section-label">Types of Values</div>
+  <h2>Basic Data Types</h2>
+
+  <p>Not all values are the same kind of thing. The number <code>18</code> is different from the text <code>"18"</code>. Python keeps track of what <strong>type</strong> each value is, and that affects what you can do with it.</p>
+  <p>For now, you need to know four basic types:</p>
+
+  <table class="trace-table">
+    <tr><th>Type</th><th>What it stores</th><th>Example</th></tr>
+    <tr><td><code>int</code></td><td>Whole numbers (no decimal)</td><td>18, -5, 0, 1000</td></tr>
+    <tr><td><code>float</code></td><td>Numbers with a decimal point</td><td>5.0, 3.14, -0.5</td></tr>
+    <tr><td><code>str</code></td><td>Text (string of characters)</td><td>"hello", "LED", "72"</td></tr>
+    <tr><td><code>bool</code></td><td>True or False only</td><td>True, False</td></tr>
+  </table>
+
+  <h3>Examples in Python</h3>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">age</span>       = <span class="num">18</span>           <span class="cmt"># int — a whole number</span>
+<span class="var">voltage</span>   = <span class="num">5.0</span>          <span class="cmt"># float — has a decimal point</span>
+<span class="var">device</span>    = <span class="str">"LED"</span>        <span class="cmt"># str — text in quotes</span>
+<span class="var">power_on</span>  = <span class="kw">True</span>         <span class="cmt"># bool — True or False</span>
+</div>
+  </div>
+
+  <h3>Checking the type with type()</h3>
+  <p>Python gives you a tool called <code>type()</code> that tells you what type a value is:</p>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="num">18</span>))        <span class="cmt"># &lt;class 'int'&gt;</span>
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="num">5.0</span>))       <span class="cmt"># &lt;class 'float'&gt;</span>
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="str">"LED"</span>))    <span class="cmt"># &lt;class 'str'&gt;</span>
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="kw">True</span>))      <span class="cmt"># &lt;class 'bool'&gt;</span>
+</div>
+  </div>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Guess the Type — For each value, what type is it?</div>
+    <p>Work through these on your own first:</p>
+    <table class="trace-table">
+      <tr><th>Value</th><th>Type (int, float, str, or bool)?</th></tr>
+      <tr><td>42</td><td class="blank">?</td></tr>
+      <tr><td>3.14</td><td class="blank">?</td></tr>
+      <tr><td>"hello"</td><td class="blank">?</td></tr>
+      <tr><td>False</td><td class="blank">?</td></tr>
+      <tr><td>100</td><td class="blank">?</td></tr>
+      <tr><td>"100"</td><td class="blank">?</td></tr>
+      <tr><td>0.0</td><td class="blank">?</td></tr>
+      <tr><td>True</td><td class="blank">?</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>Value</th><th>Type</th></tr>
+          <tr><td>42</td><td>int</td></tr>
+          <tr><td>3.14</td><td>float</td></tr>
+          <tr><td>"hello"</td><td>str</td></tr>
+          <tr><td>False</td><td>bool</td></tr>
+          <tr><td>100</td><td>int</td></tr>
+          <tr><td>"100"</td><td>str — the quotes make it text, NOT a number</td></tr>
+          <tr><td>0.0</td><td>float — even though the decimal part is zero</td></tr>
+          <tr><td>True</td><td>bool</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <div class="box misconception">
+    <div class="box-title">⚠️ Common Misconception — "25" versus 25</div>
+    <p>Look at these two lines:</p>
+    <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="num">25</span>
+<span class="var">y</span> = <span class="str">"25"</span>
+</div></div>
+    <p>Are x and y the same thing?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>No — they are completely different.</strong></p>
+        <p><code>x = 25</code> stores the <em>number</em> 25 (an int). You can do math with it.</p>
+        <p><code>y = "25"</code> stores the <em>text</em> "25" (a str). It looks like a number, but Python treats it as text. You cannot do arithmetic with it.</p>
+        <p>Try this and see what happens:</p>
+        <div class="code-block"><div class="code-body">
+<span class="fn">print</span>(<span class="num">25</span> + <span class="num">10</span>)     <span class="cmt"># 35 — math works</span>
+<span class="fn">print</span>(<span class="str">"25"</span> + <span class="str">"10"</span>) <span class="cmt"># "2510" — strings are joined, not added!</span>
+</div></div>
+        <p>When Python sees <code>"25" + "10"</code>, it glues the two strings together: <strong>2510</strong>, not 35. This is a very common beginner mistake.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="box engineering">
+    <div class="box-title">🌎 Engineering Connection — Choosing the right type</div>
+    <p>Suppose you are writing a program to monitor an LED circuit. Which type would you use for each?</p>
+    <table class="trace-table">
+      <tr><th>What you're storing</th><th>Best type?</th></tr>
+      <tr><td>The number of LEDs in the circuit</td><td class="blank">?</td></tr>
+      <tr><td>The voltage across a resistor (e.g., 3.3)</td><td class="blank">?</td></tr>
+      <tr><td>The component name (e.g., "resistor")</td><td class="blank">?</td></tr>
+      <tr><td>Whether the LED is on or off</td><td class="blank">?</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>What</th><th>Type</th><th>Why</th></tr>
+          <tr><td>Number of LEDs</td><td>int</td><td>You can't have half an LED</td></tr>
+          <tr><td>Voltage 3.3</td><td>float</td><td>Has a decimal point</td></tr>
+          <tr><td>"resistor"</td><td>str</td><td>It's a word / label</td></tr>
+          <tr><td>LED on/off</td><td>bool</td><td>Exactly two states: True or False</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PART 5 — INPUT AND OUTPUT
+════════════════════════════════════════════ -->
+<div class="section" id="part5">
+  <div class="part-badge">Part 5</div>
+  <div class="section-label">Talking to the User</div>
+  <h2>Input and Output</h2>
+
+  <h3>Output: print()</h3>
+  <p>You've already used <code>print()</code>. It displays a value on the screen. Here are a few things to know:</p>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="fn">print</span>(<span class="str">"Hello!"</span>)               <span class="cmt"># prints text</span>
+<span class="fn">print</span>(<span class="num">42</span>)                   <span class="cmt"># prints a number</span>
+<span class="fn">print</span>(<span class="str">"Voltage:"</span>, <span class="num">3.3</span>)       <span class="cmt"># prints text and a number together</span>
+<span class="var">device</span> = <span class="str">"LED"</span>
+<span class="fn">print</span>(<span class="str">"Device:"</span>, <span class="var">device</span>)    <span class="cmt"># prints text and a variable</span>
+</div>
+  </div>
+
+  <h3>Input: input()</h3>
+  <p>So far our programs have had fixed values. But most useful programs ask the user for information. Python does this with <code>input()</code>.</p>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">name</span> = <span class="fn">input</span>(<span class="str">"What is your name? "</span>)
+<span class="fn">print</span>(<span class="str">"Hello,"</span>, <span class="var">name</span>)
+</div>
+  </div>
+
+  <p>When Python reaches <code>input()</code>, it pauses and waits for the user to type something and press Enter. Whatever the user typed is stored in the variable <code>name</code>.</p>
+  <p>The text inside the quotes — <code>"What is your name? "</code> — is the <strong>prompt</strong>: the message shown to the user asking them what to type.</p>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict — What will this display?</div>
+    <p>If the user types <code>Maria</code> when prompted, what will the program print?</p>
+    <div class="code-block"><div class="code-body">
+<span class="var">name</span> = <span class="fn">input</span>(<span class="str">"What is your name? "</span>)
+<span class="fn">print</span>(<span class="str">"Hello,"</span>, <span class="var">name</span>)
+</div></div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Hello, Maria</strong></p>
+        <p>Python stored "Maria" in the variable <code>name</code>, then printed "Hello," followed by the value in <code>name</code>.</p>
+      </div>
+    </details>
+  </div>
+
+  <h3>⚠️ Critical: input() always gives you text</h3>
+  <p>Here is one of the most common mistakes beginners make. Look at this code:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">age</span> = <span class="fn">input</span>(<span class="str">"Enter your age: "</span>)
+<span class="var">next_age</span> = <span class="var">age</span> + <span class="num">1</span>
+<span class="fn">print</span>(<span class="var">next_age</span>)
+</div>
+  </div>
+
+  <div class="box predict">
+    <div class="box-title">🤔 What do you think will happen?</div>
+    <p>If the user types <code>20</code>, will this print <code>21</code>?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>No — it will crash with an error:</strong></p>
+        <div class="code-block"><div class="code-body">
+<span class="err">TypeError: can only concatenate str (not "int") to str</span>
+</div></div>
+        <p><strong>Why?</strong> <code>input()</code> always returns a <strong>string</strong>, even if the user typed a number. So <code>age</code> contains the text <code>"20"</code>, not the number <code>20</code>. When Python tries to do <code>"20" + 1</code>, it sees a string + a number and doesn't know what to do.</p>
+      </div>
+    </details>
+  </div>
+
+  <h3>Converting input to a number</h3>
+  <p>To fix this, we convert the string to a number using <code>int()</code> or <code>float()</code>:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">age</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Enter your age: "</span>))   <span class="cmt"># convert to integer</span>
+<span class="var">next_age</span> = <span class="var">age</span> + <span class="num">1</span>
+<span class="fn">print</span>(<span class="str">"Next year you will be:"</span>, <span class="var">next_age</span>)
+</div>
+  </div>
+
+  <p>Now <code>int()</code> converts the text <code>"20"</code> into the number <code>20</code> before storing it in <code>age</code>. The math works.</p>
+  <p>Use <code>float()</code> when the user might enter a decimal number:</p>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">voltage</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter voltage: "</span>))   <span class="cmt"># works for 3.3, 5.0, etc.</span>
+</div>
+  </div>
+
+  <h3>Build-up: Growing a small program</h3>
+  <p>Let's build a temperature-checking program step by step. Each step adds one new idea.</p>
+
+  <div class="box tryit">
+    <div class="box-title">✏️ Step 1 — Store a temperature</div>
+    <p>Write one line that stores the value 98.6 in a variable called <code>temperature</code>.</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="var">temperature</span> = <span class="num">98.6</span>
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="box tryit">
+    <div class="box-title">✏️ Step 2 — Print the temperature</div>
+    <p>Add a print statement so the program displays: <code>Temperature: 98.6</code></p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="var">temperature</span> = <span class="num">98.6</span>
+<span class="fn">print</span>(<span class="str">"Temperature:"</span>, <span class="var">temperature</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="box tryit">
+    <div class="box-title">✏️ Step 3 — Ask the user for the temperature</div>
+    <p>Instead of storing 98.6 directly, ask the user to enter the temperature. Remember to convert the input to a float.</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="var">temperature</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter temperature: "</span>))
+<span class="fn">print</span>(<span class="str">"Temperature:"</span>, <span class="var">temperature</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PART 6 — EXPRESSIONS AND OPERATORS
+════════════════════════════════════════════ -->
+<div class="section" id="part6">
+  <div class="part-badge">Part 6</div>
+  <div class="section-label">Calculations</div>
+  <h2>Expressions and Operators</h2>
+
+  <p>Python can do arithmetic. The symbols used to perform calculations are called <strong>operators</strong>.</p>
+
+  <table class="trace-table">
+    <tr><th>Operator</th><th>What it does</th><th>Example</th><th>Result</th></tr>
+    <tr><td><code>+</code></td><td>Addition</td><td>5 + 3</td><td>8</td></tr>
+    <tr><td><code>-</code></td><td>Subtraction</td><td>10 - 4</td><td>6</td></tr>
+    <tr><td><code>*</code></td><td>Multiplication</td><td>3 * 4</td><td>12</td></tr>
+    <tr><td><code>/</code></td><td>Division (always gives float)</td><td>10 / 4</td><td>2.5</td></tr>
+    <tr><td><code>//</code></td><td>Integer division (drops decimal)</td><td>10 // 4</td><td>2</td></tr>
+    <tr><td><code>%</code></td><td>Remainder (modulo)</td><td>10 % 3</td><td>1</td></tr>
+    <tr><td><code>**</code></td><td>Power / exponent</td><td>2 ** 8</td><td>256</td></tr>
+  </table>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict the Result</div>
+    <p>Work out each result without running the code:</p>
+    <table class="trace-table">
+      <tr><th>Expression</th><th>Result</th></tr>
+      <tr><td>7 + 3</td><td class="blank">?</td></tr>
+      <tr><td>15 - 8</td><td class="blank">?</td></tr>
+      <tr><td>6 * 7</td><td class="blank">?</td></tr>
+      <tr><td>9 / 2</td><td class="blank">?</td></tr>
+      <tr><td>9 // 2</td><td class="blank">?</td></tr>
+      <tr><td>9 % 2</td><td class="blank">?</td></tr>
+      <tr><td>2 ** 4</td><td class="blank">?</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>Expression</th><th>Result</th></tr>
+          <tr><td>7 + 3</td><td>10</td></tr>
+          <tr><td>15 - 8</td><td>7</td></tr>
+          <tr><td>6 * 7</td><td>42</td></tr>
+          <tr><td>9 / 2</td><td>4.5 (always gives a float)</td></tr>
+          <tr><td>9 // 2</td><td>4 (drops the .5)</td></tr>
+          <tr><td>9 % 2</td><td>1 (9 = 4×2 + 1, remainder is 1)</td></tr>
+          <tr><td>2 ** 4</td><td>16 (2×2×2×2)</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <h3>Engineering calculations</h3>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="cmt"># Temperature conversion: Celsius to Fahrenheit</span>
+<span class="var">celsius</span>    = <span class="num">25</span>
+<span class="var">fahrenheit</span> = (<span class="var">celsius</span> * <span class="num">9</span> / <span class="num">5</span>) + <span class="num">32</span>
+<span class="fn">print</span>(<span class="str">"Fahrenheit:"</span>, <span class="var">fahrenheit</span>)
+
+<span class="cmt"># Averaging three sensor readings</span>
+<span class="var">reading1</span> = <span class="num">72.1</span>
+<span class="var">reading2</span> = <span class="num">71.8</span>
+<span class="var">reading3</span> = <span class="num">72.5</span>
+<span class="var">average</span>  = (<span class="var">reading1</span> + <span class="var">reading2</span> + <span class="var">reading3</span>) / <span class="num">3</span>
+<span class="fn">print</span>(<span class="str">"Average temperature:"</span>, <span class="var">average</span>)
+</div>
+  </div>
+
+  <div class="box engineering">
+    <div class="box-title">🌎 Engineering Connection — Component cost calculator</div>
+    <p>Write a program that:</p>
+    <ul>
+      <li>Asks the user for a price per component</li>
+      <li>Asks the user for a quantity</li>
+      <li>Calculates and displays the total cost</li>
+    </ul>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="var">price</span>    = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Price per component: $"</span>))
+<span class="var">quantity</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Quantity: "</span>))
+<span class="var">total</span>    = <span class="var">price</span> * <span class="var">quantity</span>
+<span class="fn">print</span>(<span class="str">"Total cost: $"</span>, <span class="var">total</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="box modify">
+    <div class="box-title">🔧 Modify It</div>
+    <p>The program below calculates distance using speed × time. Modify it to also print how long the trip takes if the speed was doubled.</p>
+    <div class="code-block"><div class="code-body">
+<span class="var">speed</span>    = <span class="num">60</span>   <span class="cmt"># mph</span>
+<span class="var">time</span>     = <span class="num">2.5</span>  <span class="cmt"># hours</span>
+<span class="var">distance</span> = <span class="var">speed</span> * <span class="var">time</span>
+<span class="fn">print</span>(<span class="str">"Distance:"</span>, <span class="var">distance</span>, <span class="str">"miles"</span>)
+</div></div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="var">speed</span>        = <span class="num">60</span>
+<span class="var">time</span>         = <span class="num">2.5</span>
+<span class="var">distance</span>     = <span class="var">speed</span> * <span class="var">time</span>
+<span class="fn">print</span>(<span class="str">"Distance:"</span>, <span class="var">distance</span>, <span class="str">"miles"</span>)
+
+<span class="var">double_speed</span> = <span class="var">speed</span> * <span class="num">2</span>
+<span class="var">faster_time</span>  = <span class="var">distance</span> / <span class="var">double_speed</span>
+<span class="fn">print</span>(<span class="str">"Time at double speed:"</span>, <span class="var">faster_time</span>, <span class="str">"hours"</span>)
+</div></div>
+        <p>Distance stays 150 miles. At 120 mph, it takes 1.25 hours.</p>
+      </div>
+    </details>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PART 7 — DECISIONS WITH IF
+════════════════════════════════════════════ -->
+<div class="section" id="part7">
+  <div class="part-badge">Part 7</div>
+  <div class="section-label">Making Choices</div>
+  <h2>Decisions with if</h2>
+
+  <h3>Why do programs need decisions?</h3>
+  <p>So far, our programs run every line from top to bottom without any choices. But most real programs need to respond differently depending on the situation:</p>
+  <ul>
+    <li>If the temperature is above 100°F, trigger a warning.</li>
+    <li>If the battery is below 20%, display "Low battery."</li>
+    <li>If the user enters the correct password, let them in.</li>
+  </ul>
+  <p>In Python, we use the <strong>if statement</strong> to make decisions.</p>
+
+  <h3>Comparison operators</h3>
+  <p>To make a decision, we need to compare values. Python uses these comparison operators:</p>
+  <table class="trace-table">
+    <tr><th>Operator</th><th>Meaning</th><th>Example</th></tr>
+    <tr><td><code>==</code></td><td>Equal to</td><td>x == 5</td></tr>
+    <tr><td><code>!=</code></td><td>Not equal to</td><td>x != 5</td></tr>
+    <tr><td><code>&gt;</code></td><td>Greater than</td><td>x &gt; 5</td></tr>
+    <tr><td><code>&lt;</code></td><td>Less than</td><td>x &lt; 5</td></tr>
+    <tr><td><code>&gt;=</code></td><td>Greater than or equal to</td><td>x &gt;= 5</td></tr>
+    <tr><td><code>&lt;=</code></td><td>Less than or equal to</td><td>x &lt;= 5</td></tr>
+  </table>
+
+  <div class="box misconception">
+    <div class="box-title">⚠️ = versus == — The most common beginner mistake</div>
+    <p><code>=</code> means <strong>assignment</strong> — store a value in a variable.</p>
+    <p><code>==</code> means <strong>comparison</strong> — ask "are these two things equal?"</p>
+    <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="num">5</span>         <span class="cmt"># stores 5 in x (assignment)</span>
+<span class="var">x</span> == <span class="num">5</span>        <span class="cmt"># asks "is x equal to 5?" (comparison — True)</span>
+</div></div>
+    <p>Using <code>=</code> inside an if condition is a very common error that produces confusing results.</p>
+  </div>
+
+  <h3>The if statement</h3>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">temperature</span> = <span class="num">85</span>
+
+<span class="kw">if</span> <span class="var">temperature</span> > <span class="num">80</span>:
+    <span class="fn">print</span>(<span class="str">"Warning: temperature is high!"</span>)
+</div>
+  </div>
+
+  <p>Notice the structure:</p>
+  <ul>
+    <li><code>if</code> — the keyword that starts a decision</li>
+    <li><code>temperature &gt; 80</code> — the condition (a question that's either True or False)</li>
+    <li><code>:</code> — the colon is required at the end of the if line</li>
+    <li>The indented line — Python only runs this if the condition is True. The 4 spaces of indentation are required.</li>
+  </ul>
+
+  <div class="flow">        temperature > 80?
+           /          \
+         Yes            No
+          |              |
+    Print warning    (do nothing)</div>
+
+  <h3>if / else</h3>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">temperature</span> = <span class="num">72</span>
+
+<span class="kw">if</span> <span class="var">temperature</span> > <span class="num">80</span>:
+    <span class="fn">print</span>(<span class="str">"Warning: temperature is high!"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Temperature is normal."</span>)
+</div>
+  </div>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict — What does this display?</div>
+    <p>The temperature is 72. Will the program print the warning or "Temperature is normal."?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Temperature is normal.</strong></p>
+        <p>72 is NOT greater than 80, so the condition is False. Python skips the if block and runs the else block instead.</p>
+      </div>
+    </details>
+  </div>
+
+  <h3>if / elif / else — Multiple options</h3>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">battery</span> = <span class="num">15</span>
+
+<span class="kw">if</span> <span class="var">battery</span> > <span class="num">80</span>:
+    <span class="fn">print</span>(<span class="str">"Battery is full."</span>)
+<span class="kw">elif</span> <span class="var">battery</span> > <span class="num">20</span>:
+    <span class="fn">print</span>(<span class="str">"Battery is OK."</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Low battery — charge now!"</span>)
+</div>
+  </div>
+
+  <p><code>elif</code> is short for "else if." Python checks each condition in order and runs the first one that is True. If none are True, it runs <code>else</code>.</p>
+
+  <div class="box trace">
+    <div class="box-title">🔍 Trace It — Follow the logic</div>
+    <p>What does the battery program print if battery = 50? If battery = 95?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>battery = 50:</strong></p>
+        <ul>
+          <li>Is 50 &gt; 80? No → skip</li>
+          <li>Is 50 &gt; 20? Yes → print "Battery is OK."</li>
+        </ul>
+        <p><strong>battery = 95:</strong></p>
+        <ul>
+          <li>Is 95 &gt; 80? Yes → print "Battery is full." → stop (don't check the rest)</li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <div class="box tryit">
+    <div class="box-title">✏️ Build-up Step 4 — Add a safety check to our temperature program</div>
+    <p>Continue from Step 3 (where the user enters a temperature). Add an if/else that prints "Safe" if temperature &lt;= 100, or "Danger: Overheating!" if it exceeds 100.</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="var">temperature</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter temperature: "</span>))
+<span class="fn">print</span>(<span class="str">"Temperature:"</span>, <span class="var">temperature</span>)
+
+<span class="kw">if</span> <span class="var">temperature</span> > <span class="num">100</span>:
+    <span class="fn">print</span>(<span class="str">"Danger: Overheating!"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Safe."</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="box debug">
+    <div class="box-title">🐛 Debug It — Find the bug</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">speed</span> = <span class="num">75</span>
+<span class="kw">if</span> <span class="var">speed</span> = <span class="num">70</span>
+    <span class="fn">print</span>(<span class="str">"Speed limit exceeded!"</span>)
+</div></div>
+    <p>There are two bugs in this code. Can you spot them?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Bug 1:</strong> <code>speed = 70</code> uses a single <code>=</code> (assignment) instead of <code>==</code> (comparison). Inside an if condition, you need <code>==</code>.</p>
+        <p><strong>Bug 2:</strong> The if line is missing the colon <code>:</code> at the end.</p>
+        <p><strong>Fixed:</strong></p>
+        <div class="code-block"><div class="code-body">
+<span class="var">speed</span> = <span class="num">75</span>
+<span class="kw">if</span> <span class="var">speed</span> > <span class="num">70</span>:
+    <span class="fn">print</span>(<span class="str">"Speed limit exceeded!"</span>)
+</div></div>
+        <p>Note: the original condition <code>speed = 70</code> was also the wrong logic — we want "greater than 70", not "equal to 70."</p>
+      </div>
+    </details>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PART 8 — LOOPS
+════════════════════════════════════════════ -->
+<div class="section" id="part8">
+  <div class="part-badge">Part 8</div>
+  <div class="section-label">Repetition</div>
+  <h2>Repetition and Loops</h2>
+
+  <h3>The problem: doing something many times</h3>
+  <p>What if you needed to print "Checking sensor..." 100 times? You could write 100 print statements, but that's absurd. And what if it needed to be 1,000 times? Or the number came from user input?</p>
+  <p>Programs need a way to <strong>repeat</strong> instructions. That's exactly what a <strong>loop</strong> does.</p>
+
+  <h3>The for loop</h3>
+  <p>The <code>for</code> loop tells Python: "Do this a set number of times."</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+    <span class="fn">print</span>(<span class="var">i</span>)
+</div>
+  </div>
+
+  <p>Let's break down every part:</p>
+  <ul>
+    <li><code>for</code> — the keyword that starts the loop</li>
+    <li><code>i</code> — the <strong>loop variable</strong>. Python automatically changes this value each time through the loop. You can name it anything, but <code>i</code> is a common choice.</li>
+    <li><code>in</code> — connects the variable to the sequence of values</li>
+    <li><code>range(5)</code> — generates the numbers 0, 1, 2, 3, 4. It gives you 5 values starting from zero.</li>
+    <li><code>:</code> — the required colon at the end of the for line</li>
+    <li>The indented line — this runs once for each value in range(5)</li>
+  </ul>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict — What does this print?</div>
+    <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+    <span class="fn">print</span>(<span class="var">i</span>)
+</div></div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p>It prints:</p>
+        <div class="code-block"><div class="code-body">
+<span class="out">0</span>
+<span class="out">1</span>
+<span class="out">2</span>
+<span class="out">3</span>
+<span class="out">4</span>
+</div></div>
+        <p>range(5) gives 0, 1, 2, 3, 4 — <strong>five numbers starting from 0</strong>, not 1 through 5. This surprises many beginners.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="box misconception">
+    <div class="box-title">⚠️ Common Misconception — range(5) is NOT 1 to 5</div>
+    <p><code>range(5)</code> produces: <strong>0, 1, 2, 3, 4</strong> — it starts at 0 and gives you 5 values.</p>
+    <p>If you want 1 through 5, use <code>range(1, 6)</code>.</p>
+    <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">6</span>):   <span class="cmt"># 1, 2, 3, 4, 5</span>
+    <span class="fn">print</span>(<span class="var">i</span>)
+</div></div>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>Example 1 — Counting up with a for loop</h3>
+  <p>The simplest for loop just counts through a sequence of numbers. Here we print a greeting 5 times:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+    <span class="fn">print</span>(<span class="str">"Hello! This is message number"</span>, <span class="var">i</span>)
+</div>
+  </div>
+
+  <div class="box trace">
+    <div class="box-title">🔍 Trace It — What prints each time?</div>
+    <p>Fill in the table before checking:</p>
+    <table class="trace-table">
+      <tr><th>Iteration</th><th>Value of i</th><th>Output line</th></tr>
+      <tr><td>1st</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>2nd</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>3rd</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>4th</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>5th</td><td class="blank">?</td><td class="blank">?</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>Iteration</th><th>Value of i</th><th>Output line</th></tr>
+          <tr><td>1st</td><td>0</td><td>Hello! This is message number 0</td></tr>
+          <tr><td>2nd</td><td>1</td><td>Hello! This is message number 1</td></tr>
+          <tr><td>3rd</td><td>2</td><td>Hello! This is message number 2</td></tr>
+          <tr><td>4th</td><td>3</td><td>Hello! This is message number 3</td></tr>
+          <tr><td>5th</td><td>4</td><td>Hello! This is message number 4</td></tr>
+        </table>
+        <p>Notice: the loop runs 5 times but <code>i</code> goes from <strong>0 to 4</strong>, not 1 to 5.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>Example 2 — Printing a times table</h3>
+  <p>Loops are great for repeating a calculation with different numbers. Here we print the 3 times table:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">11</span>):
+    <span class="fn">print</span>(<span class="num">3</span>, <span class="str">"x"</span>, <span class="var">i</span>, <span class="str">"="</span>, <span class="num">3</span> * <span class="var">i</span>)
+</div>
+  </div>
+
+  <p>Notice we use <code>range(1, 11)</code> to get numbers from 1 to 10 — because we want a proper times table starting at 1, not 0.</p>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict — What are the first 3 lines of output?</div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="out">3 x 1 = 3</span>
+<span class="out">3 x 2 = 6</span>
+<span class="out">3 x 3 = 9</span>
+<span class="cmt"># ... continues to 3 x 10 = 30</span>
+</div></div>
+        <p>The loop starts at 1 (because we wrote <code>range(1, 11)</code>) and goes up to 10. Each time, Python calculates 3 × i and prints the result.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="box modify">
+    <div class="box-title">🔧 Modify It — Change the times table</div>
+    <p>Modify the program so it prints the <strong>5 times table</strong> from 1 to 12.</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">13</span>):
+    <span class="fn">print</span>(<span class="num">5</span>, <span class="str">"x"</span>, <span class="var">i</span>, <span class="str">"="</span>, <span class="num">5</span> * <span class="var">i</span>)
+</div></div>
+        <p>Two changes: the multiplier changes from 3 to 5, and the range upper limit changes from 11 to 13 (so it includes 12).</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>Example 3 — Accumulating a total</h3>
+  <p>One of the most common loop patterns is adding up a running total. Notice how <code>total</code> starts at 0 and grows with each iteration:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">total</span> = <span class="num">0</span>   <span class="cmt"># start at zero before the loop</span>
+
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">6</span>):
+    <span class="var">total</span> = <span class="var">total</span> + <span class="var">i</span>
+    <span class="fn">print</span>(<span class="str">"After adding"</span>, <span class="var">i</span>, <span class="str">", total ="</span>, <span class="var">total</span>)
+
+<span class="fn">print</span>(<span class="str">"Final total:"</span>, <span class="var">total</span>)
+</div>
+  </div>
+
+  <div class="box trace">
+    <div class="box-title">🔍 Trace It — Track total through every iteration</div>
+    <table class="trace-table">
+      <tr><th>i</th><th>total = total + i</th><th>total after</th></tr>
+      <tr><td>1</td><td class="blank">0 + 1 = ?</td><td class="blank">?</td></tr>
+      <tr><td>2</td><td class="blank">? + 2 = ?</td><td class="blank">?</td></tr>
+      <tr><td>3</td><td class="blank">? + 3 = ?</td><td class="blank">?</td></tr>
+      <tr><td>4</td><td class="blank">? + 4 = ?</td><td class="blank">?</td></tr>
+      <tr><td>5</td><td class="blank">? + 5 = ?</td><td class="blank">?</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>i</th><th>total = total + i</th><th>total after</th></tr>
+          <tr><td>1</td><td>0 + 1 = 1</td><td>1</td></tr>
+          <tr><td>2</td><td>1 + 2 = 3</td><td>3</td></tr>
+          <tr><td>3</td><td>3 + 3 = 6</td><td>6</td></tr>
+          <tr><td>4</td><td>6 + 4 = 10</td><td>10</td></tr>
+          <tr><td>5</td><td>10 + 5 = 15</td><td>15</td></tr>
+        </table>
+        <p>Final total = 15. This is 1 + 2 + 3 + 4 + 5. The key pattern: always set <code>total = 0</code> BEFORE the loop, then add to it inside.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>Example 4 — Collecting sensor readings and averaging them</h3>
+  <p>Now let's apply the accumulation pattern to a real engineering scenario — collecting temperature readings and finding the average:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">total</span> = <span class="num">0</span>   <span class="cmt"># running total starts at zero</span>
+
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+    <span class="var">reading</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter temperature reading: "</span>))
+    <span class="var">total</span> = <span class="var">total</span> + <span class="var">reading</span>   <span class="cmt"># add this reading to the total</span>
+
+<span class="var">average</span> = <span class="var">total</span> / <span class="num">5</span>
+<span class="fn">print</span>(<span class="str">"Average temperature:"</span>, <span class="var">average</span>)
+</div>
+  </div>
+
+  <p>The loop asks for a reading 5 times. Each reading gets added to <code>total</code>. After the loop finishes, we divide the total by 5 to get the average. The average calculation happens <strong>outside the loop</strong> — we only need it once, after all readings are collected.</p>
+
+  <!-- ─────────────────────────────── -->
+  <h3>Example 5 — Loop with an if inside</h3>
+  <p>Loops and if statements work very well together. Here we check each temperature reading as it comes in:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">3</span>):
+    <span class="var">temperature</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter temperature: "</span>))
+
+    <span class="kw">if</span> <span class="var">temperature</span> > <span class="num">100</span>:
+        <span class="fn">print</span>(<span class="str">"⚠ Danger: Overheating!"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"✓ Safe."</span>)
+</div>
+  </div>
+
+  <p>The indentation is important here. The <code>if</code> statement and the <code>else</code> statement are both indented inside the <code>for</code> loop — so they run once for <strong>every</strong> reading. After 3 readings, the loop stops.</p>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict — What prints if the user enters: 95, 107, 88?</div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="out">✓ Safe.</span>
+<span class="out">⚠ Danger: Overheating!</span>
+<span class="out">✓ Safe.</span>
+</div></div>
+        <p>95 is not above 100 → Safe. 107 is above 100 → Danger. 88 is not above 100 → Safe. The if check runs separately for each reading.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>Example 6 — Counting how many readings are dangerous</h3>
+  <p>We can add a counter variable to keep track of how many readings triggered the warning:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">danger_count</span> = <span class="num">0</span>   <span class="cmt"># counts how many readings are dangerous</span>
+
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+    <span class="var">temperature</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter temperature: "</span>))
+
+    <span class="kw">if</span> <span class="var">temperature</span> > <span class="num">100</span>:
+        <span class="fn">print</span>(<span class="str">"⚠ Danger!"</span>)
+        <span class="var">danger_count</span> = <span class="var">danger_count</span> + <span class="num">1</span>   <span class="cmt"># add 1 to the danger counter</span>
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"✓ Safe."</span>)
+
+<span class="fn">print</span>(<span class="str">"Total dangerous readings:"</span>, <span class="var">danger_count</span>)
+</div>
+  </div>
+
+  <div class="box trace">
+    <div class="box-title">🔍 Trace It — Readings: 95, 110, 88, 102, 97</div>
+    <table class="trace-table">
+      <tr><th>i</th><th>temperature</th><th>danger?</th><th>danger_count after</th></tr>
+      <tr><td>0</td><td>95</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>1</td><td>110</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>2</td><td>88</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>3</td><td>102</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>4</td><td>97</td><td class="blank">?</td><td class="blank">?</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>i</th><th>temperature</th><th>danger?</th><th>danger_count after</th></tr>
+          <tr><td>0</td><td>95</td><td>No</td><td>0</td></tr>
+          <tr><td>1</td><td>110</td><td>Yes</td><td>1</td></tr>
+          <tr><td>2</td><td>88</td><td>No</td><td>1</td></tr>
+          <tr><td>3</td><td>102</td><td>Yes</td><td>2</td></tr>
+          <tr><td>4</td><td>97</td><td>No</td><td>2</td></tr>
+        </table>
+        <p>Final output: <strong>Total dangerous readings: 2</strong></p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>The while loop</h3>
+  <p>The <code>for</code> loop is perfect when you know exactly how many times to repeat. But sometimes you don't know in advance — you want to keep going <strong>until something changes</strong>. That's when you use a <code>while</code> loop.</p>
+  <p>A <code>while</code> loop keeps running <strong>as long as a condition is True</strong>. The moment the condition becomes False, the loop stops.</p>
+
+  <!-- ─────────────────────────────── -->
+  <h3>while Example 1 — Counting with a while loop</h3>
+  <p>Let's look at the simplest while loop — counting from 1 to 5:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">count</span> = <span class="num">1</span>   <span class="cmt"># start at 1</span>
+
+<span class="kw">while</span> <span class="var">count</span> <= <span class="num">5</span>:
+    <span class="fn">print</span>(<span class="str">"Count is:"</span>, <span class="var">count</span>)
+    <span class="var">count</span> = <span class="var">count</span> + <span class="num">1</span>   <span class="cmt"># MUST increase count or loop never stops</span>
+
+<span class="fn">print</span>(<span class="str">"Done!"</span>)
+</div>
+  </div>
+
+  <p>Here is how Python reads this:</p>
+  <ol>
+    <li>Is count (1) ≤ 5? Yes → run the indented code, count becomes 2</li>
+    <li>Is count (2) ≤ 5? Yes → run the indented code, count becomes 3</li>
+    <li>Is count (3) ≤ 5? Yes → run the indented code, count becomes 4</li>
+    <li>Is count (4) ≤ 5? Yes → run the indented code, count becomes 5</li>
+    <li>Is count (5) ≤ 5? Yes → run the indented code, count becomes 6</li>
+    <li>Is count (6) ≤ 5? <strong>No</strong> → loop ends, print "Done!"</li>
+  </ol>
+
+  <div class="box trace">
+    <div class="box-title">🔍 Trace It — Fill in the output</div>
+    <table class="trace-table">
+      <tr><th>count at start of check</th><th>count &lt;= 5?</th><th>Output</th><th>count after</th></tr>
+      <tr><td>1</td><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>2</td><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>3</td><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>4</td><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>5</td><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td>6</td><td class="blank">?</td><td class="blank">loop ends</td><td>—</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>count</th><th>count &lt;= 5?</th><th>Output</th><th>count after</th></tr>
+          <tr><td>1</td><td>True</td><td>Count is: 1</td><td>2</td></tr>
+          <tr><td>2</td><td>True</td><td>Count is: 2</td><td>3</td></tr>
+          <tr><td>3</td><td>True</td><td>Count is: 3</td><td>4</td></tr>
+          <tr><td>4</td><td>True</td><td>Count is: 4</td><td>5</td></tr>
+          <tr><td>5</td><td>True</td><td>Count is: 5</td><td>6</td></tr>
+          <tr><td>6</td><td>False</td><td>loop ends → "Done!"</td><td>—</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>while Example 2 — Countdown</h3>
+  <p>A while loop can also count downward. We just subtract instead of add:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">countdown</span> = <span class="num">5</span>
+
+<span class="kw">while</span> <span class="var">countdown</span> > <span class="num">0</span>:
+    <span class="fn">print</span>(<span class="var">countdown</span>)
+    <span class="var">countdown</span> = <span class="var">countdown</span> - <span class="num">1</span>   <span class="cmt"># subtract 1 each time</span>
+
+<span class="fn">print</span>(<span class="str">"Blast off! 🚀"</span>)
+</div>
+  </div>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict — What is the full output?</div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="out">5</span>
+<span class="out">4</span>
+<span class="out">3</span>
+<span class="out">2</span>
+<span class="out">1</span>
+<span class="out">Blast off! 🚀</span>
+</div></div>
+        <p>The loop starts at 5 and subtracts 1 each time. When countdown reaches 0, the condition <code>countdown &gt; 0</code> is False, the loop stops, and "Blast off!" prints.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>while Example 3 — Repeat until the user enters a valid answer</h3>
+  <p>This is one of the most useful patterns: keep asking the user for input until they give a valid answer. A <code>for</code> loop can't do this easily, because we don't know in advance how many tries the user will need.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">password</span> = <span class="str">""</span>   <span class="cmt"># start with empty string</span>
+
+<span class="kw">while</span> <span class="var">password</span> != <span class="str">"open123"</span>:
+    <span class="var">password</span> = <span class="fn">input</span>(<span class="str">"Enter password: "</span>)
+
+<span class="fn">print</span>(<span class="str">"Access granted!"</span>)
+</div>
+  </div>
+
+  <p>The loop keeps asking for the password as long as it doesn't match <code>"open123"</code>. The moment the user types the correct password, the condition <code>password != "open123"</code> becomes False, and the loop stops.</p>
+
+  <div class="box check">
+    <div class="box-title">✅ Check Your Understanding</div>
+    <p>In the password example above — what happens if the user types the correct password on the very first try? Does the loop run at all?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p>Yes, the loop runs once. Python checks the condition <em>before</em> each iteration. The first time, <code>password</code> is an empty string <code>""</code>, so the condition <code>password != "open123"</code> is True. The loop runs, the user types the correct password, then Python checks the condition again — now it's False — and the loop stops.</p>
+        <p>So even with a correct first answer, the loop body executes exactly once.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>while Example 4 — Battery draining simulation</h3>
+  <p>Here's a real engineering scenario: simulate a battery draining until it hits a low-power threshold.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">battery</span> = <span class="num">100</span>   <span class="cmt"># start fully charged</span>
+
+<span class="kw">while</span> <span class="var">battery</span> > <span class="num">20</span>:
+    <span class="fn">print</span>(<span class="str">"Battery level:"</span>, <span class="var">battery</span>, <span class="str">"%"</span>)
+    <span class="var">battery</span> = <span class="var">battery</span> - <span class="num">15</span>   <span class="cmt"># discharge 15% per cycle</span>
+
+<span class="fn">print</span>(<span class="str">"Low battery warning! Level:"</span>, <span class="var">battery</span>, <span class="str">"%"</span>)
+</div>
+  </div>
+
+  <div class="box trace">
+    <div class="box-title">🔍 Trace It — How many cycles run?</div>
+    <table class="trace-table">
+      <tr><th>battery at check</th><th>battery &gt; 20?</th><th>Output</th><th>battery after -15</th></tr>
+      <tr><td>100</td><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td><td class="blank">?</td></tr>
+      <tr><td class="blank">?</td><td class="blank">?</td><td>loop ends</td><td>—</td></tr>
+    </table>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <table class="trace-table">
+          <tr><th>battery</th><th>battery &gt; 20?</th><th>Output</th><th>after -15</th></tr>
+          <tr><td>100</td><td>True</td><td>Battery level: 100 %</td><td>85</td></tr>
+          <tr><td>85</td><td>True</td><td>Battery level: 85 %</td><td>70</td></tr>
+          <tr><td>70</td><td>True</td><td>Battery level: 70 %</td><td>55</td></tr>
+          <tr><td>55</td><td>True</td><td>Battery level: 55 %</td><td>40</td></tr>
+          <tr><td>40</td><td>True</td><td>Battery level: 40 %</td><td>25</td></tr>
+          <tr><td>25</td><td>True</td><td>Battery level: 25 %</td><td>10</td></tr>
+          <tr><td>10</td><td>False</td><td>Low battery warning! Level: 10 %</td><td>—</td></tr>
+        </table>
+        <p>The loop runs 6 times, then exits when battery drops to 10 — which is not greater than 20.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>⚠️ Infinite loops — what goes wrong</h3>
+  <p>A while loop must eventually make its condition False — otherwise it runs forever. This is called an <strong>infinite loop</strong> and it's one of the most common beginner mistakes.</p>
+
+  <div class="box debug">
+    <div class="box-title">🐛 What goes wrong here?</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">count</span> = <span class="num">1</span>
+<span class="kw">while</span> <span class="var">count</span> <= <span class="num">5</span>:
+    <span class="fn">print</span>(<span class="str">"Count is:"</span>, <span class="var">count</span>)
+<span class="cmt"># count = count + 1 is missing!</span>
+</div></div>
+    <p>What happens? How do you fix it?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Infinite loop.</strong> <code>count</code> starts at 1 and never changes. The condition <code>count &lt;= 5</code> is always True. Python prints "Count is: 1" forever until you force-quit the program (press Ctrl+C).</p>
+        <p><strong>Rule:</strong> always make sure something inside the loop changes the variable that the condition checks. Without that, the condition can never become False.</p>
+        <p><strong>Fix:</strong></p>
+        <div class="code-block"><div class="code-body">
+<span class="var">count</span> = <span class="num">1</span>
+<span class="kw">while</span> <span class="var">count</span> <= <span class="num">5</span>:
+    <span class="fn">print</span>(<span class="str">"Count is:"</span>, <span class="var">count</span>)
+    <span class="var">count</span> = <span class="var">count</span> + <span class="num">1</span>   <span class="cmt"># this line makes the condition eventually False</span>
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ─────────────────────────────── -->
+  <h3>for vs while — when to use which</h3>
+  <table class="trace-table">
+    <tr><th>Use <code>for</code> when…</th><th>Use <code>while</code> when…</th></tr>
+    <tr><td>You know exactly how many times to repeat</td><td>You don't know how many times you'll need</td></tr>
+    <tr><td>Counting through a range of numbers</td><td>Repeating until a condition changes</td></tr>
+    <tr><td>Processing a fixed number of items</td><td>Waiting for user input to match a value</td></tr>
+    <tr><td>Example: "check 5 readings"</td><td>Example: "keep asking until correct password"</td></tr>
+  </table>
+
+  <div class="box tryit">
+    <div class="box-title">✏️ Build-up Step 5 — Write your own loop</div>
+    <p>Write a <code>for</code> loop that asks the user for 4 numbers and prints whether each one is positive (greater than 0) or not.</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">4</span>):
+    <span class="var">number</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter a number: "</span>))
+
+    <span class="kw">if</span> <span class="var">number</span> > <span class="num">0</span>:
+        <span class="fn">print</span>(<span class="var">number</span>, <span class="str">"is positive"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="var">number</span>, <span class="str">"is not positive"</span>)
+</div></div>
+        <p>The loop runs 4 times. Each time it asks for a number, converts it to a float, then uses an if/else to print the result.</p>
+      </div>
+    </details>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+
+<!-- ════════════════════════════════════════════
+     PART 9 — DEBUGGING
+════════════════════════════════════════════ -->
+<div class="section" id="part9">
+  <div class="part-badge">Part 9</div>
+  <div class="section-label">Finding and Fixing Errors</div>
+  <h2>Debugging</h2>
+
+  <h3>Errors are normal</h3>
+  <p>Every programmer — beginner and expert — writes buggy code. Errors are not a sign of failure; they are a normal part of the process. The skill you need to develop is not "write perfect code," it's "find and fix problems quickly."</p>
+  <p>This skill is called <strong>debugging</strong>.</p>
+
+  <h3>Three types of errors</h3>
+
+  <h4>1. Syntax Errors — "Python can't read this"</h4>
+  <p>Python cannot understand the code because it violates the rules of the language. Like a grammatical error in English — if you write a sentence that is completely garbled, the reader gives up.</p>
+  <div class="code-block"><div class="code-body">
+<span class="fn">print</span>(<span class="str">"Hello"</span>   <span class="cmt"># SyntaxError: missing closing parenthesis</span>
+</div></div>
+
+  <h4>2. Runtime Errors — "Something went wrong while running"</h4>
+  <p>The code looks correct, but something goes wrong while it is running. Python crashes and shows an error message.</p>
+  <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="fn">int</span>(<span class="str">"hello"</span>)   <span class="cmt"># ValueError: can't convert "hello" to an integer</span>
+</div></div>
+
+  <h4>3. Logic Errors — "The program runs but gives the wrong answer"</h4>
+  <p>The most sneaky type. Python runs the code without crashing, but the result is wrong because the logic is flawed.</p>
+  <div class="code-block"><div class="code-body">
+<span class="cmt"># Trying to calculate the average of 3 numbers</span>
+<span class="var">total</span>   = <span class="num">10</span> + <span class="num">20</span> + <span class="num">30</span>
+<span class="var">average</span> = <span class="var">total</span> / <span class="num">2</span>   <span class="cmt"># Bug: should divide by 3, not 2</span>
+<span class="fn">print</span>(<span class="var">average</span>)         <span class="cmt"># prints 30.0 instead of correct 20.0</span>
+</div></div>
+
+  <h3>The debugging strategy</h3>
+  <div class="callout">
+    <strong>Read → Predict → Run → Read the error message → Locate → Fix → Test again</strong>
+    <br>Never just randomly change things hoping the error goes away. Read the error message carefully — Python usually tells you exactly which line has a problem.
+  </div>
+
+  <h3>🔬 Debugging Lab — 8 broken programs</h3>
+  <p>For each program below: identify the bug, fix it, and explain why your fix works. Attempt each one before checking the solution.</p>
+
+  <!-- Bug 1 -->
+  <div class="box debug">
+    <div class="box-title">🐛 Bug 1 — Missing quotes</div>
+    <div class="code-block"><div class="code-body">
+<span class="fn">print</span>(Hello, world!)
+</div></div>
+    <p>What type of error is this? What is wrong?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Syntax Error.</strong> The text "Hello, world!" is missing quotation marks. Without quotes, Python thinks you are using variable names, which don't exist.</p>
+        <p><strong>Fixed:</strong></p>
+        <div class="code-block"><div class="code-body">
+<span class="fn">print</span>(<span class="str">"Hello, world!"</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Bug 2 -->
+  <div class="box debug">
+    <div class="box-title">🐛 Bug 2 — Missing colon</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="num">10</span>
+<span class="kw">if</span> <span class="var">x</span> > <span class="num">5</span>
+    <span class="fn">print</span>(<span class="str">"x is big"</span>)
+</div></div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Syntax Error.</strong> The <code>if</code> line is missing the required colon <code>:</code> at the end.</p>
+        <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="num">10</span>
+<span class="kw">if</span> <span class="var">x</span> > <span class="num">5</span>:
+    <span class="fn">print</span>(<span class="str">"x is big"</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Bug 3 -->
+  <div class="box debug">
+    <div class="box-title">🐛 Bug 3 — Wrong indentation</div>
+    <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">3</span>):
+<span class="fn">print</span>(<span class="var">i</span>)
+</div></div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Indentation Error.</strong> The <code>print(i)</code> line needs to be indented (4 spaces) to be inside the for loop. Without indentation, Python doesn't know this line belongs to the loop.</p>
+        <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">3</span>):
+    <span class="fn">print</span>(<span class="var">i</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Bug 4 -->
+  <div class="box debug">
+    <div class="box-title">🐛 Bug 4 — Misspelled variable name</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">temperature</span> = <span class="num">98.6</span>
+<span class="fn">print</span>(<span class="var">temperture</span>)
+</div></div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Runtime Error (NameError).</strong> <code>temperture</code> (missing the 'a') is a different variable name that was never created. Python says "I don't know what temperture is."</p>
+        <div class="code-block"><div class="code-body">
+<span class="var">temperature</span> = <span class="num">98.6</span>
+<span class="fn">print</span>(<span class="var">temperature</span>)   <span class="cmt"># correct spelling</span>
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Bug 5 -->
+  <div class="box debug">
+    <div class="box-title">🐛 Bug 5 — Using = instead of ==</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">status</span> = <span class="str">"on"</span>
+<span class="kw">if</span> <span class="var">status</span> = <span class="str">"on"</span>:
+    <span class="fn">print</span>(<span class="str">"LED is on"</span>)
+</div></div>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Syntax Error.</strong> Inside an if condition, you compare with <code>==</code>, not assign with <code>=</code>.</p>
+        <div class="code-block"><div class="code-body">
+<span class="var">status</span> = <span class="str">"on"</span>
+<span class="kw">if</span> <span class="var">status</span> == <span class="str">"on"</span>:
+    <span class="fn">print</span>(<span class="str">"LED is on"</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Bug 6 -->
+  <div class="box debug">
+    <div class="box-title">🐛 Bug 6 — Forgetting to convert input type</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">voltage</span> = <span class="fn">input</span>(<span class="str">"Enter voltage: "</span>)
+<span class="var">double</span>  = <span class="var">voltage</span> * <span class="num">2</span>
+<span class="fn">print</span>(<span class="var">double</span>)
+</div></div>
+    <p>If the user enters 3.3, what happens? What's wrong?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Logic Error (unexpected behavior).</strong> <code>input()</code> returns a string. When you multiply a string by 2, Python duplicates it: "3.3" * 2 = "3.33.3" — not the number 6.6.</p>
+        <div class="code-block"><div class="code-body">
+<span class="var">voltage</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter voltage: "</span>))
+<span class="var">double</span>  = <span class="var">voltage</span> * <span class="num">2</span>
+<span class="fn">print</span>(<span class="var">double</span>)   <span class="cmt"># now correctly prints 6.6</span>
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Bug 7 -->
+  <div class="box debug">
+    <div class="box-title">🐛 Bug 7 — Wrong loop range</div>
+    <div class="code-block"><div class="code-body">
+<span class="cmt"># Trying to print 1 through 5</span>
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+    <span class="fn">print</span>(<span class="var">i</span>)
+</div></div>
+    <p>This prints 0 1 2 3 4 — but the goal was 1 through 5. Fix it.</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p><strong>Logic Error.</strong> <code>range(5)</code> gives 0 to 4. To get 1 to 5, use <code>range(1, 6)</code>.</p>
+        <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">6</span>):
+    <span class="fn">print</span>(<span class="var">i</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Bug 8 -->
+  <div class="box debug">
+    <div class="box-title">🐛 Bug 8 — Wrong calculation</div>
+    <div class="code-block"><div class="code-body">
+<span class="cmt"># Convert Celsius to Fahrenheit: F = (C * 9/5) + 32</span>
+<span class="var">celsius</span>    = <span class="num">100</span>
+<span class="var">fahrenheit</span> = <span class="var">celsius</span> * <span class="num">9</span> / <span class="num">5</span> + <span class="num">32</span>
+<span class="fn">print</span>(<span class="var">fahrenheit</span>)   <span class="cmt"># should print 212</span>
+</div></div>
+    <p>Run it mentally — does it print the right answer? If not, what went wrong?</p>
+    <details>
+      <summary>▶ Check Your Answer</summary>
+      <div class="solution-body">
+        <p>Actually — this one <strong>is correct</strong>. Python follows the correct order of operations: multiplication and division before addition. <code>100 * 9 / 5 + 32 = 180 + 32 = 212</code>. ✅</p>
+        <p>This is a deliberate trick — sometimes you'll suspect there's a bug and there isn't. Always trace carefully before changing anything.</p>
+      </div>
+    </details>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+
+</div><!-- /page-wrap -->
+
+<!-- ════════════════════════════════════════════
+     FINAL CHALLENGE
+════════════════════════════════════════════ -->
+<div class="challenge-section" id="challenge">
+  <div class="part-badge" style="background:rgba(255,255,255,.2);color:#fff;">Final Challenge</div>
+  <h2>🏆 Temperature Monitor — Build It Yourself</h2>
+  <p>You've learned variables, input, operators, conditionals, and loops. Now let's put them all together into one program.</p>
+  <p><strong>The problem:</strong> Build a temperature monitoring program. It asks the user for 5 temperature readings, checks if each is safe (&lt;= 100°F) or dangerous (&gt; 100°F), calculates the average, and reports the result.</p>
+</div>
+
+<div class="page-wrap">
+
+<div class="section">
+  <h3>Work through this stage by stage</h3>
+
+  <div class="challenge-step">
+    <h4>Stage 1 — Understand</h4>
+    <p>What are the inputs? What is the process? What should the output look like? Write this in plain English before touching code.</p>
+  </div>
+
+  <div class="challenge-step">
+    <h4>Stage 2 — Decompose</h4>
+    <p>Break the problem into smaller parts: (a) collecting readings, (b) checking each reading, (c) calculating the average, (d) displaying the final report.</p>
+  </div>
+
+  <div class="challenge-step">
+    <h4>Stage 3 — Write the loop and safety check</h4>
+    <p>Use a <code>for</code> loop to ask for 5 readings. Inside the loop, use an <code>if/else</code> to print "Safe" or "Danger: Overheating!" for each reading. Also accumulate a running total.</p>
+  </div>
+
+  <div class="challenge-step">
+    <h4>Stage 4 — Calculate and display the average</h4>
+    <p>After the loop finishes, calculate the average (total ÷ 5) and print a final summary report.</p>
+  </div>
+
+  <details>
+    <summary>💡 Hint — Stuck on Stage 3?</summary>
+    <div class="solution-body">
+      <p>Start with just the loop and if/else — ignore the total for now:</p>
+      <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">5</span>):
+    <span class="var">temp</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter reading: "</span>))
+    <span class="kw">if</span> <span class="var">temp</span> > <span class="num">100</span>:
+        <span class="fn">print</span>(<span class="str">"Danger: Overheating!"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"Safe."</span>)
+</div></div>
+      <p>Once that works, add <code>total = 0</code> before the loop and <code>total = total + temp</code> inside the loop.</p>
+    </div>
+  </details>
+
+  <details>
+    <summary>▶ Full Solution — Try it yourself first!</summary>
+    <div class="solution-body">
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">python — fully commented solution</span></div>
+        <div class="code-body">
+<span class="cmt"># Set up before the loop</span>
+<span class="var">total</span>    = <span class="num">0</span>   <span class="cmt"># accumulator — starts at zero</span>
+<span class="var">readings</span> = <span class="num">5</span>   <span class="cmt"># how many readings to collect</span>
+
+<span class="fn">print</span>(<span class="str">"--- Temperature Monitor ---"</span>)
+
+<span class="cmt"># Loop 5 times</span>
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="var">readings</span>):
+    <span class="var">temp</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter reading: "</span>))
+
+    <span class="cmt"># Check this reading immediately</span>
+    <span class="kw">if</span> <span class="var">temp</span> > <span class="num">100</span>:
+        <span class="fn">print</span>(<span class="str">"  → Danger: Overheating!"</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"  → Safe."</span>)
+
+    <span class="cmt"># Add to running total</span>
+    <span class="var">total</span> = <span class="var">total</span> + <span class="var">temp</span>
+
+<span class="cmt"># After ALL 5 readings: calculate and display average</span>
+<span class="var">average</span> = <span class="var">total</span> / <span class="var">readings</span>
+<span class="fn">print</span>(<span class="str">"--------------------------"</span>)
+<span class="fn">print</span>(<span class="str">"Average temperature:"</span>, <span class="var">average</span>, <span class="str">"°F"</span>)
+</div>
+      </div>
+      <p><strong>Why it works:</strong></p>
+      <ul>
+        <li><code>total = 0</code> is set BEFORE the loop — this is the accumulator starting point.</li>
+        <li>Inside the loop, three things happen every iteration: get input, check it with if/else, add to total.</li>
+        <li>The if/else runs independently each time — it doesn't affect the next iteration or the total.</li>
+        <li>The average is calculated AFTER the loop — only once, using the final total.</li>
+      </ul>
+    </div>
+  </details>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+<!-- ════════════════════════════════════════════
+     KNOWLEDGE CHECK
+════════════════════════════════════════════ -->
+<div class="section" id="quiz">
+  <div class="part-badge">Knowledge Check</div>
+  <h2>📝 15 Questions — Test Your Understanding</h2>
+  <p>Try to answer each question before looking at the answer. These cover everything in the module.</p>
+
+  <!-- Q1 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 1 — Multiple Choice</div>
+    <p>What does this line do?</p>
+    <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="num">7</span>
+</div></div>
+    <ol class="quiz-options" type="A">
+      <li>Checks if x equals 7</li>
+      <li>Stores the value 7 in a variable called x</li>
+      <li>Prints 7 on the screen</li>
+      <li>Starts a loop called x</li>
+    </ol>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body"><p><strong>B.</strong> The single <code>=</code> is the assignment operator — it stores 7 in the variable x. It does not compare, print, or start a loop.</p></div>
+    </details>
+  </div>
+
+  <!-- Q2 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 2 — Predict the Output</div>
+    <div class="code-block"><div class="code-body">
+<span class="fn">print</span>(<span class="str">"5"</span> + <span class="str">"3"</span>)
+</div></div>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body"><p><strong>53</strong> — Both values are strings (in quotes), so <code>+</code> joins them as text, not adds them as numbers. This is called string concatenation.</p></div>
+    </details>
+  </div>
+
+  <!-- Q3 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 3 — Predict the Output</div>
+    <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">3</span>):
+    <span class="fn">print</span>(<span class="var">i</span> * <span class="num">2</span>)
+</div></div>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <p><strong>0</strong><br><strong>2</strong><br><strong>4</strong></p>
+        <p>range(3) gives 0, 1, 2. Each is multiplied by 2: 0×2=0, 1×2=2, 2×2=4.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q4 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 4 — Identify the Error</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">temperature</span> = <span class="fn">input</span>(<span class="str">"Enter temp: "</span>)
+<span class="fn">print</span>(<span class="var">temperature</span> + <span class="num">5</span>)
+</div></div>
+    <p>What type of error is this, and how do you fix it?</p>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <p><strong>Runtime Error (TypeError).</strong> <code>input()</code> always returns a string. You cannot add a string and an integer.</p>
+        <p><strong>Fix:</strong> Convert with <code>float(input(...))</code> or <code>int(input(...))</code>.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q5 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 5 — Fill in the Code</div>
+    <p>Complete the loop so it prints the numbers 1 through 5:</p>
+    <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> _______________:
+    <span class="fn">print</span>(<span class="var">i</span>)
+</div></div>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">6</span>):
+    <span class="fn">print</span>(<span class="var">i</span>)
+</div></div>
+        <p>Use <code>range(1, 6)</code> — start at 1, stop before 6. <code>range(5)</code> would give 0 to 4, which is wrong for "1 through 5."</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q6 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 6 — True or False</div>
+    <p><code>range(5)</code> produces the numbers 1, 2, 3, 4, 5.</p>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body"><p><strong>False.</strong> <code>range(5)</code> produces 0, 1, 2, 3, 4. To get 1 through 5, use <code>range(1, 6)</code>.</p></div>
+    </details>
+  </div>
+
+  <!-- Q7 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 7 — Predict the Output</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="num">10</span>
+<span class="kw">if</span> <span class="var">x</span> > <span class="num">5</span>:
+    <span class="fn">print</span>(<span class="str">"big"</span>)
+<span class="kw">elif</span> <span class="var">x</span> > <span class="num">2</span>:
+    <span class="fn">print</span>(<span class="str">"medium"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"small"</span>)
+</div></div>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body"><p><strong>big</strong> — Python checks conditions in order. 10 &gt; 5 is True, so it prints "big" and stops. The elif and else are never reached.</p></div>
+    </details>
+  </div>
+
+  <!-- Q8 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 8 — Short Answer</div>
+    <p>What is the difference between a <code>for</code> loop and a <code>while</code> loop? Give one example of when you would choose each.</p>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <p><strong>for loop:</strong> use when you know exactly how many times to repeat. Example: "Ask the user for 5 temperature readings" — you know the count in advance.</p>
+        <p><strong>while loop:</strong> use when you don't know how many times you'll need to repeat — you keep going until a condition changes. Example: "Keep asking for a password until the correct one is entered."</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q9 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 9 — Trace It</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">total</span> = <span class="num">0</span>
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">4</span>):
+    <span class="var">total</span> = <span class="var">total</span> + <span class="var">i</span>
+<span class="fn">print</span>(<span class="var">total</span>)
+</div></div>
+    <p>What does this print?</p>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <p><strong>6</strong></p>
+        <table class="trace-table">
+          <tr><th>i</th><th>total</th></tr>
+          <tr><td>start</td><td>0</td></tr>
+          <tr><td>0</td><td>0 + 0 = 0</td></tr>
+          <tr><td>1</td><td>0 + 1 = 1</td></tr>
+          <tr><td>2</td><td>1 + 2 = 3</td></tr>
+          <tr><td>3</td><td>3 + 3 = 6</td></tr>
+        </table>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q10 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 10 — Multiple Choice</div>
+    <p>What type is the value stored in <code>x</code> after this line?</p>
+    <div class="code-block"><div class="code-body">
+<span class="var">x</span> = <span class="fn">input</span>(<span class="str">"Enter a number: "</span>)
+</div></div>
+    <ol class="quiz-options" type="A">
+      <li>int</li>
+      <li>float</li>
+      <li>str</li>
+      <li>bool</li>
+    </ol>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body"><p><strong>C — str.</strong> <code>input()</code> always returns a string, regardless of what the user typed. Even if the user enters "42", it is stored as the text "42".</p></div>
+    </details>
+  </div>
+
+  <!-- Q11 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 11 — Find the Bug</div>
+    <p>This loop is supposed to add up 1 + 2 + 3 + 4 + 5 and print 15. What is wrong?</p>
+    <div class="code-block"><div class="code-body">
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">6</span>):
+    <span class="var">total</span> = <span class="num">0</span>
+    <span class="var">total</span> = <span class="var">total</span> + <span class="var">i</span>
+<span class="fn">print</span>(<span class="var">total</span>)
+</div></div>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <p><strong>Bug:</strong> <code>total = 0</code> is inside the loop. Every iteration resets total back to zero before adding i — so the loop never accumulates. After all iterations, total is just 5 (the last value of i).</p>
+        <p><strong>Fix:</strong> move <code>total = 0</code> outside and before the loop:</p>
+        <div class="code-block"><div class="code-body">
+<span class="var">total</span> = <span class="num">0</span>   <span class="cmt"># initialise BEFORE the loop</span>
+<span class="kw">for</span> <span class="var">i</span> <span class="kw">in</span> <span class="fn">range</span>(<span class="num">1</span>, <span class="num">6</span>):
+    <span class="var">total</span> = <span class="var">total</span> + <span class="var">i</span>
+<span class="fn">print</span>(<span class="var">total</span>)   <span class="cmt"># correctly prints 15</span>
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q12 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 12 — Short Answer</div>
+    <p>What is an algorithm? Give a real-life example that doesn't involve computers.</p>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <p>An algorithm is a step-by-step set of instructions for solving a problem. Examples: a recipe, GPS directions, instructions for assembling furniture, the steps to change a tire.</p>
+        <p>The key features: it has a clear start and end, each step is specific, and following the steps in order produces the desired result.</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q13 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 13 — Predict the Output</div>
+    <div class="code-block"><div class="code-body">
+<span class="var">a</span> = <span class="num">5</span>
+<span class="var">b</span> = <span class="num">3</span>
+<span class="fn">print</span>(<span class="var">a</span> // <span class="var">b</span>)
+<span class="fn">print</span>(<span class="var">a</span> % <span class="var">b</span>)
+</div></div>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <p><strong>1</strong> (integer division: 5 ÷ 3 = 1 remainder 2, drops the remainder)<br><strong>2</strong> (modulo: the remainder when 5 is divided by 3)</p>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q14 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 14 — Write the Code</div>
+    <p>Write a program that asks the user for a number and prints whether it is even or odd. (Hint: a number is even if <code>number % 2 == 0</code>.)</p>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <div class="code-block"><div class="code-body">
+<span class="var">number</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Enter a number: "</span>))
+
+<span class="kw">if</span> <span class="var">number</span> % <span class="num">2</span> == <span class="num">0</span>:
+    <span class="fn">print</span>(<span class="str">"Even"</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Odd"</span>)
+</div></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Q15 -->
+  <div class="quiz-q">
+    <div class="qnum">Question 15 — Naming Three Error Types</div>
+    <p>Name the three categories of Python errors and describe each in one sentence.</p>
+    <details>
+      <summary>▶ Answer</summary>
+      <div class="solution-body">
+        <p><strong>Syntax Error:</strong> Python cannot understand the code because it breaks the rules of the language — like a missing colon or unmatched parenthesis.</p>
+        <p><strong>Runtime Error:</strong> The code is readable but something goes wrong while it is running — like trying to do math on a string, or dividing by zero.</p>
+        <p><strong>Logic Error:</strong> The program runs without crashing but produces the wrong result because the algorithm or calculation is incorrect.</p>
+      </div>
+    </details>
+  </div>
+
+  <div class="callout" style="margin-top:24px;">
+    <strong>🎉 Well done for completing Module 1!</strong>
+    You've learned how programs work, how to store values in variables, how to make decisions with if statements, repeat actions with for and while loops, and find and fix errors. These are the foundations of everything else you'll build in this course.
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+</div><!-- /page-wrap -->
+
+<script>
+// Copy button
+function copyCode(btn) {
+  var block = btn.closest('.code-block').querySelector('.code-body');
+  var text = block.innerText || block.textContent;
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() { flash(btn); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); flash(btn); } catch(e){}
+    document.body.removeChild(ta);
+  }
+}
+function flash(btn) {
+  var old = btn.textContent; btn.textContent = 'copied!';
+  setTimeout(function(){ btn.textContent = old; }, 1500);
+}
+
+// Progress counter — counts opened <details> elements
+(function() {
+  var pill = document.getElementById('progress-pill');
+  if (!pill) return;
+  var sections = document.querySelectorAll('.section[id]');
+  var visited = new Set();
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) visited.add(e.target.id);
+      var count = 0;
+      sections.forEach(function(s){ if(visited.has(s.id)) count++; });
+      pill.textContent = count + ' / ' + sections.length + ' visited';
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(function(s){ observer.observe(s); });
+})();
+</script>
+
+</body>
+</html>
