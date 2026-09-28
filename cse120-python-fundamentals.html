@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Fundamentals — Variables, Data Types, Operators & if Statements</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #003767;
+  --blue:   #0074B7;
+  --lblue:  #DDEAF5;
+  --teal:   #00838F;
+  --green:  #2E7D32;
+  --amber:  #E65100;
+  --purple: #6A1B9A;
+  --red:    #C62828;
+  --bg:     #F4F6FC;
+  --card:   #FFFFFF;
+  --border: #D8E4F0;
+  --dark:   #1C2B3A;
+  --mid:    #4A6080;
+  --code-bg:#EEF1FA;
+  --code-br:#D0DAF0;
+  --correct:#E8F5E9;
+  --wrong:  #FFEBEE;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--dark); line-height: 1.7; font-size: 16px; }
+
+/* ── NAV ── */
+#topnav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--navy); padding: 0 1.5rem;
+  display: flex; align-items: center; gap: 0; overflow-x: auto;
+  box-shadow: 0 2px 12px rgba(0,0,0,.25);
+}
+#topnav a {
+  color: #A8C8E8; text-decoration: none; padding: .7rem 1rem;
+  font-size: .82rem; font-weight: 600; white-space: nowrap;
+  border-bottom: 3px solid transparent; transition: all .2s;
+}
+#topnav a:hover, #topnav a.active { color: #fff; border-bottom-color: var(--blue); }
+
+/* ── PROGRESS BAR ── */
+#progbar { position: fixed; top: 0; left: 0; height: 3px; background: var(--blue); width: 0%; z-index: 200; transition: width .2s; }
+
+/* ── HERO ── */
+.hero {
+  margin: 2rem 1.5rem 0;
+  background: linear-gradient(135deg, #0F1E3D 0%, #1A3A6B 55%, #2655A8 100%);
+  border-radius: 16px; padding: 2.8rem 3rem; color: #fff;
+}
+.hero-badge { display:inline-block; background: var(--blue); color:#fff; font-size:.78rem; font-weight:700; padding:.3rem .9rem; border-radius:20px; margin-bottom:1rem; font-family:'DM Mono',monospace; letter-spacing:.05em; }
+.hero h1 { font-size: 2.4rem; font-weight: 700; line-height:1.2; margin-bottom:.8rem; }
+.hero p  { font-size: 1.05rem; color: #A8C8E8; max-width: 680px; margin-bottom: 1.5rem; }
+.hero-pills { display:flex; flex-wrap:wrap; gap:.6rem; }
+.hero-pill  { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); color:#CCE0FF; font-size:.82rem; padding:.3rem .85rem; border-radius:20px; }
+
+/* ── PROGRESS TRACKER ── */
+.progress-tracker { margin:1.5rem 1.5rem 0; background:#fff; border:1px solid var(--border); border-radius:12px; padding:1rem 1.5rem; display:flex; align-items:center; gap:1rem; }
+.progress-tracker .pt-label { font-size:.85rem; color:var(--mid); font-weight:600; white-space:nowrap; }
+.pt-bar-wrap { flex:1; background:var(--lblue); border-radius:20px; height:8px; }
+.pt-bar      { height:8px; border-radius:20px; background:var(--blue); width:0%; transition:width .4s; }
+.pt-count    { font-size:.85rem; font-weight:700; color:var(--navy); white-space:nowrap; }
+
+/* ── MAIN LAYOUT ── */
+.main { max-width: 900px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+/* ── SECTION ── */
+.section { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 2.2rem 2.4rem; margin-top: 2rem; scroll-margin-top: 56px; }
+.section:hover { box-shadow: 0 4px 20px rgba(0,55,103,.07); }
+.part-badge { display:inline-block; font-size:.72rem; font-weight:700; font-family:'DM Mono',monospace; background:var(--lblue); color:var(--navy); padding:.25rem .75rem; border-radius:20px; margin-bottom:.6rem; letter-spacing:.08em; text-transform:uppercase; }
+.section-label { font-size:.85rem; color:var(--mid); font-weight:600; margin-bottom:.3rem; }
+.section h2 { font-size:1.75rem; font-weight:700; color:var(--navy); margin-bottom:1.2rem; }
+.section h3 { font-size:1.2rem; font-weight:700; color:var(--navy); margin:1.8rem 0 .7rem; }
+.section h4 { font-size:1rem; font-weight:700; color:var(--blue); margin:1.2rem 0 .4rem; }
+.section p  { color:var(--dark); margin-bottom:.9rem; }
+.section ul, .section ol { padding-left:1.6rem; margin-bottom:.9rem; }
+.section li { margin-bottom:.4rem; }
+
+/* ── CODE BLOCKS ── */
+.code-block { background: var(--code-bg); border: 1.5px solid var(--code-br); border-radius: 10px; margin: 1rem 0; overflow: hidden; }
+.code-header { display:flex; justify-content:space-between; align-items:center; padding:.45rem .9rem; background:#E2E8F8; border-bottom:1px solid var(--code-br); }
+.code-lang   { font-size:.72rem; font-weight:700; color:var(--navy); font-family:'DM Mono',monospace; text-transform:uppercase; letter-spacing:.08em; }
+.copy-btn    { font-size:.72rem; background:var(--navy); color:#fff; border:none; padding:.25rem .7rem; border-radius:6px; cursor:pointer; font-family:'DM Sans',sans-serif; font-weight:600; transition:background .2s; }
+.copy-btn:hover { background:var(--blue); }
+.code-body   { padding:1.1rem 1.3rem; font-family:'DM Mono',monospace; font-size:.88rem; line-height:1.75; white-space:pre-wrap; color:#1a2a3a; }
+/* syntax colours */
+.kw  { color:#0055A8; font-weight:700; }
+.fn  { color:#007A6E; font-weight:600; }
+.str { color:#B5471A; }
+.num { color:#7C3AED; }
+.var { color:#1C2B3A; }
+.cmt { color:#7A8FA6; font-style:italic; }
+.out { color:#2E7D32; font-style:italic; }
+.err { color:#C62828; }
+.op  { color:#0055A8; font-weight:700; }
+
+/* ── BOXES ── */
+.box { border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1.2rem 0; }
+.box-title { font-weight:700; font-size:.92rem; margin-bottom:.6rem; }
+.box.analogy  { background:#F0F9FF; border-left:4px solid var(--blue); }
+.box.analogy .box-title { color:var(--blue); }
+.box.warn     { background:#FFF8E1; border-left:4px solid #F59E0B; }
+.box.warn .box-title { color:#92400E; }
+.box.tryit    { background:#F0FDF4; border-left:4px solid var(--green); }
+.box.tryit .box-title { color:var(--green); }
+.box.predict  { background:#FAF5FF; border-left:4px solid var(--purple); }
+.box.predict .box-title { color:var(--purple); }
+.box.check    { background:#F0FDF4; border-left:4px solid var(--teal); }
+.box.check .box-title { color:var(--teal); }
+.box.misconception { background:#FFF5F5; border-left:4px solid var(--red); }
+.box.misconception .box-title { color:var(--red); }
+
+/* ── TABLE ── */
+.tbl-wrap { overflow-x:auto; margin:1rem 0; }
+table { width:100%; border-collapse:collapse; font-size:.9rem; }
+th { background:var(--navy); color:#fff; padding:.55rem .9rem; text-align:left; font-weight:600; }
+td { padding:.5rem .9rem; border-bottom:1px solid var(--border); }
+tr:nth-child(even) td { background:var(--lblue); }
+tr:last-child td { border-bottom:none; }
+code { font-family:'DM Mono',monospace; font-size:.85em; background:var(--code-bg); padding:.1em .35em; border-radius:4px; color:#0055A8; }
+
+/* ── COLLAPSIBLES ── */
+details { border:1.5px solid var(--border); border-radius:8px; margin:.8rem 0; }
+summary { cursor:pointer; padding:.75rem 1rem; font-weight:600; color:var(--navy); list-style:none; background:var(--lblue); border-radius:8px; user-select:none; }
+summary::before { content:"▶  "; font-size:.78rem; }
+details[open] summary { border-radius:8px 8px 0 0; }
+details[open] summary::before { content:"▼  "; }
+.solution-body { padding:1rem 1.2rem; }
+
+/* ── TRACE TABLE ── */
+.trace-table { width:100%; border-collapse:collapse; font-family:'DM Mono',monospace; font-size:.85rem; }
+.trace-table th { background:var(--navy); color:#fff; padding:.4rem .7rem; }
+.trace-table td { padding:.4rem .7rem; border:1px solid var(--border); }
+.trace-table tr:nth-child(even) td { background:var(--lblue); }
+.blank { background:#FFF8E1 !important; color:#92400E; font-style:italic; }
+
+/* ── INTERACTIVE QUIZ ── */
+.quiz-wrap { background:#F8FAFE; border:1.5px solid var(--border); border-radius:12px; padding:1.5rem; margin:1.5rem 0; }
+.quiz-q { margin-bottom:1.5rem; }
+.quiz-q:last-child { margin-bottom:0; }
+.qnum { font-size:.78rem; font-weight:700; color:var(--mid); text-transform:uppercase; letter-spacing:.06em; margin-bottom:.4rem; font-family:'DM Mono',monospace; }
+.qtext { font-weight:600; margin-bottom:.8rem; }
+.options { display:flex; flex-direction:column; gap:.5rem; }
+.opt { display:flex; align-items:flex-start; gap:.7rem; padding:.6rem .85rem; border:1.5px solid var(--border); border-radius:8px; cursor:pointer; background:#fff; transition:all .2s; }
+.opt:hover { border-color:var(--blue); background:var(--lblue); }
+.opt.correct { border-color:var(--green); background:#E8F5E9; }
+.opt.wrong   { border-color:var(--red); background:#FFEBEE; }
+.opt input   { margin-top:.15rem; accent-color:var(--blue); }
+.opt-label   { font-size:.92rem; }
+.feedback    { font-size:.85rem; margin-top:.6rem; padding:.5rem .8rem; border-radius:6px; display:none; }
+.feedback.show { display:block; }
+.feedback.ok  { background:#E8F5E9; color:var(--green); font-weight:600; }
+.feedback.bad { background:#FFEBEE; color:var(--red); font-weight:600; }
+
+/* ── LIVE PLAYGROUND ── */
+.playground { background:#1E2D40; border-radius:12px; padding:1.4rem; margin:1.2rem 0; }
+.playground label { color:#A8C8E8; font-size:.82rem; font-weight:700; font-family:'DM Mono',monospace; display:block; margin-bottom:.5rem; }
+.playground input[type=text], .playground input[type=number], .playground select {
+  width:100%; padding:.55rem .85rem; border-radius:7px; border:1.5px solid #2A4060;
+  background:#162333; color:#E8F4FD; font-family:'DM Mono',monospace; font-size:.9rem;
+  margin-bottom:.8rem; outline:none; transition:border .2s;
+}
+.playground input:focus, .playground select:focus { border-color:var(--blue); }
+.run-btn { background:var(--blue); color:#fff; border:none; padding:.55rem 1.4rem; border-radius:7px; cursor:pointer; font-weight:700; font-size:.9rem; font-family:'DM Sans',sans-serif; transition:background .2s; }
+.run-btn:hover { background:#005A8E; }
+.output-box { margin-top:.85rem; background:#0D1B2A; border-radius:8px; padding:.8rem 1rem; font-family:'DM Mono',monospace; font-size:.88rem; color:#7FDDFF; min-height:2.2rem; white-space:pre-wrap; }
+
+/* ── TYPE CARDS ── */
+.type-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin:1rem 0; }
+.type-card { border-radius:10px; padding:1.1rem; text-align:center; }
+.type-card .tc-icon { font-size:1.8rem; margin-bottom:.4rem; }
+.type-card .tc-name { font-size:1rem; font-weight:700; font-family:'DM Mono',monospace; margin-bottom:.25rem; }
+.type-card .tc-ex   { font-size:.82rem; color:var(--mid); }
+
+/* ── OP TABLE ── */
+.op-showcase { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem; margin:1rem 0; }
+.op-card { background:var(--code-bg); border:1.5px solid var(--code-br); border-radius:10px; padding:1rem 1.1rem; }
+.op-card .op-symbol { font-size:1.5rem; font-weight:700; font-family:'DM Mono',monospace; color:var(--blue); }
+.op-card .op-name   { font-size:.85rem; font-weight:700; color:var(--navy); margin-bottom:.35rem; }
+.op-card .op-ex     { font-size:.82rem; font-family:'DM Mono',monospace; color:var(--dark); }
+
+/* ── IF FLOW DIAGRAM ── */
+.flow-wrap { display:flex; flex-direction:column; align-items:center; gap:.3rem; margin:1.2rem 0; font-family:'DM Sans',sans-serif; }
+.flow-box  { padding:.55rem 1.4rem; border-radius:8px; font-weight:600; font-size:.9rem; text-align:center; min-width:200px; }
+.flow-diamond { width:160px; height:80px; position:relative; }
+.flow-diamond svg { position:absolute; top:0; left:0; }
+.flow-arr  { font-size:1.4rem; color:var(--mid); line-height:1; }
+.flow-yes  { font-size:.75rem; font-weight:700; color:var(--green); }
+.flow-no   { font-size:.75rem; font-weight:700; color:var(--red); }
+
+/* ── BACK TO TOP ── */
+.back-top { display:block; text-align:right; margin-top:1.5rem; color:var(--blue); font-size:.82rem; font-weight:600; text-decoration:none; }
+.back-top:hover { text-decoration:underline; }
+
+/* ── FINAL BADGE ── */
+.finish-card { background:linear-gradient(135deg,#003767,#0074B7); border-radius:14px; padding:2rem 2.4rem; color:#fff; text-align:center; margin-top:2rem; }
+.finish-card h2 { font-size:1.6rem; margin-bottom:.6rem; }
+.finish-card p  { color:#A8C8E8; }
+
+@media(max-width:640px){
+  .hero { padding:1.8rem 1.4rem; } .hero h1 { font-size:1.7rem; }
+  .section { padding:1.4rem 1.2rem; }
+  .type-grid { grid-template-columns:1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="progbar"></div>
+
+<nav id="topnav">
+  <a href="#part1" class="active">1. Variables</a>
+  <a href="#part2">2. Data Types</a>
+  <a href="#part3">3. Operators</a>
+  <a href="#part4">4. if Statements</a>
+  <a href="#quiz">5. Quiz</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero" style="margin:0;border-radius:0;padding:3rem 2.5rem;">
+  <div class="hero-badge">CSE 120 &nbsp;·&nbsp; Module 2</div>
+  <h1>Python Fundamentals</h1>
+  <p>Variables, Data Types, Operators, and if Statements — the four building blocks every Python program is made of. Lots of examples, zero assumed knowledge.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">4 Parts</span>
+    <span class="hero-pill">40+ Examples</span>
+    <span class="hero-pill">Interactive Playgrounds</span>
+    <span class="hero-pill">Quizzes with Feedback</span>
+    <span class="hero-pill">Beginner Friendly</span>
+  </div>
+</div>
+
+<div style="max-width:900px;margin:1.5rem auto 0;padding:0 1.5rem;">
+  <div class="progress-tracker">
+    <span class="pt-label">Progress</span>
+    <div class="pt-bar-wrap"><div class="pt-bar" id="ptbar"></div></div>
+    <span class="pt-count" id="ptcount">0 / 4 parts</span>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART 1 — VARIABLES
+══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="part1">
+  <div class="part-badge">Part 1</div>
+  <div class="section-label">Storing Information</div>
+  <h2>Variables</h2>
+
+  <p>A <strong>variable</strong> is a named container that holds a value in your program's memory. Think of it like a labelled box — you put something in, you can look it up by name later, and you can swap the contents whenever you like.</p>
+
+  <div class="box analogy">
+    <div class="box-title">📦 Analogy — The Labelled Box</div>
+    <p>Imagine a shelf of boxes, each with a label on the front. You write <code>temperature = 98.6</code> and Python creates a box labelled <strong>temperature</strong> and puts the value <strong>98.6</strong> inside it. Any time you need that value, just say the label and Python goes and fetches it.</p>
+  </div>
+
+  <h3>Creating a Variable</h3>
+  <p>In Python, you create a variable with the <strong>assignment operator</strong> — a single equals sign <code>=</code>. The variable name goes on the left, the value on the right.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="cmt"># Creating variables</span>
+<span class="var">student_name</span> = <span class="str">"Maria"</span>
+<span class="var">age</span>          = <span class="num">20</span>
+<span class="var">gpa</span>          = <span class="num">3.75</span>
+<span class="var">is_enrolled</span>  = <span class="kw">True</span>
+
+<span class="cmt"># Using variables</span>
+<span class="fn">print</span>(<span class="var">student_name</span>)   <span class="cmt"># Maria</span>
+<span class="fn">print</span>(<span class="var">age</span>)            <span class="cmt"># 20</span>
+<span class="fn">print</span>(<span class="var">gpa</span>)            <span class="cmt"># 3.75</span>
+<span class="fn">print</span>(<span class="var">is_enrolled</span>)   <span class="cmt"># True</span>
+</div>
+  </div>
+
+  <h3>Naming Rules — What Python Allows</h3>
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Rule</th><th>✅ Good Example</th><th>❌ Bad Example</th></tr>
+    <tr><td>Letters, digits, underscore only</td><td><code>sensor_1</code></td><td><code>sensor-1</code> (hyphen not allowed)</td></tr>
+    <tr><td>Must start with a letter or _</td><td><code>_result</code></td><td><code>1result</code> (starts with digit)</td></tr>
+    <tr><td>No spaces</td><td><code>total_cost</code></td><td><code>total cost</code></td></tr>
+    <tr><td>Case-sensitive</td><td><code>Speed</code> ≠ <code>speed</code></td><td>Mixing case unintentionally</td></tr>
+    <tr><td>Not a reserved keyword</td><td><code>my_if</code></td><td><code>if</code>, <code>for</code>, <code>while</code></td></tr>
+  </table>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ Naming Convention — Use snake_case</div>
+    <p>Python programmers use <strong>snake_case</strong> — all lowercase letters with underscores between words. This is not enforced by Python but it's the professional standard: <code>total_cost</code> not <code>TotalCost</code> or <code>totalcost</code>.</p>
+  </div>
+
+  <h3>= Means Assign, Not Equal</h3>
+  <p>In math, <code>=</code> means "these two sides are equal." In Python, <code>=</code> means <strong>"store this value in this variable"</strong>. This is called <em>assignment</em>.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="cmt"># This is legal Python — impossible in math!</span>
+<span class="var">count</span> = <span class="num">5</span>
+<span class="fn">print</span>(<span class="var">count</span>)      <span class="cmt"># 5</span>
+
+<span class="var">count</span> = <span class="var">count</span> + <span class="num">1</span>   <span class="cmt"># "take count (5), add 1, store the result back in count"</span>
+<span class="fn">print</span>(<span class="var">count</span>)      <span class="cmt"># 6</span>
+
+<span class="var">count</span> = <span class="var">count</span> * <span class="num">2</span>
+<span class="fn">print</span>(<span class="var">count</span>)      <span class="cmt"># 12</span>
+</div>
+  </div>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Trace It — What is x at the end?</div>
+    <div class="code-block" style="margin:.5rem 0;"><div class="code-body">
+<span class="var">x</span> = <span class="num">10</span>
+<span class="var">x</span> = <span class="var">x</span> + <span class="num">5</span>
+<span class="var">x</span> = <span class="var">x</span> * <span class="num">2</span>
+<span class="var">x</span> = <span class="var">x</span> - <span class="num">3</span>
+<span class="fn">print</span>(<span class="var">x</span>)
+</div></div>
+    <details><summary>▶ Show Trace</summary>
+      <div class="solution-body">
+        <div class="tbl-wrap"><table class="trace-table">
+          <tr><th>Line</th><th>Operation</th><th>x after</th></tr>
+          <tr><td>1</td><td>x = 10</td><td>10</td></tr>
+          <tr><td>2</td><td>x = 10 + 5</td><td>15</td></tr>
+          <tr><td>3</td><td>x = 15 × 2</td><td>30</td></tr>
+          <tr><td>4</td><td>x = 30 − 3</td><td>27</td></tr>
+        </table></div>
+        <p style="margin-top:.7rem"><strong>Output: 27</strong></p>
+      </div>
+    </details>
+  </div>
+
+  <h3>Multiple Assignment</h3>
+  <p>Python lets you assign multiple variables on a single line:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="cmt"># Assign the same value to several variables</span>
+<span class="var">x</span> = <span class="var">y</span> = <span class="var">z</span> = <span class="num">0</span>
+<span class="fn">print</span>(<span class="var">x</span>, <span class="var">y</span>, <span class="var">z</span>)    <span class="cmt"># 0 0 0</span>
+
+<span class="cmt"># Assign different values in one line (tuple unpacking)</span>
+<span class="var">length</span>, <span class="var">width</span>, <span class="var">height</span> = <span class="num">5</span>, <span class="num">3</span>, <span class="num">2</span>
+<span class="fn">print</span>(<span class="var">length</span>, <span class="var">width</span>, <span class="var">height</span>)   <span class="cmt"># 5 3 2</span>
+
+<span class="cmt"># Swap two variables (unique Python trick!)</span>
+<span class="var">a</span>, <span class="var">b</span> = <span class="num">10</span>, <span class="num">20</span>
+<span class="var">a</span>, <span class="var">b</span> = <span class="var">b</span>, <span class="var">a</span>
+<span class="fn">print</span>(<span class="var">a</span>, <span class="var">b</span>)   <span class="cmt"># 20 10</span>
+</div>
+  </div>
+
+  <h3>Updating Variables — Shorthand Operators</h3>
+  <p>Writing <code>count = count + 1</code> is so common that Python has a shorthand for it:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">score</span> = <span class="num">100</span>
+
+<span class="var">score</span> += <span class="num">10</span>    <span class="cmt"># same as: score = score + 10  → 110</span>
+<span class="var">score</span> -= <span class="num">5</span>     <span class="cmt"># same as: score = score - 5   → 105</span>
+<span class="var">score</span> *= <span class="num">2</span>     <span class="cmt"># same as: score = score * 2   → 210</span>
+<span class="var">score</span> //= <span class="num">3</span>   <span class="cmt"># same as: score = score // 3  → 70</span>
+
+<span class="fn">print</span>(<span class="var">score</span>)   <span class="cmt"># 70</span>
+</div>
+  </div>
+
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART 2 — DATA TYPES
+══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="part2">
+  <div class="part-badge">Part 2</div>
+  <div class="section-label">What Kind of Value?</div>
+  <h2>Data Types</h2>
+
+  <p>Every value in Python has a <strong>data type</strong> — it tells Python what kind of information is stored and what you can do with it. The same operation behaves completely differently on different types: <code>"3" + "3"</code> gives <code>"33"</code>, but <code>3 + 3</code> gives <code>6</code>.</p>
+
+  <div class="type-grid">
+    <div class="type-card" style="background:#EBF5FF;border:1.5px solid #B3D4F5;">
+      <div class="tc-icon">🔢</div>
+      <div class="tc-name" style="color:#003767;">int</div>
+      <div class="tc-ex">42, -7, 0, 1000</div>
+    </div>
+    <div class="type-card" style="background:#FFF3E0;border:1.5px solid #FFCC80;">
+      <div class="tc-icon">📉</div>
+      <div class="tc-name" style="color:#E65100;">float</div>
+      <div class="tc-ex">3.14, -0.5, 2.0</div>
+    </div>
+    <div class="type-card" style="background:#F3E8FF;border:1.5px solid #CE93D8;">
+      <div class="tc-icon">💬</div>
+      <div class="tc-name" style="color:#6A1B9A;">str</div>
+      <div class="tc-ex">"Hello", 'CSE 120'</div>
+    </div>
+    <div class="type-card" style="background:#E8F5E9;border:1.5px solid #A5D6A7;">
+      <div class="tc-icon">✅</div>
+      <div class="tc-name" style="color:#2E7D32;">bool</div>
+      <div class="tc-ex">True, False</div>
+    </div>
+  </div>
+
+  <h3>Numeric Types — Range & Precision Chart</h3>
+  <p>Choosing between <code>int</code> and <code>float</code> depends on what kind of value you need to store. Here is a visual guide:</p>
+
+  <div style="background:#EEF1FA;border:1.5px solid #D0DAF0;border-radius:12px;padding:1.4rem;margin:1rem 0;">
+    <div style="font-weight:700;font-size:.9rem;color:#003767;margin-bottom:1rem;">📊 Python Numeric Types at a Glance</div>
+
+    <!-- int bar -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.35rem;">
+        <span style="font-family:'DM Mono',monospace;font-weight:700;color:#003767;font-size:.95rem;min-width:55px;">int</span>
+        <span style="font-size:.82rem;color:#4A6080;">Whole numbers only — no decimal point</span>
+      </div>
+      <div style="background:#fff;border-radius:8px;overflow:hidden;height:36px;position:relative;border:1px solid #C8D8F0;">
+        <div style="position:absolute;left:0;top:0;height:100%;width:100%;background:linear-gradient(90deg,#003767 0%,#0074B7 50%,#003767 100%);opacity:.85;border-radius:8px;"></div>
+        <div style="position:absolute;left:50%;top:0;height:100%;width:2px;background:rgba(255,255,255,.5);"></div>
+        <span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:#fff;font-size:.78rem;font-family:'DM Mono',monospace;">−∞ (no lower limit)</span>
+        <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:#fff;font-size:.78rem;font-family:'DM Mono',monospace;">+∞ (no upper limit)</span>
+        <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#fff;font-weight:700;font-size:.82rem;">0</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:.3rem;font-size:.75rem;color:#4A6080;">
+        <span>Examples: −1,000,000 &nbsp; −7 &nbsp; 0 &nbsp; 42 &nbsp; 2,026 &nbsp; 1,000,000,000</span>
+        <span style="color:#2E7D32;font-weight:600;">✅ Unlimited size in Python</span>
+      </div>
+    </div>
+
+    <!-- float bar -->
+    <div style="margin-bottom:1.2rem;">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.35rem;">
+        <span style="font-family:'DM Mono',monospace;font-weight:700;color:#E65100;font-size:.95rem;min-width:55px;">float</span>
+        <span style="font-size:.82rem;color:#4A6080;">Numbers with a decimal — 64-bit double precision</span>
+      </div>
+      <div style="background:#fff;border-radius:8px;overflow:hidden;height:36px;position:relative;border:1px solid #FFD8A0;">
+        <div style="position:absolute;left:0;top:0;height:100%;width:100%;background:linear-gradient(90deg,#B45309 0%,#E65100 50%,#B45309 100%);opacity:.85;border-radius:8px;"></div>
+        <span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:#fff;font-size:.78rem;font-family:'DM Mono',monospace;">≈ −1.8 × 10³⁰⁸</span>
+        <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:#fff;font-size:.78rem;font-family:'DM Mono',monospace;">≈ +1.8 × 10³⁰⁸</span>
+        <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:#fff;font-weight:700;font-size:.82rem;">0.0</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:.3rem;font-size:.75rem;color:#4A6080;">
+        <span>Examples: 3.14 &nbsp; −0.5 &nbsp; 2.0 &nbsp; 98.6 &nbsp; 0.000001 &nbsp; 1.5e10</span>
+        <span style="color:#E65100;font-weight:600;">⚠️ ~15–17 significant digits precision</span>
+      </div>
+    </div>
+
+    <!-- bool bar -->
+    <div style="margin-bottom:.5rem;">
+      <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.35rem;">
+        <span style="font-family:'DM Mono',monospace;font-weight:700;color:#2E7D32;font-size:.95rem;min-width:55px;">bool</span>
+        <span style="font-size:.82rem;color:#4A6080;">Exactly two values — True (=1) or False (=0)</span>
+      </div>
+      <div style="display:flex;gap:.6rem;">
+        <div style="flex:1;background:#2E7D32;border-radius:8px;height:36px;display:flex;align-items:center;justify-content:center;">
+          <span style="color:#fff;font-weight:700;font-family:'DM Mono',monospace;">True &nbsp;(= 1)</span>
+        </div>
+        <div style="flex:1;background:#C62828;border-radius:8px;height:36px;display:flex;align-items:center;justify-content:center;">
+          <span style="color:#fff;font-weight:700;font-family:'DM Mono',monospace;">False (= 0)</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Comparison table -->
+  <div class="tbl-wrap" style="margin-top:1.2rem;">
+  <table>
+    <tr><th>Type</th><th>Stores</th><th>Range / Precision</th><th>Example values</th><th>Use when</th></tr>
+    <tr>
+      <td><code>int</code></td>
+      <td>Whole numbers</td>
+      <td>Unlimited (no overflow in Python)</td>
+      <td><code>0, 42, -7, 2026</code></td>
+      <td>Counting, indexing, ages, years</td>
+    </tr>
+    <tr>
+      <td><code>float</code></td>
+      <td>Decimal numbers</td>
+      <td>±1.8 × 10³⁰⁸ &nbsp;/&nbsp; ~15 sig. digits</td>
+      <td><code>3.14, -0.5, 98.6</code></td>
+      <td>Measurements, prices, averages</td>
+    </tr>
+    <tr>
+      <td><code>str</code></td>
+      <td>Text characters</td>
+      <td>Up to ~1 billion characters</td>
+      <td><code>"Alice", "CSE 120"</code></td>
+      <td>Names, messages, labels</td>
+    </tr>
+    <tr>
+      <td><code>bool</code></td>
+      <td>True or False only</td>
+      <td>Exactly 2 values</td>
+      <td><code>True, False</code></td>
+      <td>Flags, conditions, comparisons</td>
+    </tr>
+  </table>
+  </div>
+  <h3>int — Whole Numbers</h3>
+  <p>Integers are whole numbers — no decimal point. They can be positive, negative, or zero. Python integers can be arbitrarily large.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">students</span>     = <span class="num">30</span>
+<span class="var">temperature</span>  = <span class="num">-5</span>
+<span class="var">year</span>         = <span class="num">2026</span>
+<span class="var">zero</span>         = <span class="num">0</span>
+
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="var">students</span>))   <span class="cmt"># &lt;class 'int'&gt;</span>
+<span class="fn">print</span>(<span class="var">students</span> + <span class="num">5</span>)     <span class="cmt"># 35 — math works as expected</span>
+<span class="fn">print</span>(<span class="var">year</span> * <span class="num">2</span>)         <span class="cmt"># 4052</span>
+</div>
+  </div>
+
+  <h3>float — Decimal Numbers</h3>
+  <p>Floats are numbers with a decimal point. Use them whenever precision matters — measurements, prices, averages.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">pi</span>           = <span class="num">3.14159</span>
+<span class="var">voltage</span>      = <span class="num">5.0</span>       <span class="cmt"># still float even though it looks whole</span>
+<span class="var">temperature</span>  = <span class="num">-2.5</span>
+<span class="var">price</span>        = <span class="num">19.99</span>
+
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="var">pi</span>))        <span class="cmt"># &lt;class 'float'&gt;</span>
+<span class="fn">print</span>(<span class="num">10</span> / <span class="num">3</span>)          <span class="cmt"># 3.3333333333333335  — / always gives float</span>
+<span class="fn">print</span>(<span class="num">10</span> // <span class="num">3</span>)         <span class="cmt"># 3  — // gives int (floor division)</span>
+</div>
+  </div>
+
+  <h3>str — Text (Strings)</h3>
+  <p>A string is any sequence of characters wrapped in quotes. You can use single or double quotes — both work.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">name</span>    = <span class="str">"Alice"</span>
+<span class="var">city</span>    = <span class="str">'Vancouver'</span>
+<span class="var">message</span> = <span class="str">"She said: 'Hello!'"</span>   <span class="cmt"># mix quotes when needed</span>
+
+<span class="cmt"># String operations</span>
+<span class="fn">print</span>(<span class="var">name</span> + <span class="str">" "</span> + <span class="var">city</span>)   <span class="cmt"># Alice Vancouver  (concatenation)</span>
+<span class="fn">print</span>(<span class="var">name</span> * <span class="num">3</span>)             <span class="cmt"># AliceAliceAlice  (repetition)</span>
+<span class="fn">print</span>(<span class="fn">len</span>(<span class="var">name</span>))            <span class="cmt"># 5  (number of characters)</span>
+<span class="fn">print</span>(<span class="var">name</span>.<span class="fn">upper</span>())         <span class="cmt"># ALICE</span>
+<span class="fn">print</span>(<span class="var">name</span>.<span class="fn">lower</span>())         <span class="cmt"># alice</span>
+
+<span class="cmt"># f-strings — the modern way to embed variables in text</span>
+<span class="var">age</span> = <span class="num">20</span>
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"My name is {name} and I am {age} years old."</span>)
+<span class="cmt"># My name is Alice and I am 20 years old.</span>
+</div>
+  </div>
+
+  <h3>bool — True or False</h3>
+  <p>A boolean has exactly two possible values: <code>True</code> or <code>False</code>. Notice the capital first letter — that matters in Python.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">is_raining</span>   = <span class="kw">True</span>
+<span class="var">is_finished</span>  = <span class="kw">False</span>
+<span class="var">has_passed</span>   = <span class="num">85</span> > <span class="num">60</span>   <span class="cmt"># evaluates to True</span>
+<span class="var">is_equal</span>     = <span class="num">10</span> == <span class="num">5</span>   <span class="cmt"># evaluates to False</span>
+
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="var">is_raining</span>))   <span class="cmt"># &lt;class 'bool'&gt;</span>
+<span class="fn">print</span>(<span class="var">has_passed</span>)          <span class="cmt"># True</span>
+<span class="fn">print</span>(<span class="var">is_equal</span>)            <span class="cmt"># False</span>
+</div>
+  </div>
+
+  <h3>Checking the Type — type()</h3>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="num">42</span>))          <span class="cmt"># &lt;class 'int'&gt;</span>
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="num">3.14</span>))        <span class="cmt"># &lt;class 'float'&gt;</span>
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="str">"hello"</span>))    <span class="cmt"># &lt;class 'str'&gt;</span>
+<span class="fn">print</span>(<span class="fn">type</span>(<span class="kw">True</span>))        <span class="cmt"># &lt;class 'bool'&gt;</span>
+</div>
+  </div>
+
+  <h3>Type Conversion</h3>
+  <p>You can convert between types using built-in functions:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="cmt"># str → int / float  (common after input())</span>
+<span class="var">user_input</span> = <span class="str">"42"</span>
+<span class="var">number</span>     = <span class="fn">int</span>(<span class="var">user_input</span>)    <span class="cmt"># "42" → 42</span>
+<span class="var">decimal</span>    = <span class="fn">float</span>(<span class="var">user_input</span>)  <span class="cmt"># "42" → 42.0</span>
+
+<span class="cmt"># int / float → str</span>
+<span class="var">age</span>    = <span class="num">20</span>
+<span class="var">label</span>  = <span class="str">"Age: "</span> + <span class="fn">str</span>(<span class="var">age</span>)   <span class="cmt"># "Age: 20"</span>
+
+<span class="cmt"># float → int (truncates — drops the decimal)</span>
+<span class="fn">print</span>(<span class="fn">int</span>(<span class="num">3.9</span>))   <span class="cmt"># 3   ← NOT rounded, just truncated!</span>
+<span class="fn">print</span>(<span class="fn">int</span>(<span class="num">3.1</span>))   <span class="cmt"># 3</span>
+
+<span class="cmt"># bool conversions</span>
+<span class="fn">print</span>(<span class="fn">int</span>(<span class="kw">True</span>))    <span class="cmt"># 1</span>
+<span class="fn">print</span>(<span class="fn">int</span>(<span class="kw">False</span>))   <span class="cmt"># 0</span>
+</div>
+  </div>
+
+  <div class="box misconception">
+    <div class="box-title">🚫 Common Misconception — "25" vs 25</div>
+    <p><code>"25"</code> is a <strong>string</strong> — two characters, the digit 2 and the digit 5. Python cannot do math with it directly. <code>25</code> is an <strong>integer</strong>. They look alike but behave completely differently:</p>
+    <div class="code-block" style="margin:.5rem 0;"><div class="code-body">
+<span class="fn">print</span>(<span class="str">"25"</span> + <span class="str">"10"</span>)   <span class="cmt"># "2510"  — string join!</span>
+<span class="fn">print</span>(<span class="num">25</span>  + <span class="num">10</span>)    <span class="cmt"># 35     — math!</span>
+</div></div>
+    <p>Always convert with <code>int()</code> or <code>float()</code> after <code>input()</code>.</p>
+  </div>
+
+
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART 3 — OPERATORS
+══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="part3">
+  <div class="part-badge">Part 3</div>
+  <div class="section-label">Doing Things with Values</div>
+  <h2>Operators</h2>
+
+  <p>Operators are the symbols that perform actions on values. Python groups them into four categories we'll cover here: <strong>arithmetic</strong>, <strong>comparison</strong>, <strong>logical</strong>, and <strong>string</strong> operators.</p>
+
+  <h3>Arithmetic Operators</h3>
+  <p>These do math. Python follows standard order of operations (PEMDAS).</p>
+
+  <div class="op-showcase">
+    <div class="op-card"><div class="op-symbol">+</div><div class="op-name">Addition</div><div class="op-ex">5 + 3 → 8<br>2.5 + 1.5 → 4.0</div></div>
+    <div class="op-card"><div class="op-symbol">-</div><div class="op-name">Subtraction</div><div class="op-ex">10 - 4 → 6<br>0 - 7 → -7</div></div>
+    <div class="op-card"><div class="op-symbol">*</div><div class="op-name">Multiplication</div><div class="op-ex">6 * 7 → 42<br>2.5 * 4 → 10.0</div></div>
+    <div class="op-card"><div class="op-symbol">/</div><div class="op-name">True Division</div><div class="op-ex">10 / 4 → 2.5<br>Always returns float</div></div>
+    <div class="op-card"><div class="op-symbol">//</div><div class="op-name">Floor Division</div><div class="op-ex">10 // 4 → 2<br>Drops the decimal</div></div>
+    <div class="op-card"><div class="op-symbol">%</div><div class="op-name">Modulo (Remainder)</div><div class="op-ex">10 % 3 → 1<br>11 % 2 → 1 (odd check)</div></div>
+    <div class="op-card"><div class="op-symbol">**</div><div class="op-name">Exponent (Power)</div><div class="op-ex">2 ** 8 → 256<br>9 ** 0.5 → 3.0 (√9)</div></div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — arithmetic in action</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">a</span>, <span class="var">b</span> = <span class="num">17</span>, <span class="num">5</span>
+
+<span class="fn">print</span>(<span class="var">a</span> + <span class="var">b</span>)    <span class="cmt"># 22</span>
+<span class="fn">print</span>(<span class="var">a</span> - <span class="var">b</span>)    <span class="cmt"># 12</span>
+<span class="fn">print</span>(<span class="var">a</span> * <span class="var">b</span>)    <span class="cmt"># 85</span>
+<span class="fn">print</span>(<span class="var">a</span> / <span class="var">b</span>)    <span class="cmt"># 3.4  (always float)</span>
+<span class="fn">print</span>(<span class="var">a</span> // <span class="var">b</span>)   <span class="cmt"># 3    (how many times does 5 go into 17 fully?)</span>
+<span class="fn">print</span>(<span class="var">a</span> % <span class="var">b</span>)    <span class="cmt"># 2    (17 = 5×3 + 2, remainder is 2)</span>
+<span class="fn">print</span>(<span class="var">a</span> ** <span class="num">2</span>)   <span class="cmt"># 289  (17 squared)</span>
+
+<span class="cmt"># Practical: is a number even or odd?</span>
+<span class="var">number</span> = <span class="num">42</span>
+<span class="fn">print</span>(<span class="var">number</span> % <span class="num">2</span> == <span class="num">0</span>)   <span class="cmt"># True — even numbers have remainder 0</span>
+</div>
+  </div>
+
+  <div class="box analogy">
+    <div class="box-title">📐 Understanding Modulo (%)</div>
+    <p>Modulo gives you the <strong>remainder</strong> after division. Think of it like dividing items into groups: <code>17 % 5</code> asks "if I put 17 items into groups of 5, how many are left over?" 3 full groups of 5 = 15, leftover = 2. So <code>17 % 5 = 2</code>.</p>
+    <p>Common uses: checking even/odd (<code>n % 2</code>), wrapping around a range, dividing time into hours/minutes.</p>
+  </div>
+
+  <h3>Division in Python — Three Types Explained</h3>
+  <p>Division is one of the most misunderstood areas for beginners because Python has <strong>three different division operators</strong>, each producing a different kind of result.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Operator</th><th>Name</th><th>Returns</th><th>Example</th><th>Result</th></tr>
+    <tr><td><code>/</code></td><td>True (float) division</td><td>Always a <code>float</code></td><td><code>10 / 4</code></td><td><code>2.5</code></td></tr>
+    <tr><td><code>//</code></td><td>Floor division</td><td>Always an <code>int</code> (or float if inputs are float)</td><td><code>10 // 4</code></td><td><code>2</code></td></tr>
+    <tr><td><code>%</code></td><td>Modulo (remainder)</td><td>The leftover after floor division</td><td><code>10 % 4</code></td><td><code>2</code></td></tr>
+  </table>
+  </div>
+
+  <h4>/ &nbsp; True Division — always gives a decimal</h4>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — true division ( / )</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="fn">print</span>(<span class="num">10</span> / <span class="num">4</span>)    <span class="cmt"># 2.5   — always float, even if it divides evenly</span>
+<span class="fn">print</span>(<span class="num">9</span>  / <span class="num">3</span>)    <span class="cmt"># 3.0   — not 3! Still a float</span>
+<span class="fn">print</span>(<span class="num">7</span>  / <span class="num">2</span>)    <span class="cmt"># 3.5</span>
+<span class="fn">print</span>(<span class="num">1</span>  / <span class="num">4</span>)    <span class="cmt"># 0.25</span>
+<span class="cmt"># Rule: / ALWAYS returns a float in Python 3</span>
+</div>
+  </div>
+
+  <h4>// &nbsp; Floor Division — rounds DOWN to a whole number</h4>
+  <div class="box analogy">
+    <div class="box-title">📦 What does "floor" mean?</div>
+    <p>The <strong>floor</strong> of a number is the largest whole number that is less than or equal to it — in other words, always round toward negative infinity (always round <em>down</em>, never up).</p>
+    <p><code>floor(3.9) = 3</code> &nbsp;&nbsp; <code>floor(3.1) = 3</code> &nbsp;&nbsp; <code>floor(-3.1) = -4</code> (not -3!)</p>
+  </div>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — floor division ( // )</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="fn">print</span>(<span class="num">10</span> // <span class="num">4</span>)    <span class="cmt"># 2    — 10÷4=2.5, floor=2</span>
+<span class="fn">print</span>(<span class="num">9</span>  // <span class="num">3</span>)    <span class="cmt"># 3    — divides exactly</span>
+<span class="fn">print</span>(<span class="num">7</span>  // <span class="num">2</span>)    <span class="cmt"># 3    — 7÷2=3.5, floor=3</span>
+<span class="fn">print</span>(<span class="num">17</span> // <span class="num">5</span>)    <span class="cmt"># 3    — 17÷5=3.4, floor=3</span>
+<span class="fn">print</span>(<span class="num">1</span>  // <span class="num">4</span>)    <span class="cmt"># 0    — 0.25 floors to 0</span>
+
+<span class="cmt"># Watch out — negative numbers floor toward -∞</span>
+<span class="fn">print</span>(-<span class="num">7</span> // <span class="num">2</span>)    <span class="cmt"># -4   — NOT -3! -3.5 floors DOWN to -4</span>
+<span class="fn">print</span>( <span class="num">7</span> // <span class="num">2</span>)    <span class="cmt"># 3</span>
+
+<span class="cmt"># Practical use: convert total minutes to hours and minutes</span>
+<span class="var">total_minutes</span> = <span class="num">137</span>
+<span class="var">hours</span>   = <span class="var">total_minutes</span> // <span class="num">60</span>   <span class="cmt"># 2</span>
+<span class="var">minutes</span> = <span class="var">total_minutes</span> % <span class="num">60</span>    <span class="cmt"># 17  (remainder)</span>
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"{total_minutes} minutes = {hours}h {minutes}m"</span>)
+<span class="cmt"># 137 minutes = 2h 17m</span>
+</div>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ int() truncates — // floors. They are NOT the same for negatives.</div>
+    <div class="code-block" style="margin:.5rem 0;"><div class="code-body">
+<span class="fn">print</span>(<span class="fn">int</span>(-<span class="num">3.9</span>))    <span class="cmt"># -3   — truncate (toward zero)</span>
+<span class="fn">print</span>(-<span class="num">7</span> // <span class="num">2</span>)      <span class="cmt"># -4   — floor (toward -∞)</span>
+<span class="cmt"># For positive numbers they agree; for negatives they differ.</span>
+</div></div>
+  </div>
+
+  <h4>% &nbsp; Modulo — the remainder after floor division</h4>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — modulo ( % )</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="fn">print</span>(<span class="num">10</span> % <span class="num">4</span>)    <span class="cmt"># 2    — 10 = 4×2 + 2, remainder is 2</span>
+<span class="fn">print</span>(<span class="num">9</span>  % <span class="num">3</span>)    <span class="cmt"># 0    — divides exactly, no remainder</span>
+<span class="fn">print</span>(<span class="num">17</span> % <span class="num">5</span>)    <span class="cmt"># 2    — 17 = 5×3 + 2</span>
+<span class="fn">print</span>(<span class="num">7</span>  % <span class="num">2</span>)    <span class="cmt"># 1    — odd number</span>
+<span class="fn">print</span>(<span class="num">42</span> % <span class="num">2</span>)    <span class="cmt"># 0    — even number</span>
+
+<span class="cmt"># Three golden uses of modulo:</span>
+<span class="cmt"># 1. Even / odd check</span>
+<span class="var">n</span> = <span class="num">42</span>
+<span class="fn">print</span>(<span class="var">n</span> % <span class="num">2</span> == <span class="num">0</span>)   <span class="cmt"># True → even</span>
+
+<span class="cmt"># 2. Divisibility check</span>
+<span class="fn">print</span>(<span class="num">15</span> % <span class="num">3</span> == <span class="num">0</span>)   <span class="cmt"># True → divisible by 3</span>
+
+<span class="cmt"># 3. Time conversion (shown above with //)</span>
+</div>
+  </div>
+
+  <!-- Side-by-side comparison -->
+  <h4>All Three Division Operators — Side by Side</h4>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — comparison of all three</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="cmt">#         /     //    %</span>
+<span class="cmt"># 10 ÷ 4:</span>
+<span class="fn">print</span>(<span class="num">10</span> / <span class="num">4</span>)    <span class="cmt"># 2.5  — exact decimal</span>
+<span class="fn">print</span>(<span class="num">10</span> // <span class="num">4</span>)   <span class="cmt"># 2    — whole number (floor)</span>
+<span class="fn">print</span>(<span class="num">10</span> % <span class="num">4</span>)    <span class="cmt"># 2    — remainder (10 - 4×2 = 2)</span>
+
+<span class="cmt"># Relationship: a == (a // b) * b + (a % b)</span>
+<span class="cmt"># 10 == (10//4)*4 + (10%4)  →  10 == 2*4 + 2  →  10 == 10 ✓</span>
+</div>
+  </div>
+
+
+  <h3>Order of Operations</h3>
+  <p>Python respects the same order as maths — <strong>PEMDAS</strong>: Parentheses, Exponents, Multiply/Divide, Add/Subtract.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="fn">print</span>(<span class="num">2</span> + <span class="num">3</span> * <span class="num">4</span>)       <span class="cmt"># 14   (multiply first: 3×4=12, then 2+12)</span>
+<span class="fn">print</span>((<span class="num">2</span> + <span class="num">3</span>) * <span class="num">4</span>)     <span class="cmt"># 20   (parentheses first: 2+3=5, then 5×4)</span>
+<span class="fn">print</span>(<span class="num">2</span> ** <span class="num">3</span> ** <span class="num">2</span>)     <span class="cmt"># 512  (** is right-to-left: 3**2=9, then 2**9)</span>
+<span class="fn">print</span>(<span class="num">10</span> - <span class="num">2</span> * <span class="num">3</span> + <span class="num">1</span>)  <span class="cmt"># 5    (2×3=6, then 10-6+1)</span>
+
+<span class="cmt"># Engineering: Ohm's Law — V = I × R</span>
+<span class="var">current</span>    = <span class="num">2.5</span>   <span class="cmt"># Amps</span>
+<span class="var">resistance</span> = <span class="num">47</span>    <span class="cmt"># Ohms</span>
+<span class="var">voltage</span>    = <span class="var">current</span> * <span class="var">resistance</span>
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Voltage: {voltage} V"</span>)   <span class="cmt"># Voltage: 117.5 V</span>
+</div>
+  </div>
+
+  <h3>Comparison Operators</h3>
+  <p>Comparison operators compare two values and always return <code>True</code> or <code>False</code>. They are the backbone of decision-making in Python.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Operator</th><th>Meaning</th><th>Example</th><th>Result</th></tr>
+    <tr><td><code>==</code></td><td>Equal to</td><td><code>5 == 5</code></td><td><code>True</code></td></tr>
+    <tr><td><code>!=</code></td><td>Not equal to</td><td><code>5 != 3</code></td><td><code>True</code></td></tr>
+    <tr><td><code>&gt;</code></td><td>Greater than</td><td><code>10 &gt; 7</code></td><td><code>True</code></td></tr>
+    <tr><td><code>&lt;</code></td><td>Less than</td><td><code>3 &lt; 1</code></td><td><code>False</code></td></tr>
+    <tr><td><code>&gt;=</code></td><td>Greater than or equal</td><td><code>5 &gt;= 5</code></td><td><code>True</code></td></tr>
+    <tr><td><code>&lt;=</code></td><td>Less than or equal</td><td><code>4 &lt;= 3</code></td><td><code>False</code></td></tr>
+  </table>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — comparison examples</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">score</span> = <span class="num">78</span>
+
+<span class="fn">print</span>(<span class="var">score</span> >= <span class="num">60</span>)   <span class="cmt"># True  — passing?</span>
+<span class="fn">print</span>(<span class="var">score</span> == <span class="num">100</span>)  <span class="cmt"># False — perfect score?</span>
+<span class="fn">print</span>(<span class="var">score</span> != <span class="num">78</span>)   <span class="cmt"># False — is it NOT 78?</span>
+<span class="fn">print</span>(<span class="var">score</span> < <span class="num">90</span>)    <span class="cmt"># True  — below A range?</span>
+
+<span class="cmt"># Chained comparisons — very readable in Python</span>
+<span class="fn">print</span>(<span class="num">60</span> <= <span class="var">score</span> < <span class="num">80</span>)   <span class="cmt"># True — is score between 60 and 79?</span>
+</div>
+  </div>
+
+  <div class="box warn">
+    <div class="box-title">⚠️ = vs == — The Most Common Beginner Mistake</div>
+    <p><code>=</code> <strong>assigns</strong> a value: <code>x = 5</code> stores 5 in x.<br>
+    <code>==</code> <strong>compares</strong> two values: <code>x == 5</code> asks "is x equal to 5?"<br>
+    Using <code>=</code> instead of <code>==</code> in a condition is a syntax error in Python 3.</p>
+    <div class="code-block" style="margin:.5rem 0;"><div class="code-body">
+<span class="var">x</span> = <span class="num">5</span>            <span class="cmt"># ← assignment: store 5 in x</span>
+<span class="fn">print</span>(<span class="var">x</span> == <span class="num">5</span>)   <span class="cmt"># ← comparison: True</span>
+<span class="fn">print</span>(<span class="var">x</span> == <span class="num">6</span>)   <span class="cmt"># ← comparison: False</span>
+</div></div>
+  </div>
+
+  <h3>Logical Operators</h3>
+  <p>Logical operators combine multiple comparisons into one expression.</p>
+
+  <div class="tbl-wrap">
+  <table>
+    <tr><th>Operator</th><th>Meaning</th><th>True when</th><th>Example</th></tr>
+    <tr><td><code>and</code></td><td>Both true</td><td>Both sides are True</td><td><code>age &gt;= 18 and has_id == True</code></td></tr>
+    <tr><td><code>or</code></td><td>At least one true</td><td>Either side is True</td><td><code>is_member or paid_today</code></td></tr>
+    <tr><td><code>not</code></td><td>Flip it</td><td>Original is False</td><td><code>not is_raining</code></td></tr>
+  </table>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — logical operators</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">age</span>        = <span class="num">20</span>
+<span class="var">has_ticket</span> = <span class="kw">True</span>
+<span class="var">is_vip</span>     = <span class="kw">False</span>
+
+<span class="cmt"># and — both must be True</span>
+<span class="fn">print</span>(<span class="var">age</span> >= <span class="num">18</span> <span class="kw">and</span> <span class="var">has_ticket</span>)        <span class="cmt"># True  (20>=18 AND has_ticket)</span>
+<span class="fn">print</span>(<span class="var">age</span> >= <span class="num">18</span> <span class="kw">and</span> <span class="var">is_vip</span>)            <span class="cmt"># False (is_vip is False)</span>
+
+<span class="cmt"># or — at least one must be True</span>
+<span class="fn">print</span>(<span class="var">has_ticket</span> <span class="kw">or</span> <span class="var">is_vip</span>)            <span class="cmt"># True  (has_ticket is True)</span>
+<span class="fn">print</span>(<span class="kw">False</span> <span class="kw">or</span> <span class="kw">False</span>)                   <span class="cmt"># False</span>
+
+<span class="cmt"># not — flips True ↔ False</span>
+<span class="fn">print</span>(<span class="kw">not</span> <span class="var">is_vip</span>)                       <span class="cmt"># True  (flip False)</span>
+<span class="fn">print</span>(<span class="kw">not</span> <span class="var">has_ticket</span>)                   <span class="cmt"># False (flip True)</span>
+
+<span class="cmt"># Combining all three</span>
+<span class="var">can_enter</span> = (<span class="var">age</span> >= <span class="num">18</span>) <span class="kw">and</span> (<span class="var">has_ticket</span> <span class="kw">or</span> <span class="var">is_vip</span>)
+<span class="fn">print</span>(<span class="var">can_enter</span>)   <span class="cmt"># True</span>
+</div>
+  </div>
+
+
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     PART 4 — IF STATEMENTS
+══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="part4">
+  <div class="part-badge">Part 4</div>
+  <div class="section-label">Making Decisions</div>
+  <h2>if Statements</h2>
+
+  <p>So far your programs run every line top to bottom. An <code>if</code> statement lets Python <strong>choose</strong> which code to run based on a condition. It is the foundation of all decision-making in programming.</p>
+
+  <div class="box analogy">
+    <div class="box-title">🚦 Analogy — A Traffic Light</div>
+    <p>A traffic light asks: "Is the light red?" <strong>If yes</strong>, stop. <strong>If it is amber</strong>, slow down. <strong>Otherwise</strong>, go. Your Python program can make the same kind of branching decisions with if / elif / else.</p>
+  </div>
+
+  <h3>Simple if</h3>
+  <p>The simplest form: run a block of code only when the condition is True. If it's False, skip the block entirely.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — simple if</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">temperature</span> = <span class="num">38</span>
+
+<span class="kw">if</span> <span class="var">temperature</span> > <span class="num">37.5</span>:
+    <span class="fn">print</span>(<span class="str">"You have a fever."</span>)
+    <span class="fn">print</span>(<span class="str">"Please rest and drink water."</span>)
+
+<span class="cmt"># This line always runs — it's outside the if block</span>
+<span class="fn">print</span>(<span class="str">"Temperature check complete."</span>)
+</div>
+  </div>
+
+  <p>The <strong>indented block</strong> (4 spaces or 1 tab) is the if body. Python uses indentation — not braces — to group code. Everything indented under the <code>if</code> only runs when the condition is True.</p>
+
+  <h3>if / else</h3>
+  <p>Add an <code>else</code> to handle the False case — one of the two blocks always runs.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — if / else</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">score</span> = <span class="num">72</span>
+
+<span class="kw">if</span> <span class="var">score</span> >= <span class="num">60</span>:
+    <span class="fn">print</span>(<span class="str">"Pass! Well done."</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Did not pass. Please see your instructor."</span>)
+
+<span class="cmt"># With score = 72 → output: "Pass! Well done."</span>
+<span class="cmt"># With score = 45 → output: "Did not pass. Please see your instructor."</span>
+</div>
+  </div>
+
+  <h3>if / elif / else — Multiple Conditions</h3>
+  <p>When you have more than two cases, use <code>elif</code> (short for "else if"). Python checks conditions top to bottom and runs the <strong>first</strong> one that is True, then skips the rest.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — if / elif / else</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">score</span> = <span class="num">85</span>
+
+<span class="kw">if</span> <span class="var">score</span> >= <span class="num">93</span>:
+    <span class="var">grade</span> = <span class="str">"A"</span>
+<span class="kw">elif</span> <span class="var">score</span> >= <span class="num">83</span>:
+    <span class="var">grade</span> = <span class="str">"B"</span>
+<span class="kw">elif</span> <span class="var">score</span> >= <span class="num">73</span>:
+    <span class="var">grade</span> = <span class="str">"C"</span>
+<span class="kw">elif</span> <span class="var">score</span> >= <span class="num">60</span>:
+    <span class="var">grade</span> = <span class="str">"D"</span>
+<span class="kw">else</span>:
+    <span class="var">grade</span> = <span class="str">"F"</span>
+
+<span class="fn">print</span>(<span class="fn">f</span><span class="str">"Score {score} → Grade {grade}"</span>)   <span class="cmt"># Score 85 → Grade B</span>
+</div>
+  </div>
+
+  <div class="box predict">
+    <div class="box-title">🤔 Predict — What grade does score = 73 get?</div>
+    <details><summary>▶ Show Answer</summary>
+      <div class="solution-body">
+        <p>Score 73 → Grade <strong>C</strong>.</p>
+        <p>Python checks in order: <code>73 >= 93</code>? No. <code>73 >= 83</code>? No. <code>73 >= 73</code>? <strong>Yes</strong> → grade = "C". The remaining <code>elif</code> and <code>else</code> are skipped.</p>
+      </div>
+    </details>
+  </div>
+
+  <h3>Nested if Statements</h3>
+  <p>You can put an if inside another if. The inner if only runs when the outer condition is True. Indent one extra level.</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — nested if</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">age</span>        = <span class="num">20</span>
+<span class="var">has_ticket</span> = <span class="kw">True</span>
+
+<span class="kw">if</span> <span class="var">age</span> >= <span class="num">18</span>:
+    <span class="fn">print</span>(<span class="str">"Age check passed."</span>)
+    <span class="kw">if</span> <span class="var">has_ticket</span>:
+        <span class="fn">print</span>(<span class="str">"Welcome! Enjoy the show."</span>)
+    <span class="kw">else</span>:
+        <span class="fn">print</span>(<span class="str">"Please buy a ticket first."</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Sorry — must be 18 or older."</span>)
+</div>
+  </div>
+
+  <h3>if with Logical Operators</h3>
+  <p>Combine conditions with <code>and</code>, <code>or</code>, <code>not</code> to avoid deep nesting:</p>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python — combined conditions</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="cmt"># Same logic as nested, but flat</span>
+<span class="kw">if</span> <span class="var">age</span> >= <span class="num">18</span> <span class="kw">and</span> <span class="var">has_ticket</span>:
+    <span class="fn">print</span>(<span class="str">"Welcome!"</span>)
+<span class="kw">elif</span> <span class="var">age</span> < <span class="num">18</span>:
+    <span class="fn">print</span>(<span class="str">"Must be 18 or older."</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"Need a ticket."</span>)
+
+<span class="cmt"># Check a range</span>
+<span class="var">bmi</span> = <span class="num">22.4</span>
+<span class="kw">if</span> <span class="num">18.5</span> <= <span class="var">bmi</span> < <span class="num">25.0</span>:
+    <span class="fn">print</span>(<span class="str">"Healthy BMI range"</span>)
+
+<span class="cmt"># not operator</span>
+<span class="var">is_weekend</span> = <span class="kw">False</span>
+<span class="kw">if</span> <span class="kw">not</span> <span class="var">is_weekend</span>:
+    <span class="fn">print</span>(<span class="str">"It's a weekday — class is on!"</span>)
+</div>
+  </div>
+
+  <h3>Real-World Examples</h3>
+
+  <h4>Example A — Temperature Monitor</h4>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">temp</span> = <span class="fn">float</span>(<span class="fn">input</span>(<span class="str">"Enter temperature (°C): "</span>))
+
+<span class="kw">if</span> <span class="var">temp</span> > <span class="num">100</span>:
+    <span class="fn">print</span>(<span class="str">"CRITICAL: System overheating!"</span>)
+<span class="kw">elif</span> <span class="var">temp</span> > <span class="num">80</span>:
+    <span class="fn">print</span>(<span class="str">"WARNING: Temperature is high."</span>)
+<span class="kw">elif</span> <span class="var">temp</span> > <span class="num">60</span>:
+    <span class="fn">print</span>(<span class="str">"NOTICE: Running warm — monitor closely."</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="str">"OK: Temperature is normal."</span>)
+</div>
+  </div>
+
+  <h4>Example B — Grade Calculator with Letter and Comment</h4>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">name</span>  = <span class="fn">input</span>(<span class="str">"Student name: "</span>)
+<span class="var">score</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Score (0-100): "</span>))
+
+<span class="kw">if</span> <span class="var">score</span> < <span class="num">0</span> <span class="kw">or</span> <span class="var">score</span> > <span class="num">100</span>:
+    <span class="fn">print</span>(<span class="str">"Invalid score entered."</span>)
+<span class="kw">elif</span> <span class="var">score</span> >= <span class="num">93</span>:
+    <span class="fn">print</span>(<span class="fn">f</span><span class="str">"{name}: A — Outstanding!"</span>)
+<span class="kw">elif</span> <span class="var">score</span> >= <span class="num">83</span>:
+    <span class="fn">print</span>(<span class="fn">f</span><span class="str">"{name}: B — Great work."</span>)
+<span class="kw">elif</span> <span class="var">score</span> >= <span class="num">73</span>:
+    <span class="fn">print</span>(<span class="fn">f</span><span class="str">"{name}: C — Satisfactory."</span>)
+<span class="kw">elif</span> <span class="var">score</span> >= <span class="num">60</span>:
+    <span class="fn">print</span>(<span class="fn">f</span><span class="str">"{name}: D — Needs improvement."</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="fn">f</span><span class="str">"{name}: F — Please see your instructor."</span>)
+</div>
+  </div>
+
+  <h4>Example C — Even / Odd / Divisibility</h4>
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">python</span><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+    <div class="code-body">
+<span class="var">n</span> = <span class="fn">int</span>(<span class="fn">input</span>(<span class="str">"Enter a number: "</span>))
+
+<span class="kw">if</span> <span class="var">n</span> % <span class="num">2</span> == <span class="num">0</span>:
+    <span class="fn">print</span>(<span class="fn">f</span><span class="str">"{n} is even."</span>)
+<span class="kw">else</span>:
+    <span class="fn">print</span>(<span class="fn">f</span><span class="str">"{n} is odd."</span>)
+
+<span class="cmt"># More specific: divisible by 3 and 5?</span>
+<span class="kw">if</span> <span class="var">n</span> % <span class="num">15</span> == <span class="num">0</span>:
+    <span class="fn">print</span>(<span class="str">"Divisible by both 3 and 5 (FizzBuzz!)"</span>)
+<span class="kw">elif</span> <span class="var">n</span> % <span class="num">3</span> == <span class="num">0</span>:
+    <span class="fn">print</span>(<span class="str">"Divisible by 3 (Fizz)"</span>)
+<span class="kw">elif</span> <span class="var">n</span> % <span class="num">5</span> == <span class="num">0</span>:
+    <span class="fn">print</span>(<span class="str">"Divisible by 5 (Buzz)"</span>)
+</div>
+  </div>
+
+
+
+  <div class="box misconception">
+    <div class="box-title">🚫 Indentation Errors — The Beginner Trap</div>
+    <p>Python uses indentation to define code blocks. Inconsistent indentation causes an <code>IndentationError</code> and your program won't run at all.</p>
+    <div class="code-block" style="margin:.5rem 0;"><div class="code-body">
+<span class="cmt"># ❌ WRONG — inconsistent indent</span>
+<span class="kw">if</span> <span class="var">x</span> > <span class="num">0</span>:
+<span class="fn">print</span>(<span class="str">"positive"</span>)   <span class="cmt"># IndentationError!</span>
+
+<span class="cmt"># ✅ CORRECT — 4 spaces inside the block</span>
+<span class="kw">if</span> <span class="var">x</span> > <span class="num">0</span>:
+    <span class="fn">print</span>(<span class="str">"positive"</span>)
+</div></div>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     KNOWLEDGE CHECK QUIZ
+══════════════════════════════════════════════════════════════════ -->
+<div class="section" id="quiz">
+  <div class="part-badge">Knowledge Check</div>
+  <div class="section-label">Test Yourself</div>
+  <h2>Quiz — 10 Questions</h2>
+  <p>Choose the best answer for each question. Instant feedback is given after each selection.</p>
+
+  <div class="quiz-wrap">
+
+    <!-- Q1 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 1</div>
+      <div class="qtext">What does this print? <code>x = 5; x = x * 2; x += 3; print(x)</code></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q1" value="a" onchange="checkQ(this,'b')"><span class="opt-label">A) 10</span></label>
+        <label class="opt"><input type="radio" name="q1" value="b" onchange="checkQ(this,'b')"><span class="opt-label">B) 13</span></label>
+        <label class="opt"><input type="radio" name="q1" value="c" onchange="checkQ(this,'b')"><span class="opt-label">C) 8</span></label>
+        <label class="opt"><input type="radio" name="q1" value="d" onchange="checkQ(this,'b')"><span class="opt-label">D) 16</span></label>
+      </div>
+      <div class="feedback" id="fb_q1"></div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 2</div>
+      <div class="qtext">What is the type of <code>"3.14"</code>?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q2" value="a" onchange="checkQ(this,'c')"><span class="opt-label">A) int</span></label>
+        <label class="opt"><input type="radio" name="q2" value="b" onchange="checkQ(this,'c')"><span class="opt-label">B) float</span></label>
+        <label class="opt"><input type="radio" name="q2" value="c" onchange="checkQ(this,'c')"><span class="opt-label">C) str</span></label>
+        <label class="opt"><input type="radio" name="q2" value="d" onchange="checkQ(this,'c')"><span class="opt-label">D) bool</span></label>
+      </div>
+      <div class="feedback" id="fb_q2"></div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 3</div>
+      <div class="qtext">What does <code>17 % 5</code> evaluate to?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q3" value="a" onchange="checkQ(this,'a')"><span class="opt-label">A) 2</span></label>
+        <label class="opt"><input type="radio" name="q3" value="b" onchange="checkQ(this,'a')"><span class="opt-label">B) 3</span></label>
+        <label class="opt"><input type="radio" name="q3" value="c" onchange="checkQ(this,'a')"><span class="opt-label">C) 3.4</span></label>
+        <label class="opt"><input type="radio" name="q3" value="d" onchange="checkQ(this,'a')"><span class="opt-label">D) 0</span></label>
+      </div>
+      <div class="feedback" id="fb_q3"></div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 4</div>
+      <div class="qtext">Which of the following variable names is <strong>invalid</strong> in Python?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q4" value="a" onchange="checkQ(this,'c')"><span class="opt-label">A) _speed</span></label>
+        <label class="opt"><input type="radio" name="q4" value="b" onchange="checkQ(this,'c')"><span class="opt-label">B) total_cost</span></label>
+        <label class="opt"><input type="radio" name="q4" value="c" onchange="checkQ(this,'c')"><span class="opt-label">C) 2fast</span></label>
+        <label class="opt"><input type="radio" name="q4" value="d" onchange="checkQ(this,'c')"><span class="opt-label">D) my_var2</span></label>
+      </div>
+      <div class="feedback" id="fb_q4"></div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 5</div>
+      <div class="qtext">What does <code>print("5" + "3")</code> output?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q5" value="a" onchange="checkQ(this,'b')"><span class="opt-label">A) 8</span></label>
+        <label class="opt"><input type="radio" name="q5" value="b" onchange="checkQ(this,'b')"><span class="opt-label">B) 53</span></label>
+        <label class="opt"><input type="radio" name="q5" value="c" onchange="checkQ(this,'b')"><span class="opt-label">C) "8"</span></label>
+        <label class="opt"><input type="radio" name="q5" value="d" onchange="checkQ(this,'b')"><span class="opt-label">D) Error</span></label>
+      </div>
+      <div class="feedback" id="fb_q5"></div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 6</div>
+      <div class="qtext">What is the value of <code>not (5 > 3)</code>?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q6" value="a" onchange="checkQ(this,'b')"><span class="opt-label">A) True</span></label>
+        <label class="opt"><input type="radio" name="q6" value="b" onchange="checkQ(this,'b')"><span class="opt-label">B) False</span></label>
+        <label class="opt"><input type="radio" name="q6" value="c" onchange="checkQ(this,'b')"><span class="opt-label">C) None</span></label>
+        <label class="opt"><input type="radio" name="q6" value="d" onchange="checkQ(this,'b')"><span class="opt-label">D) Error</span></label>
+      </div>
+      <div class="feedback" id="fb_q6"></div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 7</div>
+      <div class="qtext">Given <code>score = 75</code>, which block runs?<br><code>if score >= 80: print("B")</code><br><code>elif score >= 70: print("C")</code><br><code>else: print("D")</code></div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q7" value="a" onchange="checkQ(this,'b')"><span class="opt-label">A) B</span></label>
+        <label class="opt"><input type="radio" name="q7" value="b" onchange="checkQ(this,'b')"><span class="opt-label">B) C</span></label>
+        <label class="opt"><input type="radio" name="q7" value="c" onchange="checkQ(this,'b')"><span class="opt-label">C) D</span></label>
+        <label class="opt"><input type="radio" name="q7" value="d" onchange="checkQ(this,'b')"><span class="opt-label">D) B and C</span></label>
+      </div>
+      <div class="feedback" id="fb_q7"></div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 8</div>
+      <div class="qtext">What does <code>int(3.9)</code> return?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q8" value="a" onchange="checkQ(this,'b')"><span class="opt-label">A) 4 (rounded)</span></label>
+        <label class="opt"><input type="radio" name="q8" value="b" onchange="checkQ(this,'b')"><span class="opt-label">B) 3 (truncated)</span></label>
+        <label class="opt"><input type="radio" name="q8" value="c" onchange="checkQ(this,'b')"><span class="opt-label">C) 3.9</span></label>
+        <label class="opt"><input type="radio" name="q8" value="d" onchange="checkQ(this,'b')"><span class="opt-label">D) Error</span></label>
+      </div>
+      <div class="feedback" id="fb_q8"></div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 9</div>
+      <div class="qtext">Which expression checks if <code>age</code> is between 18 and 65 (inclusive)?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q9" value="a" onchange="checkQ(this,'c')"><span class="opt-label">A) <code>age > 18 and age < 65</code></span></label>
+        <label class="opt"><input type="radio" name="q9" value="b" onchange="checkQ(this,'c')"><span class="opt-label">B) <code>age == 18 or age == 65</code></span></label>
+        <label class="opt"><input type="radio" name="q9" value="c" onchange="checkQ(this,'c')"><span class="opt-label">C) <code>18 &lt;= age &lt;= 65</code></span></label>
+        <label class="opt"><input type="radio" name="q9" value="d" onchange="checkQ(this,'c')"><span class="opt-label">D) <code>age between 18 65</code></span></label>
+      </div>
+      <div class="feedback" id="fb_q9"></div>
+    </div>
+
+    <!-- Q10 -->
+    <div class="quiz-q">
+      <div class="qnum">Question 10</div>
+      <div class="qtext">What is the difference between <code>=</code> and <code>==</code>?</div>
+      <div class="options">
+        <label class="opt"><input type="radio" name="q10" value="a" onchange="checkQ(this,'a')"><span class="opt-label">A) <code>=</code> assigns a value; <code>==</code> compares two values</span></label>
+        <label class="opt"><input type="radio" name="q10" value="b" onchange="checkQ(this,'a')"><span class="opt-label">B) <code>==</code> assigns a value; <code>=</code> compares</span></label>
+        <label class="opt"><input type="radio" name="q10" value="c" onchange="checkQ(this,'a')"><span class="opt-label">C) They mean the same thing</span></label>
+        <label class="opt"><input type="radio" name="q10" value="d" onchange="checkQ(this,'a')"><span class="opt-label">D) <code>==</code> is used for floats, <code>=</code> for integers</span></label>
+      </div>
+      <div class="feedback" id="fb_q10"></div>
+    </div>
+
+  </div><!-- /quiz-wrap -->
+
+  <div id="quiz_score" style="margin-top:1rem;padding:1rem 1.3rem;border-radius:10px;background:var(--lblue);display:none;">
+    <strong>Score: <span id="score_val"></span> / 10</strong> — <span id="score_msg"></span>
+  </div>
+
+  <a href="#" class="back-top">↑ Back to top</a>
+</div>
+
+<!-- FINISH CARD -->
+<div class="finish-card">
+  <h2>🎉 Tutorial Complete!</h2>
+  <p>You have covered Variables, Data Types, Operators, and if Statements — the core building blocks of every Python program. Next up: Loops!</p>
+</div>
+
+</div><!-- /main -->
+
+<script>
+// ── PROGRESS BAR ──────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  const el = document.documentElement;
+  const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+  document.getElementById('progbar').style.width = pct + '%';
+});
+
+// ── NAV ACTIVE STATE ──────────────────────────────────────────────
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('#topnav a');
+const partIds  = ['part1','part2','part3','part4','quiz'];
+const visited  = new Set();
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      visited.add(e.target.id);
+      navLinks.forEach(a => a.classList.remove('active'));
+      const active = document.querySelector('#topnav a[href="#' + e.target.id + '"]');
+      if (active) active.classList.add('active');
+      const count = partIds.filter(id => visited.has(id)).length;
+      document.getElementById('ptbar').style.width = (count / 4 * 100) + '%';
+      document.getElementById('ptcount').textContent = Math.min(count,4) + ' / 4 parts';
+    }
+  });
+}, { threshold: 0.15 });
+sections.forEach(s => observer.observe(s));
+
+// ── COPY BUTTON ───────────────────────────────────────────────────
+function copyCode(btn) {
+  const text = btn.closest('.code-block').querySelector('.code-body').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'copied!';
+    setTimeout(() => btn.textContent = 'copy', 1800);
+  });
+}
+
+// ── QUIZ ──────────────────────────────────────────────────────────
+const explanations = {
+  q1:  { b: "✅ Correct! x=5 → x=5×2=10 → x=10+3=13. Output: 13.",
+          a:"❌ Not quite. After x*=2, x=10. Then x+=3 gives 13.", c:"❌ Remember x=x*2 first, then +3.", d:"❌ Check the order: multiply first, then add 3." },
+  q2:  { c:"✅ Correct! The quotes make it a string, even though the content looks like a number.",
+          a:"❌ No quotes = int. Quotes = str.", b:"❌ 3.14 without quotes is float; with quotes it is str.", d:"❌ bool is only True or False." },
+  q3:  { a:"✅ Correct! 17 = 5×3 + 2. The remainder is 2.",
+          b:"❌ 3 is the quotient (17//5), not the remainder.", c:"❌ 3.4 is 17/5 (true division), not modulo.", d:"❌ 0 would mean 17 is exactly divisible by 5 — it isn't." },
+  q4:  { c:"✅ Correct! Variable names cannot start with a digit. 2fast starts with '2'.",
+          a:"❌ _speed is valid — underscores are allowed.", b:"❌ total_cost is perfect snake_case.", d:"❌ my_var2 ends in a digit, which is fine." },
+  q5:  { b:"✅ Correct! With strings, + concatenates (joins). '5' + '3' = '53', not 8.",
+          a:"❌ 8 would be the result of int addition. These are strings.", c:"❌ The output is 53 without quotes — the quotes are just notation.", d:"❌ No error — Python knows how to concatenate strings." },
+  q6:  { b:"✅ Correct! 5>3 is True. not True = False.",
+          a:"❌ not flips True → False.", c:"❌ None is a different value. not gives True or False.", d:"❌ This is valid Python syntax." },
+  q7:  { b:"✅ Correct! 75>=80? No. 75>=70? Yes → prints 'C'. The else is skipped.",
+          a:"❌ 75 is not >=80.", c:"❌ D only runs if BOTH if and elif are False. 75>=70 is True.", d:"❌ Only the first True condition runs — Python stops checking after that." },
+  q8:  { b:"✅ Correct! int() truncates — it drops everything after the decimal. 3.9 → 3, not 4.",
+          a:"❌ int() truncates, it does NOT round. Use round() for rounding.", c:"❌ int() converts to integer, removing the decimal.", d:"❌ No error — this is valid." },
+  q9:  { c:"✅ Correct! Python allows chained comparisons: 18<=age<=65 is elegant and readable.",
+          a:"❌ This excludes 18 and 65 (strict inequalities). Use <= for inclusive.", b:"❌ This only checks if age is exactly 18 or exactly 65.", d:"❌ 'between' is not a Python keyword." },
+  q10: { a:"✅ Correct! = stores a value (assignment). == asks if two values are equal (comparison).",
+          b:"❌ It's the opposite — = assigns, == compares.", c:"❌ They are completely different operators.", d:"❌ Both work on all numeric types." },
+};
+
+let answered = {};
+function checkQ(radio, correct) {
+  const qname = radio.name;
+  if (answered[qname]) return;
+  answered[qname] = radio.value;
+  const opts = document.querySelectorAll(`input[name="${qname}"]`);
+  opts.forEach(o => {
+    o.disabled = true;
+    const lbl = o.closest('.opt');
+    if (o.value === correct) lbl.classList.add('correct');
+    else if (o.value === radio.value) lbl.classList.add('wrong');
+  });
+  const fb = document.getElementById('fb_' + qname);
+  const isRight = radio.value === correct;
+  fb.textContent = explanations[qname][radio.value] || (isRight ? '✅ Correct!' : '❌ Not quite.');
+  fb.className = 'feedback show ' + (isRight ? 'ok' : 'bad');
+  updateScore();
+}
+
+function updateScore() {
+  if (Object.keys(answered).length < 10) return;
+  const correctAnswers = {q1:'b',q2:'c',q3:'a',q4:'c',q5:'b',q6:'b',q7:'b',q8:'b',q9:'c',q10:'a'};
+  let score = 0;
+  for (const [q,a] of Object.entries(answered)) { if (a === correctAnswers[q]) score++; }
+  const msgs = ['Keep practising!','Getting there!','Good effort!','Solid!','Great work!','Almost perfect!','Perfect score! 🎉'];
+  const idx = Math.min(Math.floor(score/2), msgs.length-1);
+  document.getElementById('score_val').textContent = score;
+  document.getElementById('score_msg').textContent = msgs[idx];
+  document.getElementById('quiz_score').style.display = 'block';
+}
+
+}
+</script>
+</body>
+</html>
