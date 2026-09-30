@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Decision Making — In-Class Assignment</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background: #f4f7fb;
+        color: #243247;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1050px;
+        margin: 40px auto;
+        padding: 0 24px 50px;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #173b6c, #2864a8);
+        color: white;
+        padding: 38px 42px;
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(30, 60, 100, 0.15);
+        margin-bottom: 28px;
+    }
+
+    .hero h1 {
+        margin: 0 0 8px;
+        font-size: 36px;
+    }
+
+    .hero p {
+        margin: 0;
+        font-size: 18px;
+        opacity: 0.95;
+    }
+
+    .badge {
+        display: inline-block;
+        margin-top: 18px;
+        padding: 7px 14px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.18);
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .card {
+        background: white;
+        border: 1px solid #dfe7f1;
+        border-radius: 15px;
+        padding: 28px 32px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 14px rgba(30, 60, 100, 0.06);
+    }
+
+    h2 {
+        margin-top: 0;
+        color: #173b6c;
+        font-size: 25px;
+        border-bottom: 2px solid #e8eef7;
+        padding-bottom: 10px;
+    }
+
+    h3 {
+        color: #245895;
+        margin-bottom: 8px;
+    }
+
+    .important {
+        background: #eef6ff;
+        border-left: 5px solid #2c70bd;
+        padding: 17px 20px;
+        border-radius: 8px;
+        margin-top: 18px;
+    }
+
+    .grading {
+        background: #edf9f1;
+        border-left: 5px solid #29945b;
+        padding: 17px 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
+    .rule {
+        border: 1px solid #dce5f0;
+        border-radius: 12px;
+        padding: 20px 22px;
+        margin: 16px 0;
+        background: #fafcff;
+    }
+
+    .rule-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: #2864a8;
+        color: white;
+        border-radius: 50%;
+        font-weight: bold;
+        margin-right: 8px;
+    }
+
+    code {
+        font-family: Consolas, "Courier New", monospace;
+    }
+
+    .output {
+        background: #182433;
+        color: #e8f2ff;
+        border-radius: 9px;
+        padding: 14px 18px;
+        margin: 12px 0;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 15px;
+    }
+
+    ul {
+        padding-left: 25px;
+    }
+
+    li {
+        margin: 7px 0;
+    }
+
+    .requirements {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+        margin-top: 18px;
+    }
+
+    .requirement {
+        background: #f5f8fc;
+        border: 1px solid #dde6f1;
+        border-radius: 9px;
+        padding: 12px 15px;
+    }
+
+    .requirement code {
+        color: #174f8c;
+        font-weight: bold;
+        font-size: 16px;
+    }
+
+    .test-case {
+        border: 1px solid #dce5f0;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 20px 0;
+    }
+
+    .test-header {
+        background: #edf3fa;
+        padding: 13px 18px;
+        color: #173b6c;
+        font-weight: bold;
+        font-size: 17px;
+    }
+
+    .test-content {
+        padding: 18px 20px;
+        background: white;
+    }
+
+    .label {
+        font-weight: bold;
+        color: #53677f;
+        margin: 8px 0 5px;
+    }
+
+    .arrow {
+        text-align: center;
+        font-size: 25px;
+        color: #2864a8;
+        margin: 6px 0;
+    }
+
+    .result {
+        background: #edf9f1;
+        border: 1px solid #b9e2c8;
+        color: #17623a;
+        border-radius: 8px;
+        padding: 13px 16px;
+        font-family: Consolas, "Courier New", monospace;
+        font-weight: bold;
+    }
+
+    .warning-result {
+        background: #fff5e8;
+        border-color: #efd2a5;
+        color: #86520c;
+    }
+
+    .not-eligible {
+        background: #fff0f0;
+        border-color: #efc4c4;
+        color: #8a3030;
+    }
+
+    .branch {
+        display: inline-block;
+        background: #e8eff9;
+        color: #245895;
+        padding: 3px 9px;
+        border-radius: 12px;
+        font-family: Consolas, monospace;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .submission {
+        background: #fff9e9;
+        border: 1px solid #ead99d;
+    }
+
+    .footer-note {
+        text-align: center;
+        color: #63758c;
+        font-size: 14px;
+        margin-top: 30px;
+    }
+
+    @media (max-width: 650px) {
+        .hero {
+            padding: 28px 25px;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+        }
+
+        .card {
+            padding: 22px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <section class="hero">
+        <h1>Python Decision Making</h1>
+        <p>In-Class Programming Assignment</p>
+        <span class="badge">Individual Activity</span>
+    </section>
+
+    <section class="card">
+        <h2>Assignment Overview</h2>
+
+        <p>
+            Complete this activity <strong>independently</strong> during class.
+            The goal is to practice using Python to make decisions based on
+            multiple conditions.
+        </p>
+
+        <div class="grading">
+            <strong>Grading:</strong> This is a participation-based assignment.
+            You will receive <strong>full points for submitting your completed attempt.</strong>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Programming Problem</h2>
+
+        <p>
+            Write <strong>one Python program</strong> for a
+            <strong>college course registration system</strong>.
+            The program will collect information about a student and determine
+            whether the student is eligible for the
+            <strong>Advanced Course</strong>, the <strong>Regular Course</strong>,
+            or is <strong>not currently eligible to register</strong>.
+        </p>
+
+        <div class="important">
+            <strong>Your goal:</strong> Use <code>if</code>, <code>elif</code>,
+            <code>else</code>, comparison operators, and logical operators to make
+            the registration decision.
+        </div>
+
+        <h3>Step 1 — Ask the User for Information</h3>
+
+        <p>Your program must use <code>input()</code> to ask the user for:</p>
+
+        <ul>
+            <li>Their <strong>age</strong></li>
+            <li>Their <strong>GPA</strong></li>
+            <li>
+                Whether they have completed the prerequisite course
+                (<code>yes</code> or <code>no</code>)
+            </li>
+        </ul>
+
+        <h3>Step 2 — Make the Registration Decision</h3>
+
+        <p>
+            After receiving the information, your program must apply the following
+            rules <strong>in this order</strong>:
+        </p>
+
+        <div class="rule">
+            <h3>
+                <span class="rule-number">1</span>
+                Advanced Course
+            </h3>
+
+            <p>
+                If the student's GPA is <strong>3.0 or higher</strong>
+                <strong>AND</strong> the prerequisite course has been completed,
+                display:
+            </p>
+
+            <div class="output">You are eligible for the Advanced Course.</div>
+        </div>
+
+        <div class="rule">
+            <h3>
+                <span class="rule-number">2</span>
+                Regular Course
+            </h3>
+
+            <p>
+                Otherwise, if the student's GPA is <strong>2.0 or higher</strong>
+                <strong>AND</strong> the student is <strong>18 or older</strong>,
+                display:
+            </p>
+
+            <div class="output">You are eligible for the Regular Course.</div>
+        </div>
+
+        <div class="rule">
+            <h3>
+                <span class="rule-number">3</span>
+                Not Eligible
+            </h3>
+
+            <p>
+                If neither of the conditions above is satisfied, display:
+            </p>
+
+            <div class="output">You are not currently eligible to register.</div>
+        </div>
+
+        <h3>Step 3 — Python Requirements</h3>
+
+        <p>Your complete program must use all of the following:</p>
+
+        <div class="requirements">
+
+            <div class="requirement">
+                <code>input()</code><br>
+                Get information from the user
+            </div>
+
+            <div class="requirement">
+                <code>if</code><br>
+                Check the first condition
+            </div>
+
+            <div class="requirement">
+                <code>elif</code><br>
+                Check the second condition
+            </div>
+
+            <div class="requirement">
+                <code>else</code><br>
+                Handle the default case
+            </div>
+
+            <div class="requirement">
+                <code>and</code><br>
+                Combine conditions
+            </div>
+
+            <div class="requirement">
+                <code>&gt;= &nbsp; ==</code><br>
+                Compare values
+            </div>
+
+            <div class="requirement">
+                <code>print()</code><br>
+                Display the final decision
+            </div>
+
+        </div>
+
+        <div class="important">
+            <strong>Important:</strong> Your program should ask the user for the
+            values. Do not hard-code the age, GPA, or prerequisite answer from the
+            examples shown below.
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Expected Results</h2>
+
+        <p>
+            After you have written the complete program described above, test it with
+            different values. The following scenarios show the expected behavior for
+            each possible decision.
+        </p>
+
+        <div class="test-case">
+            <div class="test-header">
+                Test Case 1 — Advanced Course
+                
+            </div>
+
+            <div class="test-content">
+
+                <div class="label">User enters:</div>
+
+                <div class="output">
+Age: 20<br>
+GPA: 3.5<br>
+Completed prerequisite course: yes
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="label">Expected result:</div>
+
+                <div class="result">
+                    You are eligible for the Advanced Course.
+                </div>
+            </div>
+        </div>
+
+        <div class="test-case">
+            <div class="test-header">
+                Test Case 2 — Regular Course
+             
+            </div>
+
+            <div class="test-content">
+
+                <div class="label">User enters:</div>
+
+                <div class="output">
+Age: 21<br>
+GPA: 2.6<br>
+Completed prerequisite course: no
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="label">Expected result:</div>
+
+                <div class="result warning-result">
+                    You are eligible for the Regular Course.
+                </div>
+            </div>
+        </div>
+
+        <div class="test-case">
+            <div class="test-header">
+                Test Case 3 — Not Eligible
+            </div>
+
+            <div class="test-content">
+
+                <div class="label">User enters:</div>
+
+                <div class="output">
+Age: 17<br>
+GPA: 1.8<br>
+Completed prerequisite course: no
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="label">Expected result:</div>
+
+                <div class="result not-eligible">
+                    You are not currently eligible to register.
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="card">
+        <h2>Before You Submit</h2>
+
+        <p>Run your program several times using different values.</p>
+
+        <p>Make sure you test values that cause Python to execute:</p>
+
+        <ul>
+            <li>the <code>if</code> branch</li>
+            <li>the <code>elif</code> branch</li>
+            <li>the <code>else</code> branch</li>
+        </ul>
+
+        <div class="important">
+            Do not test your program only once. Different input values should
+            produce different results.
+        </div>
+    </section>
+
+    <section class="card submission">
+        <h2>Submission Instructions</h2>
+
+        <p>
+            Copy and paste your <strong>complete Python program</strong>
+            into the text submission area.
+        </p>
+
+        <p>
+            You <strong>do not need to upload a file.</strong>
+        </p>
+
+        <p>
+            The purpose of this activity is to practice making decisions in Python
+            using <code>if</code>, <code>elif</code>, <code>else</code>,
+            comparison operators, and logical operators.
+        </p>
+
+        <p>
+            <strong>Make a genuine attempt and submit your code to receive full participation points.</strong>
+        </p>
+    </section>
+
+    <div class="footer-note">
+        Python Decision Making • Individual In-Class Programming Activity
+    </div>
+
+</div>
+
+</body>
+</html>
