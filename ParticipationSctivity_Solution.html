@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Python Decision Making — Problem and Solution</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        background: #f4f7fb;
+        color: #243247;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 1.65;
+    }
+
+    .container {
+        max-width: 1050px;
+        margin: 40px auto;
+        padding: 0 24px 50px;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, #173b6c, #2864a8);
+        color: white;
+        padding: 40px 42px;
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(30, 60, 100, 0.15);
+        margin-bottom: 28px;
+    }
+
+    .hero h1 {
+        margin: 0 0 8px;
+        font-size: 36px;
+    }
+
+    .hero p {
+        margin: 0;
+        font-size: 18px;
+        opacity: 0.95;
+    }
+
+    .badge {
+        display: inline-block;
+        margin-top: 18px;
+        padding: 7px 15px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.18);
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .card {
+        background: white;
+        border: 1px solid #dfe7f1;
+        border-radius: 15px;
+        padding: 28px 32px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 14px rgba(30, 60, 100, 0.06);
+    }
+
+    h2 {
+        margin-top: 0;
+        color: #173b6c;
+        font-size: 26px;
+        border-bottom: 2px solid #e8eef7;
+        padding-bottom: 10px;
+    }
+
+    h3 {
+        color: #245895;
+        margin-top: 24px;
+        margin-bottom: 8px;
+    }
+
+    ul {
+        padding-left: 26px;
+    }
+
+    li {
+        margin: 9px 0;
+    }
+
+    code {
+        font-family: Consolas, "Courier New", monospace;
+    }
+
+    .requirement-box {
+        background: #f7faff;
+        border-left: 5px solid #2c70bd;
+        border-radius: 8px;
+        padding: 18px 22px;
+        margin: 18px 0;
+    }
+
+    .solution-card {
+        border: 2px solid #2c70bd;
+    }
+
+    .code-block {
+        background: #182433;
+        color: #e8f2ff;
+        border-radius: 10px;
+        padding: 22px;
+        margin: 18px 0;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 15px;
+        line-height: 1.7;
+        overflow-x: auto;
+        white-space: pre;
+    }
+
+    .example {
+        border: 1px solid #dce5f0;
+        border-radius: 12px;
+        overflow: hidden;
+        margin: 22px 0;
+    }
+
+    .example-header {
+        background: #edf3fa;
+        color: #173b6c;
+        padding: 14px 20px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .example-body {
+        padding: 20px;
+    }
+
+    .label {
+        font-weight: bold;
+        color: #53677f;
+        margin: 10px 0 5px;
+    }
+
+    .terminal {
+        background: #182433;
+        color: #e8f2ff;
+        border-radius: 8px;
+        padding: 15px 18px;
+        font-family: Consolas, "Courier New", monospace;
+        margin: 8px 0 15px;
+    }
+
+    .result {
+        background: #edf9f1;
+        border: 1px solid #b9e2c8;
+        color: #17623a;
+        border-radius: 8px;
+        padding: 14px 17px;
+        font-family: Consolas, "Courier New", monospace;
+        font-weight: bold;
+    }
+
+    .regular-result {
+        background: #fff7e9;
+        border-color: #efd6aa;
+        color: #80520d;
+    }
+
+    .not-eligible {
+        background: #fff0f0;
+        border-color: #efc4c4;
+        color: #8a3030;
+    }
+
+    .trace {
+        background: #f7f9fc;
+        border: 1px solid #e0e7f0;
+        border-radius: 8px;
+        padding: 14px 18px;
+        margin-top: 15px;
+    }
+
+    .trace ul {
+        margin: 5px 0;
+    }
+
+    .key-points {
+        background: #eef6ff;
+        border-left: 5px solid #2c70bd;
+        border-radius: 8px;
+        padding: 18px 22px;
+    }
+
+    .footer {
+        text-align: center;
+        color: #68798f;
+        font-size: 14px;
+        margin-top: 30px;
+    }
+
+    @media (max-width: 650px) {
+        .hero {
+            padding: 28px 25px;
+        }
+
+        .hero h1 {
+            font-size: 28px;
+        }
+
+        .card {
+            padding: 22px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <section class="hero">
+        <h1>Python Decision Making</h1>
+        <p>In-Class Programming Activity — Solution & Review</p>
+        <span class="badge">CSE 120</span>
+    </section>
+
+
+    <!-- PROBLEM -->
+    <section class="card">
+
+        <h2>Problem</h2>
+
+        <p>
+            Write a Python program for a
+            <strong>college course registration system</strong>.
+        </p>
+
+        <h3>Program Requirements</h3>
+
+        <div class="requirement-box">
+            <ul>
+                <li>
+                    Ask the student to enter their <strong>age</strong>.
+                </li>
+
+                <li>
+                    Ask the student to enter their <strong>GPA</strong>.
+                </li>
+
+                <li>
+                    Ask whether the student has completed the
+                    <strong>prerequisite course</strong>.
+                    The student should enter <code>yes</code> or <code>no</code>.
+                </li>
+
+                <li>
+                    Convert the age to an appropriate numeric data type.
+                </li>
+
+                <li>
+                    Convert the GPA to an appropriate numeric data type.
+                </li>
+
+                <li>
+                    If the student's <strong>GPA is 3.0 or higher</strong>
+                    <strong>AND</strong> the prerequisite course has been completed,
+                    display:
+
+                    <div class="terminal">
+                        You are eligible for the Advanced Course.
+                    </div>
+                </li>
+
+                <li>
+                    Otherwise, if the student's <strong>GPA is 2.0 or higher</strong>
+                    <strong>AND</strong> the student is <strong>18 or older</strong>,
+                    display:
+
+                    <div class="terminal">
+                        You are eligible for the Regular Course.
+                    </div>
+                </li>
+
+                <li>
+                    Otherwise, display:
+
+                    <div class="terminal">
+                        You are not currently eligible to register.
+                    </div>
+                </li>
+
+                <li>
+                    Your program must use
+                    <code>input()</code>,
+                    <code>if</code>,
+                    <code>elif</code>,
+                    <code>else</code>,
+                    the logical operator <code>and</code>,
+                    comparison operators, and
+                    <code>print()</code>.
+                </li>
+            </ul>
+        </div>
+
+    </section>
+
+
+    <!-- SOLUTION -->
+    <section class="card solution-card">
+
+        <h2>Solution</h2>
+
+        <p>
+            Below is one correct solution to the problem.
+        </p>
+
+        <div class="code-block">age = int(input("Enter your age: "))
+gpa = float(input("Enter your GPA: "))
+prerequisite = input("Have you completed the prerequisite course? yes/no: ")
+
+if gpa &gt;= 3.0 and prerequisite == "yes":
+    print("You are eligible for the Advanced Course.")
+
+elif gpa &gt;= 2.0 and age &gt;= 18:
+    print("You are eligible for the Regular Course.")
+
+else:
+    print("You are not currently eligible to register.")</div>
+
+    </section>
+
+
+    <!-- EXAMPLES -->
+    <section class="card">
+
+        <h2>Expected Results</h2>
+
+        <p>
+            The following examples demonstrate how the program behaves
+            with different user input.
+        </p>
+
+
+        <!-- EXAMPLE 1 -->
+        <div class="example">
+
+            <div class="example-header">
+                Example 1 — Advanced Course
+            </div>
+
+            <div class="example-body">
+
+                <div class="label">User Input</div>
+
+                <div class="terminal">
+                    Enter your age: 20<br>
+                    Enter your GPA: 3.5<br>
+                    Have you completed the prerequisite course? yes/no: yes
+                </div>
+
+                <div class="label">Output</div>
+
+                <div class="result">
+                    You are eligible for the Advanced Course.
+                </div>
+
+                <div class="trace">
+                    <strong>Why?</strong>
+
+                    <ul>
+                        <li>
+                            <code>gpa &gt;= 3.0</code> → True
+                        </li>
+                        <li>
+                            <code>prerequisite == "yes"</code> → True
+                        </li>
+                        <li>
+                            <strong>True and True → True</strong>
+                        </li>
+                    </ul>
+
+                    Therefore, the <code>if</code> branch executes.
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- EXAMPLE 2 -->
+        <div class="example">
+
+            <div class="example-header">
+                Example 2 — Regular Course
+            </div>
+
+            <div class="example-body">
+
+                <div class="label">User Input</div>
+
+                <div class="terminal">
+                    Enter your age: 21<br>
+                    Enter your GPA: 2.6<br>
+                    Have you completed the prerequisite course? yes/no: no
+                </div>
+
+                <div class="label">Output</div>
+
+                <div class="result regular-result">
+                    You are eligible for the Regular Course.
+                </div>
+
+                <div class="trace">
+                    <strong>Why?</strong>
+
+                    <p>
+                        The Advanced Course condition is False,
+                        so Python moves to the <code>elif</code>.
+                    </p>
+
+                    <ul>
+                        <li>
+                            <code>gpa &gt;= 2.0</code> → True
+                        </li>
+                        <li>
+                            <code>age &gt;= 18</code> → True
+                        </li>
+                        <li>
+                            <strong>True and True → True</strong>
+                        </li>
+                    </ul>
+
+                    Therefore, the <code>elif</code> branch executes.
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- EXAMPLE 3 -->
+        <div class="example">
+
+            <div class="example-header">
+                Example 3 — Not Eligible
+            </div>
+
+            <div class="example-body">
+
+                <div class="label">User Input</div>
+
+                <div class="terminal">
+                    Enter your age: 17<br>
+                    Enter your GPA: 1.8<br>
+                    Have you completed the prerequisite course? yes/no: no
+                </div>
+
+                <div class="label">Output</div>
+
+                <div class="result not-eligible">
+                    You are not currently eligible to register.
+                </div>
+
+                <div class="trace">
+                    <strong>Why?</strong>
+
+                    <ul>
+                        <li>
+                            The Advanced Course condition is False.
+                        </li>
+                        <li>
+                            The Regular Course condition is False.
+                        </li>
+                        <li>
+                            Python reaches the <code>else</code> branch.
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- KEY POINTS -->
+    <section class="card">
+
+        <h2>Key Points</h2>
+
+        <div class="key-points">
+
+            <ul>
+                <li>
+                    <code>input()</code> receives information from the user.
+                </li>
+
+                <li>
+                    <code>int()</code> converts the age to an integer.
+                </li>
+
+                <li>
+                    <code>float()</code> converts the GPA to a decimal number.
+                </li>
+
+                <li>
+                    <code>if</code> checks the first condition.
+                </li>
+
+                <li>
+                    <code>elif</code> checks another condition when the
+                    previous condition is False.
+                </li>
+
+                <li>
+                    <code>else</code> handles the default scenario.
+                </li>
+
+                <li>
+                    <code>and</code> means that
+                    <strong>both conditions must be True</strong>.
+                </li>
+
+                <li>
+                    Python executes the
+                    <strong>first matching branch</strong>
+                    in an <code>if / elif / else</code> chain.
+                </li>
+            </ul>
+
+        </div>
+
+    </section>
+
+
+    <div class="footer">
+        CSE 120 • Python Decision Making • Professor Dimpy Gill
+    </div>
+
+</div>
+
+</body>
+</html>
