@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Python Loops</title>
+<style>
+:root{--ink:#172033;--muted:#526078;--blue:#2457d6;--light:#eef4ff;--green:#eaf8ef;--amber:#fff6df;--red:#fff0f0;--border:#d9e0ec;--code:#101827}
+*{box-sizing:border-box} body{margin:0;background:#f5f7fb;color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+main{max-width:1050px;margin:auto;background:#fff;min-height:100vh;padding:48px 64px 80px;box-shadow:0 0 28px #dfe4ee}
+h1{font-size:2.5rem;line-height:1.15;margin:.1em 0 .25em;color:#153b9f} h2{margin-top:2em;border-bottom:2px solid #e8edf6;padding-bottom:.25em;color:#173c94} h3{margin-top:1.5em;color:#24477f}
+.lead{font-size:1.15rem;color:var(--muted)} .box{border-left:5px solid var(--blue);background:var(--light);padding:14px 18px;margin:18px 0;border-radius:6px}.why{border-left-color:#16834a;background:var(--green)}.warn{border-left-color:#d58a00;background:var(--amber)}.mistake{border-left-color:#c83c3c;background:var(--red)}
+code{font-family:Consolas,Monaco,monospace;background:#edf1f7;padding:.1em .3em;border-radius:4px} pre{background:var(--code);color:#f5f7fa;padding:18px 20px;border-radius:9px;overflow:auto;line-height:1.55} pre code{background:none;padding:0;color:inherit}.output{background:#f7f8fa;border:1px solid var(--border);padding:12px 16px;border-radius:7px;font-family:Consolas,monospace;white-space:pre-wrap}.label{font-weight:700;margin-bottom:5px}.flow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:20px 0}.step{padding:10px 15px;border:1px solid #adc0ed;background:#f5f8ff;border-radius:8px;font-weight:650}.arrow{font-size:1.35rem;color:#65769c}.toc{background:#f8fafc;border:1px solid var(--border);padding:18px 24px;border-radius:10px}.toc a{color:#2457d6;text-decoration:none}.toc li{margin:4px 0}table{width:100%;border-collapse:collapse;margin:16px 0}th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top}th{background:#f0f4fb}.try{border:2px dashed #8ca5dc;padding:15px 18px;border-radius:9px;margin:20px 0}.small{color:var(--muted);font-size:.94rem}.pill{display:inline-block;background:#eaf0ff;color:#214db5;padding:2px 9px;border-radius:999px;font-weight:700;font-size:.85rem}@media(max-width:700px){main{padding:28px 20px}h1{font-size:2rem}}
+@media print{body{background:#fff}main{box-shadow:none;max-width:none;padding:20px 35px}pre{white-space:pre-wrap}.toc{break-inside:avoid}h2{break-after:avoid}}
+</style>
+</head>
+<body><main>
+<h1>Python Loops</h1>
+<br>
+<div class="toc"><ol>
+<li><a href="#what">What is a loop?</a></li>
+<li><a href="#why">Why do we use loops?</a></li>
+<li><a href="#for">The <code>for</code> loop</a></li>
+<li><a href="#range">Using <code>range()</code></a></li>
+<li><a href="#while">The <code>while</code> loop</a></li>
+<li><a href="#patterns">Counters and running totals</a></li>
+<li><a href="#control"><code>break</code> and <code>continue</code></a></li>
+<li><a href="#mistakes">Common mistakes</a></li>
+<li><a href="#practice">Practice problems</a></li>
+</ol></div>
+
+<h2 id="what">1. What Is a Loop?</h2>
+<p>A <strong>loop</strong> is a programming structure that repeats a block of code. Each time the loop repeats, we call it an <strong>iteration</strong>.</p>
+<p>Suppose we want to print <code>Hello</code> five times. Without a loop, we could write:</p>
+<pre><code>print("Hello")
+print("Hello")
+print("Hello")
+print("Hello")
+print("Hello")</code></pre>
+<p>This works, but the instruction is repeated. A loop lets us express the same idea more clearly:</p>
+<pre><code>for i in range(5):
+    print("Hello")</code></pre>
+<div class="output">Hello
+Hello
+Hello
+Hello
+Hello</div>
+<div class="box"><strong>Key idea:</strong> A loop is useful whenever the program needs to perform the same type of action repeatedly.</div>
+
+<h2 id="why">2. Why Do We Use Loops?</h2>
+<p>Loops reduce repeated code and make programs easier to change. At this stage, we will use loops to repeat statements, count with numbers, repeat calculations, and keep asking for input until a condition is satisfied.</p>
+<div class="why box"><strong>Example:</strong> If we want to print a message 30 times, we do not want to write 30 separate <code>print()</code> statements. One loop can repeat the statement for us.</div>
+<p>Python has two main loop statements:</p>
+<table><tr><th>Loop</th><th>Use it when...</th></tr><tr><td><code>for</code></td><td>You want to repeat something a controlled number of times, often by using <code>range()</code>.</td></tr><tr><td><code>while</code></td><td>You want repetition to continue as long as a condition remains <code>True</code>.</td></tr></table>
+
+<h2 id="for">3. The <code>for</code> Loop</h2>
+<p>A <code>for</code> loop can repeat a block of code a controlled number of times. A very common way to use it is with <code>range()</code>.</p>
+<pre><code>for number in range(5):
+    # code that repeats</code></pre>
+<p>Here, <code>number</code> is one variable. Its value changes automatically on each iteration.</p>
+<h3>Example: Print numbers 0 through 4</h3>
+<pre><code>for number in range(5):
+    print(number)</code></pre>
+<div class="output">0
+1
+2
+3
+4</div>
+<p>Notice that <code>range(5)</code> starts at <code>0</code> and stops <strong>before</strong> <code>5</code>.</p>
+<div class="flow"><span class="step">number = 0</span><span class="arrow">→</span><span class="step">number = 1</span><span class="arrow">→</span><span class="step">number = 2</span><span class="arrow">→</span><span class="step">number = 3</span><span class="arrow">→</span><span class="step">number = 4</span></div>
+
+<h2 id="range">4. Understanding <code>range()</code></h2>
+<p><code>range()</code> gives a <code>for</code> loop a controlled set of integer values to use, one value per iteration.</p>
+<h3><code>range(stop)</code></h3>
+<pre><code>for number in range(5):
+    print(number)</code></pre>
+<p>This gives <code>0, 1, 2, 3, 4</code>.</p>
+<h3><code>range(start, stop)</code></h3>
+<pre><code>for number in range(1, 6):
+    print(number)</code></pre>
+<div class="output">1
+2
+3
+4
+5</div>
+<p>The first value is included. The stop value is not included.</p>
+<h3><code>range(start, stop, step)</code></h3>
+<pre><code>for number in range(2, 11, 2):
+    print(number)</code></pre>
+<div class="output">2
+4
+6
+8
+10</div>
+<p>The third argument, <code>2</code>, is the <strong>step</strong>: the amount added after each iteration.</p>
+<h3>Counting backward</h3>
+<pre><code>for number in range(5, 0, -1):
+    print(number)
+
+print("Go!")</code></pre>
+<div class="output">5
+4
+3
+2
+1
+Go!</div>
+
+
+<h2 id="while">5. The <code>while</code> Loop</h2>
+<p>A <code>while</code> loop repeats while its condition is <code>True</code>. The condition is checked before every iteration.</p>
+<pre><code>while condition:
+    # repeated code</code></pre>
+<h3>Example: Count from 1 to 5</h3>
+<pre><code>number = 1
+
+while number &lt;= 5:
+    print(number)
+    number = number + 1</code></pre>
+<div class="output">1
+2
+3
+4
+5</div>
+<p>The variable <code>number</code> begins at 1. After every iteration, <code>number = number + 1</code> increases it. Eventually it becomes 6, so <code>number &lt;= 5</code> becomes <code>False</code> and the loop stops.</p>
+<div class="warn box"><strong>Important:</strong> A <code>while</code> loop usually needs something inside the loop that changes the condition. Otherwise, it may run forever.</div>
+<h3>Example: Keep asking until the user enters a positive number</h3>
+<pre><code>number = int(input("Enter a positive number: "))
+
+while number &lt;= 0:
+    print("That number is not positive.")
+    number = int(input("Try again: "))
+
+print("Thank you!")</code></pre>
+<p>This is a good use of <code>while</code> because we do not know in advance how many attempts the user will need.</p>
+
+<h2 id="patterns">6. Useful Loop Patterns: Counters and Running Totals</h2>
+<h3>Counter</h3>
+<p>A <strong>counter</strong> is a variable used to count how many times something happens.</p>
+<pre><code>count = 0
+
+for number in range(1, 6):
+    count = count + 1
+
+print("Iterations:", count)</code></pre>
+<div class="output">Iterations: 5</div>
+<h3>Running total</h3>
+<p>A <strong>running total</strong> is a variable that keeps the total as the loop repeats. Each iteration adds a new value to the same variable.</p>
+<pre><code>total = 0
+
+for number in range(1, 6):
+    total = total + number
+
+print("Total:", total)</code></pre>
+<div class="output">Total: 15</div>
+<h3>Example: Add three numbers entered by the user</h3>
+<p>This example uses only ordinary variables. The variable <code>number</code> receives one input value during each iteration, and <code>total</code> keeps the running total.</p>
+<pre><code>total = 0
+
+for i in range(3):
+    number = int(input("Enter a number: "))
+    total = total + number
+
+print("Total:", total)</code></pre>
+<div class="box"><strong>Trace it:</strong> If the user enters 10, 20, and 5, the value of <code>total</code> changes from 0 → 10 → 30 → 35.</div>
+
+<h2 id="control">7. Controlling a Loop with <code>break</code> and <code>continue</code></h2>
+<h3><code>break</code>: stop the loop immediately</h3>
+<pre><code>for number in range(1, 11):
+    if number == 5:
+        break
+    print(number)</code></pre>
+<div class="output">1
+2
+3
+4</div>
+<p>When <code>number</code> becomes 5, <code>break</code> ends the loop.</p>
+<h3><code>continue</code>: skip the rest of the current iteration</h3>
+<pre><code>for number in range(1, 6):
+    if number == 3:
+        continue
+    print(number)</code></pre>
+<div class="output">1
+2
+4
+5</div>
+<p>The loop itself continues, but the <code>print()</code> statement is skipped when <code>number</code> is 3.</p>
+
+
+<h2>8. More Examples</h2>
+<h3>Example A: Print even numbers</h3>
+<pre><code>for number in range(1, 11):
+    if number % 2 == 0:
+        print(number)</code></pre>
+<div class="output">2
+4
+6
+8
+10</div>
+<p>The <code>%</code> operator gives the remainder. An even number has a remainder of 0 when divided by 2.</p>
+<h3>Example B: Sum numbers entered by the user</h3>
+<pre><code>total = 0
+
+for i in range(3):
+    number = int(input("Enter a number: "))
+    total = total + number
+
+print("Total:", total)</code></pre>
+<h3>Example C: Multiplication table for one number</h3>
+<pre><code>number = int(input("Enter a number: "))
+
+for i in range(1, 11):
+    answer = number * i
+    print(number, "x", i, "=", answer)</code></pre>
+<p>This uses one user-entered number. The loop variable <code>i</code> changes from 1 through 10.</p>
+<h3>Example D: Password attempts</h3>
+<pre><code>correct_password = "python123"
+password = ""
+
+while password != correct_password:
+    password = input("Enter password: ")
+
+print("Access granted")</code></pre>
+
+<h2 id="mistakes">9. Common Mistakes</h2>
+<h3>Mistake 1: Forgetting indentation</h3>
+<div class="mistake box"><strong>Incorrect</strong><pre><code>for number in range(5):
+print(number)</code></pre><strong>Correct</strong><pre><code>for number in range(5):
+    print(number)</code></pre></div>
+<h3>Mistake 2: Forgetting the colon</h3>
+<pre><code># Incorrect
+for number in range(5)
+    print(number)
+
+# Correct
+for number in range(5):
+    print(number)</code></pre>
+<h3>Mistake 3: Expecting the stop value from <code>range()</code></h3>
+<pre><code>for number in range(1, 5):
+    print(number)</code></pre>
+<p>This prints 1 through 4, not 1 through 5. Use <code>range(1, 6)</code> if you need 1 through 5.</p>
+<h3>Mistake 4: Creating an infinite <code>while</code> loop</h3>
+<pre><code># Problem: number never changes
+number = 1
+while number &lt;= 5:
+    print(number)</code></pre>
+<p>A corrected version updates <code>number</code>:</p>
+<pre><code>number = 1
+while number &lt;= 5:
+    print(number)
+    number = number + 1</code></pre>
+
+<h2>10. Choosing Between <code>for</code> and <code>while</code></h2>
+<table><tr><th>Situation</th><th>Good choice</th></tr><tr><td>Print numbers 1–10</td><td><code>for</code></td></tr><tr><td>Print a message a fixed number of times</td><td><code>for</code></td></tr><tr><td>Repeat exactly 5 times</td><td><code>for</code></td></tr><tr><td>Keep asking until input is valid</td><td><code>while</code></td></tr><tr><td>Continue until the user chooses Quit</td><td><code>while</code></td></tr></table>
+<div class="box"><strong>Rule of thumb:</strong> At this stage, use <code>for</code> with <code>range()</code> when you know or control how many times to repeat. Use <code>while</code> when repetition depends on a condition.</div>
+
+<h2 id="practice">11. Practice Problems</h2>
+<div class="try"><strong>Practice 1 — Counting</strong><p>Write a <code>for</code> loop that prints the numbers 1 through 10.</p></div>
+<div class="try"><strong>Practice 2 — Odd numbers</strong><p>Print the odd numbers from 1 through 15.</p></div>
+<div class="try"><strong>Practice 3 — Running total</strong><p>Ask the user to enter 4 numbers, one at a time. Use a <code>for</code> loop and a <code>total</code> variable to add them. Print the final total.</p></div>
+<div class="try"><strong>Practice 4 — Repeat a message</strong><p>Ask the user for a word. Use a <code>for</code> loop with <code>range()</code> to print that word 5 times.</p></div>
+<div class="try"><strong>Practice 5 — User input</strong><p>Use a <code>while</code> loop to keep asking the user to type <code>yes</code>. Stop only when the user enters <code>yes</code>.</p></div>
+<div class="try"><strong>Practice 6 — Multiplication table</strong><p>Ask the user for a number and use a loop to print that number's multiplication table from 1 through 10.</p></div>
+
+<h2>12. Summary</h2>
+<table><tr><th>Concept</th><th>Meaning</th></tr><tr><td>Loop</td><td>Repeats a block of code.</td></tr><tr><td>Iteration</td><td>One repetition of a loop.</td></tr><tr><td><code>for</code></td><td>Repeats code a controlled number of times; in this tutorial we use it with <code>range()</code>.</td></tr><tr><td><code>while</code></td><td>Repeats while a condition is true.</td></tr><tr><td><code>range()</code></td><td>Provides integer values for a <code>for</code> loop; the stop value is not included.</td></tr><tr><td>Counter</td><td>Counts occurrences or iterations.</td></tr><tr><td>Running total</td><td>A variable that keeps a total as the loop repeats.</td></tr><tr><td><code>break</code></td><td>Ends the nearest loop immediately.</td></tr><tr><td><code>continue</code></td><td>Skips the rest of the current iteration.</td></tr></table>
+<p class="small">The best way to learn loops is to trace them by hand. Write down the loop variable's value on each iteration and predict the output before running the program.</p>
+</main></body></html>
