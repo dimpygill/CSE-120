@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python For and While Loops — Practice With Solutions</title>
+<style>
+:root { --ink:#1f2937; --muted:#4b5563; --line:#d1d5db; --soft:#f5f7fa; --code:#111827; --accent:#1d4ed8; }
+* { box-sizing:border-box; }
+body { font-family: Arial, Helvetica, sans-serif; color:var(--ink); margin:0; background:#fff; line-height:1.5; }
+main { max-width:960px; margin:0 auto; padding:32px 42px 56px; }
+h1 { margin:0 0 8px; font-size:30px; }
+h2 { margin:30px 0 10px; font-size:21px; border-bottom:2px solid var(--line); padding-bottom:6px; }
+p { margin:7px 0; }
+.intro { color:var(--muted); margin-bottom:16px; }
+.notice { background:#eef4ff; border-left:5px solid var(--accent); padding:12px 14px; margin:18px 0 24px; }
+.exercise { border:1px solid var(--line); border-radius:8px; padding:16px 18px; margin:16px 0; break-inside:avoid; }
+.exercise h3 { margin:0 0 8px; font-size:18px; }
+.expected { margin-top:12px; }
+pre { background:var(--code); color:#f9fafb; padding:13px 15px; border-radius:6px; overflow-x:auto; white-space:pre-wrap; }
+code { font-family: Consolas, "Courier New", monospace; }
+.inline { background:var(--soft); padding:2px 5px; border-radius:4px; }
+.solution { border-top:1px dashed var(--line); margin-top:15px; padding-top:12px; }
+.footer { margin-top:28px; font-size:13px; color:var(--muted); }
+@media print { main { max-width:none; padding:18px; } .exercise { break-inside:avoid; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Python For and While Loops — Practice With Solutions</h1>
+  <div class="notice"><strong>How to use this file:</strong> Try each problem yourself first. Then compare your work with the solution. 
+            </div>
+  <h2>Practice Problems</h2>
+  
+    <section class="exercise">
+      <h3>Exercise 1 — Print Numbers 1 to 5</h3>
+      <p>Use a <code>for</code> loop to print the numbers from 1 through 5, one number per line.</p>
+      <div class="expected">
+        <p><strong>Expected output:</strong></p>
+        <pre><code>1
+2
+3
+4
+5</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>for number in range(1, 6):
+    print(number)</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 2 — Print Numbers 1 to 5 with a While Loop</h3>
+      <p>Use a <code>while</code> loop to print the numbers from 1 through 5.</p>
+      <div class="expected">
+        <p><strong>Expected output:</strong></p>
+        <pre><code>1
+2
+3
+4
+5</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>number = 1
+
+while number &lt;= 5:
+    print(number)
+    number = number + 1</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 3 — Count from 5 Down to 1</h3>
+      <p>Use a <code>while</code> loop to count backward from 5 to 1. After the loop, print <code>Done!</code>.</p>
+      <div class="expected">
+        <p><strong>Expected output:</strong></p>
+        <pre><code>5
+4
+3
+2
+1
+Done!</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>number = 5
+
+while number &gt;= 1:
+    print(number)
+    number = number - 1
+
+print(&quot;Done!&quot;)</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 4 — Print Even Numbers</h3>
+      <p>Use a <code>for</code> loop and an <code>if</code> statement to print only the even numbers from 1 through 10.</p>
+      <div class="expected">
+        <p><strong>Expected output:</strong></p>
+        <pre><code>2
+4
+6
+8
+10</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>for number in range(1, 11):
+    if number % 2 == 0:
+        print(number)</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 5 — Odd or Even</h3>
+      <p>Use a <code>for</code> loop to check the numbers 1 through 5. Use <code>if/else</code> to display whether each number is odd or even.</p>
+      <div class="expected">
+        <p><strong>Expected output:</strong></p>
+        <pre><code>1 is odd
+2 is even
+3 is odd
+4 is even
+5 is odd</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>for number in range(1, 6):
+    if number % 2 == 0:
+        print(number, &quot;is even&quot;)
+    else:
+        print(number, &quot;is odd&quot;)</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 6 — Multiplication Table</h3>
+      <p>Ask the user to enter a number. Use a <code>for</code> loop to display its multiplication table from 1 through 5.</p>
+      <div class="expected">
+        <p><strong>Example expected output if the user enters 3:</strong></p>
+        <pre><code>Enter a number: 3
+3 x 1 = 3
+3 x 2 = 6
+3 x 3 = 9
+3 x 4 = 12
+3 x 5 = 15</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>number = int(input(&quot;Enter a number: &quot;))
+
+for i in range(1, 6):
+    print(number, &quot;x&quot;, i, &quot;=&quot;, number * i)</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 7 — Add Numbers 1 Through 5</h3>
+      <p>Use a <code>for</code> loop to add the numbers 1 through 5. Display the final total after the loop.</p>
+      <div class="expected">
+        <p><strong>Expected output:</strong></p>
+        <pre><code>Total = 15</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>total = 0
+
+for number in range(1, 6):
+    total = total + number
+
+print(&quot;Total =&quot;, total)</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 8 — Positive, Negative, or Zero</h3>
+      <p>Ask the user to enter three numbers, one at a time. Use a <code>while</code> loop. For each number, use <code>if/elif/else</code> to print whether it is positive, negative, or zero.</p>
+      <div class="expected">
+        <p><strong>Example expected output for inputs 8, -2, and 0:</strong></p>
+        <pre><code>Enter a number: 8
+Positive
+Enter a number: -2
+Negative
+Enter a number: 0
+Zero</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>count = 1
+
+while count &lt;= 3:
+    number = int(input(&quot;Enter a number: &quot;))
+
+    if number &gt; 0:
+        print(&quot;Positive&quot;)
+    elif number &lt; 0:
+        print(&quot;Negative&quot;)
+    else:
+        print(&quot;Zero&quot;)
+
+    count = count + 1</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 9 — Grade Categories</h3>
+      <p>Ask the user to enter three grades, one at a time. Use a <code>for</code> loop and <code>if/elif/else</code>. Print <code>A</code> for 90 or higher, <code>B</code> for 80–89, <code>C</code> for 70–79, and <code>Needs Improvement</code> for a grade below 70.</p>
+      <div class="expected">
+        <p><strong>Example expected output for grades 95, 84, and 62:</strong></p>
+        <pre><code>Enter grade: 95
+A
+Enter grade: 84
+B
+Enter grade: 62
+Needs Improvement</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>for i in range(3):
+    grade = int(input(&quot;Enter grade: &quot;))
+
+    if grade &gt;= 90:
+        print(&quot;A&quot;)
+    elif grade &gt;= 80:
+        print(&quot;B&quot;)
+    elif grade &gt;= 70:
+        print(&quot;C&quot;)
+    else:
+        print(&quot;Needs Improvement&quot;)</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 10 — Number Classification</h3>
+      <p>Use a <code>for</code> loop for numbers 1 through 10. Print <code>Small</code> for numbers 1–3, <code>Medium</code> for numbers 4–7, and <code>Large</code> for numbers 8–10.</p>
+      <div class="expected">
+        <p><strong>Expected output:</strong></p>
+        <pre><code>1 Small
+2 Small
+3 Small
+4 Medium
+5 Medium
+6 Medium
+7 Medium
+8 Large
+9 Large
+10 Large</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>for number in range(1, 11):
+    if number &lt;= 3:
+        print(number, &quot;Small&quot;)
+    elif number &lt;= 7:
+        print(number, &quot;Medium&quot;)
+    else:
+        print(number, &quot;Large&quot;)</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 11 — Keep Asking Until the Correct Number</h3>
+      <p>Set a secret number equal to 7. Keep asking the user to guess until the user enters 7. If the guess is too low, print <code>Too low</code>. If it is too high, print <code>Too high</code>. When correct, print <code>Correct!</code>.</p>
+      <div class="expected">
+        <p><strong>Example expected output:</strong></p>
+        <pre><code>Guess the number: 4
+Too low
+Guess the number: 9
+Too high
+Guess the number: 7
+Correct!</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>secret = 7
+guess = 0
+
+while guess != secret:
+    guess = int(input(&quot;Guess the number: &quot;))
+
+    if guess &lt; secret:
+        print(&quot;Too low&quot;)
+    elif guess &gt; secret:
+        print(&quot;Too high&quot;)
+    else:
+        print(&quot;Correct!&quot;)</code></pre>
+        </div>
+    </section>
+    
+
+    <section class="exercise">
+      <h3>Exercise 12 — Simple Menu</h3>
+      <p>Create a simple menu that repeats until the user enters 3. Option 1 prints <code>Hello!</code>, option 2 prints <code>Welcome to Python!</code>, and option 3 prints <code>Goodbye!</code>. Use a <code>while</code> loop and <code>if/elif/else</code>.</p>
+      <div class="expected">
+        <p><strong>Example expected output:</strong></p>
+        <pre><code>1. Say Hello
+2. Welcome Message
+3. Exit
+Enter choice: 1
+Hello!
+1. Say Hello
+2. Welcome Message
+3. Exit
+Enter choice: 3
+Goodbye!</code></pre>
+      </div>
+      
+        <div class="solution">
+          <p><strong>Solution:</strong></p>
+          <pre><code>choice = 0
+
+while choice != 3:
+    print(&quot;1. Say Hello&quot;)
+    print(&quot;2. Welcome Message&quot;)
+    print(&quot;3. Exit&quot;)
+    choice = int(input(&quot;Enter choice: &quot;))
+
+    if choice == 1:
+        print(&quot;Hello!&quot;)
+    elif choice == 2:
+        print(&quot;Welcome to Python!&quot;)
+    elif choice == 3:
+        print(&quot;Goodbye!&quot;)
+    else:
+        print(&quot;Invalid choice&quot;)</code></pre>
+        </div>
+    </section>
+    
+  </main>
+</body>
+</html>
