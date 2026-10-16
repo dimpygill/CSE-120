@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CSE 120 — Teamwork &amp; Communication</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:#003767; --blue:#0074B7; --lblue:#DDEAF5;
+  --bg:#F4F6FC; --card:#FFFFFF; --border:#D8E4F0;
+  --dark:#1C2B3A; --mid:#4A6080;
+  --green:#2E7D32; --amber:#E65100; --red:#C62828;
+  --teal:#006064; --purple:#5E35B1;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--dark);line-height:1.75;font-size:16px}
+#prog{position:fixed;top:0;left:0;height:4px;background:var(--blue);width:0%;z-index:300;transition:width .3s}
+.sidenav{position:fixed;top:4px;left:0;bottom:0;width:220px;background:#fff;border-right:1.5px solid var(--border);overflow-y:auto;padding:1rem .75rem;display:none;z-index:200}
+@media(min-width:1100px){.sidenav{display:block}}
+.sidenav h3{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--mid);font-family:'DM Mono',monospace;margin-bottom:.6rem;padding-left:.5rem}
+.sidenav a{display:block;font-size:.82rem;color:var(--mid);text-decoration:none;padding:.3rem .5rem;border-radius:6px;transition:all .15s}
+.sidenav a:hover,.sidenav a.active{background:var(--lblue);color:var(--navy);font-weight:600}
+.sidenav .sub{padding-left:1.1rem;font-size:.78rem}
+.page{max-width:860px;margin:0 auto;padding:0 1.5rem 5rem}
+@media(min-width:1100px){.page{margin-left:240px}}
+.hero{background:linear-gradient(135deg,#0F1E3D 0%,#1A3A6B 55%,#2655A8 100%);padding:3rem 2.5rem 2.5rem;color:#fff;border-radius:0 0 20px 20px;margin-bottom:2rem}
+.hero-badge{display:inline-block;background:var(--blue);color:#fff;font-size:.75rem;font-weight:700;padding:.25rem .9rem;border-radius:20px;margin-bottom:.9rem;font-family:'DM Mono',monospace;letter-spacing:.06em}
+.hero h1{font-size:2rem;font-weight:700;margin-bottom:.5rem}
+.hero p{color:#A8C8E8;font-size:.95rem;max-width:580px;margin-bottom:1.2rem}
+.hero-pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.hero-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:#CCE0FF;font-size:.78rem;padding:.22rem .75rem;border-radius:20px}
+.section{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:2rem;margin-bottom:1.8rem}
+.section-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.3rem}
+.sec-icon{width:2.4rem;height:2.4rem;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.sec-title{font-size:1.25rem;font-weight:700;color:var(--navy)}
+.sec-sub{font-size:.8rem;color:var(--mid);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em}
+h2{font-size:1.1rem;font-weight:700;color:var(--navy);margin:1.4rem 0 .6rem}
+h3{font-size:.97rem;font-weight:700;color:var(--dark);margin:1.1rem 0 .4rem}
+p{margin-bottom:.85rem}
+ul,ol{margin:.4rem 0 .9rem 1.4rem}
+li{margin-bottom:.3rem}
+strong{font-weight:700}
+.type-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem;margin:1rem 0}
+.type-card{border-radius:12px;padding:1.1rem;border:2px solid}
+.type-card h3{margin:0 0 .4rem;font-size:.95rem}
+.type-card ul{margin:.3rem 0 0 1.1rem;font-size:.85rem}
+.type-card li{margin-bottom:.2rem}
+.tc-A{border-color:#0074B7;background:#EBF5FF}
+.tc-M{border-color:#E65100;background:#FFF3E0}
+.tc-P{border-color:#2E7D32;background:#E8F5E9}
+.tc-V{border-color:#5E35B1;background:#EDE7F6}
+.tc-A h3{color:#003767}
+.tc-M h3{color:#B34700}
+.tc-P h3{color:#1B5E20}
+.tc-V h3{color:#4527A0}
+.stages{display:flex;flex-direction:column;gap:.85rem;margin:1rem 0}
+.stage{border-radius:10px;padding:1rem 1.2rem;border-left:5px solid}
+.stage-forming{border-color:#9E9E9E;background:#F5F5F5}
+.stage-storming{border-color:#E65100;background:#FFF3E0}
+.stage-norming{border-color:#0074B7;background:#EBF5FF}
+.stage-performing{border-color:#2E7D32;background:#E8F5E9}
+.stage h3{margin:0 0 .3rem;font-size:.95rem}
+.stage p{margin:0;font-size:.9rem}
+.nego-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin:1rem 0}
+.nego-card{border-radius:10px;padding:1rem;border:1.5px solid}
+.nc-soft{border-color:#9E9E9E;background:#F5F5F5}
+.nc-hard{border-color:#C62828;background:#FFEBEE}
+.nc-win{border-color:#2E7D32;background:#E8F5E9}
+.nego-card h3{font-size:.9rem;margin-bottom:.4rem}
+.nego-card .result{font-size:.78rem;font-style:italic;margin-top:.4rem;color:var(--mid)}
+.proj-box{border-radius:12px;padding:1.3rem 1.5rem;margin:1.4rem 0}
+.proj-4{background:linear-gradient(135deg,#EBF5FF,#DDEAF5);border:2px solid #0074B7}
+.proj-2{background:linear-gradient(135deg,#E8F5E9,#D7EDD8);border:2px solid #2E7D32}
+.proj-box-header{display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem}
+.proj-box-header span{font-size:1.2rem}
+.proj-4 .proj-title{font-weight:700;color:#003767;font-size:.95rem}
+.proj-2 .proj-title{font-weight:700;color:#1B5E20;font-size:.95rem}
+.proj-box p{font-size:.9rem;margin-bottom:.55rem}
+.proj-box p:last-child{margin-bottom:0}
+.proj-box ul{font-size:.9rem;margin-top:.3rem}
+details{margin:.8rem 0}
+summary{cursor:pointer;font-weight:700;font-size:.88rem;color:var(--blue);padding:.5rem .75rem;background:var(--lblue);border-radius:8px;list-style:none;display:flex;align-items:center;gap:.5rem}
+summary::before{content:'▶';font-size:.75rem;transition:transform .2s}
+details[open] summary::before{transform:rotate(90deg)}
+.solution-body{padding:.9rem 1rem;background:#fff;border:1.5px solid var(--border);border-radius:0 0 8px 8px;font-size:.93rem}
+.comm-table{width:100%;border-collapse:collapse;font-size:.9rem;margin:1rem 0}
+.comm-table th{background:var(--navy);color:#fff;padding:.65rem .9rem;text-align:left;font-weight:600}
+.comm-table td{padding:.6rem .9rem;border-bottom:1px solid var(--border);vertical-align:top}
+.comm-table tr:nth-child(even) td{background:var(--bg)}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:.15rem .55rem;border-radius:10px;font-family:'DM Mono',monospace}
+.badge-A{background:#EBF5FF;color:#003767}
+.badge-M{background:#FFF3E0;color:#B34700}
+.badge-P{background:#E8F5E9;color:#1B5E20}
+.badge-V{background:#EDE7F6;color:#4527A0}
+.callout{border-radius:10px;padding:1rem 1.2rem;margin:1rem 0;display:flex;gap:.75rem;align-items:flex-start}
+.callout-info{background:#EBF5FF;border:1px solid #90CAF9}
+.callout-warn{background:#FFF3E0;border:1px solid #FFCC80}
+.callout-tip{background:#E8F5E9;border:1px solid #A5D6A7}
+.callout-icon{font-size:1.1rem;flex-shrink:0;padding-top:.1rem}
+.callout-body{font-size:.9rem}
+.activity{border-radius:12px;padding:1.2rem 1.4rem;margin:1.2rem 0}
+.act-think{background:#EBF5FF;border-left:5px solid var(--blue)}
+.act-try{background:#E8F5E9;border-left:5px solid var(--green)}
+.act-discuss{background:#FFF3E0;border-left:5px solid var(--amber)}
+.act-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.09em;font-family:'DM Mono',monospace;margin-bottom:.5rem}
+.act-think .act-label{color:var(--blue)}
+.act-try .act-label{color:var(--green)}
+.act-discuss .act-label{color:var(--amber)}
+.act-q{font-size:.95rem;font-weight:600;color:var(--dark);margin-bottom:.5rem}
+.radar-wrap{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0}
+@media(max-width:600px){.radar-wrap{grid-template-columns:1fr}}
+.radar-item{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:.9rem 1rem;text-align:center}
+.radar-score{font-size:1.8rem;font-weight:700;margin:.2rem 0}
+.radar-label{font-size:.78rem;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em}
+.bar-wrap{background:#E0E0E0;border-radius:20px;height:10px;margin:.4rem 0}
+.bar-fill{height:10px;border-radius:20px}
+.btt{display:inline-block;margin-top:.5rem;font-size:.8rem;color:var(--blue);text-decoration:none}
+.btt:hover{text-decoration:underline}
+.quiz-wrap{margin:1.2rem 0}
+.q-item{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:1rem 1.2rem;margin-bottom:.9rem}
+.q-stem{font-weight:600;margin-bottom:.6rem;font-size:.95rem}
+.q-opts{display:flex;flex-direction:column;gap:.4rem}
+.q-opt{display:flex;align-items:center;gap:.7rem;padding:.5rem .8rem;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;font-size:.9rem}
+.q-opt:hover{border-color:var(--blue);background:var(--lblue)}
+.q-opt.correct{border-color:var(--green)!important;background:#E8F5E9!important}
+.q-opt.wrong{border-color:var(--red)!important;background:#FFEBEE!important}
+.q-opt.locked{cursor:default}
+.q-letter{width:1.5rem;height:1.5rem;border-radius:50%;background:var(--lblue);color:var(--navy);font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1.5px solid var(--border)}
+.q-opt.correct .q-letter{background:var(--green);color:#fff;border-color:var(--green)}
+.q-opt.wrong .q-letter{background:var(--red);color:#fff;border-color:var(--red)}
+.q-fb{margin-top:.6rem;font-size:.85rem;border-radius:7px;padding:.6rem .9rem;display:none}
+.q-fb.show{display:block}
+.q-fb.ok{background:#E8F5E9;color:#1B5E20;border-left:3px solid var(--green)}
+.q-fb.bad{background:#FFEBEE;color:#7F0000;border-left:3px solid var(--red)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.q-fb.show{animation:fadeIn .2s ease}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+<nav class="sidenav" id="sidenav">
+<h3>Contents</h3>
+<a href="#intro">Introduction</a>
+<a href="#thinking">Thinking Styles</a>
+<a class="sub" href="#assessment">→ Finding Your Style</a>
+<a href="#teamwork">Building a Team</a>
+<a class="sub" href="#stages">→ 4 Stages</a>
+<a class="sub" href="#tools">→ Team Tools</a>
+<a href="#communication">Communication</a>
+<a class="sub" href="#nego">→ Negotiation</a>
+<a class="sub" href="#presentation">→ Presentations</a>
+<a class="sub" href="#report">→ Technical Reports</a>
+<a href="#quiz">Knowledge Check</a>
+</nav>
+<div class="page">
+<div class="hero" id="top">
+<div class="hero-badge">CSE 120 · Module: Teamwork &amp; Communication</div>
+<h1>Working Together &amp; Communicating Well</h1>
+<p>A practical introduction to thinking preferences, team development, effective communication, and collaborative problem-solving.</p>
+<div class="hero-pills">
+<span class="hero-pill">Thinking Styles</span>
+<span class="hero-pill">4 Team Stages</span>
+<span class="hero-pill">Negotiation</span>
+<span class="hero-pill">Presentations</span>
+<span class="hero-pill">Technical Reports</span>
+<span class="hero-pill">Real-World Examples</span>
+</div>
+</div>
+<!-- SECTION 1: INTRO -->
+<div class="section" id="intro">
+<div class="section-header">
+<div class="sec-icon" style="background:#EBF5FF">🤝</div>
+<div>
+<div class="sec-title">Why This Matters</div>
+<div class="sec-sub">Section 1</div>
+</div>
+</div>
+<p>In computer science, completing a project involves more than writing correct code. People must share information, make decisions, and coordinate their work. Teamwork provides the structure for collaboration, while communication helps that collaboration succeed.</p>
+<p>For example, two programmers may agree on what a program should do but disagree on how to implement it. A clear discussion of requirements and test cases helps them compare solutions without turning a technical difference into a personal conflict.</p>
+<div class="callout callout-info">
+<span class="callout-icon">💡</span>
+<div class="callout-body">Studies show that in today's workplace, engineers spend up to <strong>70% of their time</strong> on communication and collaboration — not just technical work. Teamwork and communication are not "soft" skills — they are <strong>core engineering skills.</strong></div>
+</div>
+<p>This module covers three connected topics:</p>
+<ol>
+<li><strong>Thinking Styles</strong> — Understanding how you and your teammates naturally think and make decisions</li>
+<li><strong>Teamwork</strong> — How to build and sustain an effective team through its natural development stages</li>
+<li><strong>Communication</strong> — How to communicate clearly with different people in different situations</li>
+</ol>
+<p>Throughout this module, we follow two realistic team scenarios that illustrate how these concepts play out in practice: a <strong>four-person group project</strong> (planning a one-day trip together) and a <strong>two-person programming collaboration</strong> (building a study session tracker). Watch how the same principles apply at different team sizes and in different types of work.</p>
+</div>
+<!-- SECTION 2: THINKING STYLES -->
+<div class="section" id="thinking">
+<div class="section-header">
+<div class="sec-icon" style="background:#EDE7F6">🧠</div>
+<div>
+<div class="sec-title">Thinking Styles</div>
+<div class="sec-sub">Section 2 · How people naturally think</div>
+</div>
+</div>
+<p>Have you ever noticed that some people always want <em>data and proof</em> before making a decision, while others jump straight to <em>"what if we tried something totally new?"</em> That's not a flaw — it's a <strong>thinking style</strong>, also called a thinking preference or cognitive approach.</p>
+<p>Understanding thinking styles helps you:</p>
+<ul>
+<li>Know how <em>you</em> naturally approach problems</li>
+<li>Understand why teammates think differently than you</li>
+<li>Build teams where different strengths complement each other</li>
+<li>Communicate more effectively by adapting to your audience</li>
+<li>Assign roles in a way that plays to each person's natural strengths</li>
+</ul>
+<div class="callout callout-tip">
+<span class="callout-icon">📖</span>
+<div class="callout-body">One widely-used framework for thinking about cognitive preferences is the <strong>Herrmann Brain Dominance Model (HBDM)</strong>. It identifies four thinking preferences that most people blend — but everyone has one or two that feel most natural. Recognizing these preferences is one useful technique teams use to understand each other and assign roles effectively.</div>
+</div>
+<h2>The Four Thinking Styles</h2>
+<div class="type-grid">
+<div class="type-card tc-A">
+<h3>🔬 Analyzer (A)</h3>
+<ul>
+<li>Wants facts and data</li>
+<li>Loves logical analysis</li>
+<li>Trusts expert opinion and proven results</li>
+<li>Asks: <em>"Where's the evidence?"</em></li>
+</ul>
+</div>
+<div class="type-card tc-M">
+<h3>📋 Manager (M)</h3>
+<ul>
+<li>Wants a clear, detailed plan</li>
+<li>Prefers low risk and proven methods</li>
+<li>Loves checklists and timelines</li>
+<li>Asks: <em>"What's the step-by-step?"</em></li>
+</ul>
+</div>
+<div class="type-card tc-P">
+<h3>🤝 Partner (P)</h3>
+<ul>
+<li>Wants everyone to feel heard</li>
+<li>Focuses on people and relationships</li>
+<li>Learns from personal experience</li>
+<li>Asks: <em>"How does this affect people?"</em></li>
+</ul>
+</div>
+<div class="type-card tc-V">
+<h3>💡 Visionary (V)</h3>
+<ul>
+<li>Wants new, exciting, untested ideas</li>
+<li>Gets bored once a problem is solved</li>
+<li>Loves "what if?" questions</li>
+<li>Asks: <em>"Can we do this differently?"</em></li>
+</ul>
+</div>
+</div>
+<div class="activity act-think">
+<div class="act-label">🤔 Think About It</div>
+<div class="act-q">Which thinking style sounds most like you? It's okay to be a mix of two or more. Which one feels least like you?</div>
+<p style="font-size:.9rem;margin:0">There's no right or wrong answer — knowing yourself is the goal.</p>
+</div>
+<h2>Why You Need All Four on a Team</h2>
+<p>Teams benefit when members consider multiple perspectives: evidence, organization, relationships, and new possibilities. These perspectives need not correspond to four different people; any team member can practice more than one.</p>
+<div class="callout callout-warn">
+<span class="callout-icon">⚠️</span>
+<div class="callout-body"><strong>Area of Agreement vs. Area of Contribution</strong><br/>When two teammates think very similarly, they agree easily — that's their "Area of Agreement." But similarity doesn't always generate new ideas. The "Areas of Contribution" are where teammates think <em>differently</em> — this is often where creativity and better decisions come from. Some overlap is needed for smooth communication; too much, and you stop challenging each other.</div>
+</div>
+<div class="proj-box proj-4">
+<div class="proj-box-header">
+<span>👥</span>
+<span class="proj-title">Example — Four-Person Project: Thinking Styles in Action</span>
+</div>
+<p>Consider a four-person team that comes together to plan a shared one-day trip. Before diving into the details, the team takes time to explore their individual thinking preferences. Each person reflects on how they naturally approach starting a project, solving problems, planning, and completing tasks.</p>
+<p>Their reflections reveal a clear spread across all four styles:</p>
+<ul>
+<li><strong>Mia</strong> scores highest in Analyzer — she instinctively wants to examine costs, times, and evidence before drawing any conclusions.</li>
+<li><strong>Jordan</strong> scores highest in Manager — his first instinct is to create a plan, break the work into steps, and keep the group on schedule.</li>
+<li><strong>Sam</strong> scores highest in Partner — she wants to make sure everyone's preferences are included before decisions are made.</li>
+<li><strong>Leo</strong> scores highest in Visionary — he immediately starts imagining creative additions and interesting alternatives nobody else suggested.</li>
+</ul>
+<p>With this awareness, the team can do something powerful: <strong>assign roles that match each person's natural strengths</strong> rather than assigning tasks randomly or based on whoever speaks up first. Mia checks costs and time requirements. Jordan owns the schedule. Sam facilitates discussion and invites quiet voices in. Leo proposes creative additions and backup options when circumstances change.</p>
+</div>
+<a class="btt" href="#top">↑ Back to top</a>
+</div>
+<!-- SECTION 2.1: ASSESSMENT -->
+<div class="section" id="assessment">
+<div class="section-header">
+<div class="sec-icon" style="background:#EDE7F6">📊</div>
+<div>
+<div class="sec-title">Finding Your Thinking Style</div>
+<div class="sec-sub">Section 2.1 · Techniques for self-discovery</div>
+</div>
+</div>
+<p>Knowing your thinking style starts with honest self-reflection. There are several approaches teams use to uncover each member's natural preferences — from structured activities to observation over time. None of them are tests with right or wrong answers. They are tools for awareness.</p>
+<h2>Technique 1: Preference Ranking Activity</h2>
+<p>One common approach is a <strong>preference ranking activity</strong>, where individuals rank how well different descriptions match their behavior across several everyday situations. For each situation, rank the four options from 4 (most like you) to 1 (least like you). Use each number exactly once per row.</p>
+<table class="comm-table" style="font-size:.88rem">
+<thead>
+<tr><th>#</th><th>In this situation, you…</th><th>A — Analyzer</th><th>M — Manager</th><th>P — Partner</th><th>V — Visionary</th></tr>
+</thead>
+<tbody>
+<tr><td>1</td><td>Starting a project, you prefer to:</td><td>Examine facts and information available</td><td>Develop a plan and schedule</td><td>Discuss everyone's interests and needs</td><td>Explore the big picture and new ideas</td></tr>
+<tr><td>2</td><td>Learning something new, you prefer to:</td><td>Understand the reasoning and evidence</td><td>Follow clear instructions step by step</td><td>Discuss it with others</td><td>Imagine new ways to use it</td></tr>
+<tr><td>3</td><td>Solving a problem, you usually:</td><td>Compare information logically</td><td>Break it into manageable steps</td><td>Consider impacts on people</td><td>Suggest a different or unexpected approach</td></tr>
+<tr><td>4</td><td>Planning something, you naturally focus on:</td><td>Comparing facts and checking accuracy</td><td>Organizing the schedule and responsibilities</td><td>Making sure everyone's preferences are considered</td><td>Suggesting an original idea or experience</td></tr>
+<tr><td>5</td><td>After completing a task, you tend to:</td><td>Check the result and look for errors</td><td>Confirm all steps were completed</td><td>Ask others about their experience</td><td>Think of improvements or other possibilities</td></tr>
+</tbody>
+</table>
+<p style="margin-top:.8rem;font-size:.9rem">Add your ranks across all five rows for each style (A, M, P, V). Each total will be between 5 and 20, and all four totals together must equal 50. Your highest total points to the style that felt most natural across these situations.</p>
+<div class="callout callout-info">
+<span class="callout-icon">✏️</span>
+<div class="callout-body">This is one technique for exploring thinking preferences — not a definitive personality test. A lower score doesn't mean you lack that skill. Many people find they can operate effectively in multiple styles depending on the context. The goal is self-awareness, not a permanent label.</div>
+</div>
+<h2>Reading Your Profile</h2>
+<p>Once you have your totals, you have a thinking style profile. Here's what one person's profile might look like:</p>
+<div class="radar-wrap">
+<div class="radar-item">
+<div class="radar-label" style="color:#003767">Analyzer (A)</div>
+<div class="radar-score" style="color:#003767">16</div>
+<div class="bar-wrap"><div class="bar-fill" style="width:80%;background:#0074B7"></div></div>
+<div style="font-size:.78rem;color:var(--mid)">Strong preference for evidence</div>
+</div>
+<div class="radar-item">
+<div class="radar-label" style="color:#B34700">Manager (M)</div>
+<div class="radar-score" style="color:#B34700">11</div>
+<div class="bar-wrap"><div class="bar-fill" style="width:55%;background:#E65100"></div></div>
+<div style="font-size:.78rem;color:var(--mid)">Moderate preference for planning</div>
+</div>
+<div class="radar-item">
+<div class="radar-label" style="color:#1B5E20">Partner (P)</div>
+<div class="radar-score" style="color:#1B5E20">8</div>
+<div class="bar-wrap"><div class="bar-fill" style="width:40%;background:#2E7D32"></div></div>
+<div style="font-size:.78rem;color:var(--mid)">Less preferred in this example</div>
+</div>
+<div class="radar-item">
+<div class="radar-label" style="color:#4527A0">Visionary (V)</div>
+<div class="radar-score" style="color:#4527A0">15</div>
+<div class="bar-wrap"><div class="bar-fill" style="width:75%;background:#5E35B1"></div></div>
+<div style="font-size:.78rem;color:var(--mid)">Strong preference for new ideas</div>
+</div>
+</div>
+<p>This example profile (A=16, M=11, P=8, V=15) totals 50 points. It suggests a preference for analytical and creative approaches in these five situations. The scores do not measure ability or determine which roles a person can perform.</p>
+<h2>Other Ways Teams Discover Thinking Styles</h2>
+<p>Preference ranking is just one technique. Teams also identify thinking styles through:</p>
+<ul>
+<li><strong>Observation over time</strong> — Noticing who always asks "what's the data?" and who always says "what if we tried…"</li>
+<li><strong>Reflection after conflict</strong> — Often a disagreement reveals that two people approached the same problem through very different lenses</li>
+<li><strong>Role performance</strong> — Watching who thrives in which kind of task (detail-checking vs. brainstorming vs. facilitating) reveals natural preferences in action</li>
+<li><strong>Direct conversation</strong> — Simply asking teammates "how do you usually approach a new problem?" is a surprisingly effective technique</li>
+</ul>
+<div class="proj-box proj-4">
+<div class="proj-box-header">
+<span>👥</span>
+<span class="proj-title">Example — Four-Person Project: From Profile to Role Assignment</span>
+</div>
+<p>After completing their preference ranking activity, Mia, Jordan, Sam, and Leo shared their profiles with each other openly. No one's score was a surprise — they recognized each other's descriptions immediately. More importantly, the conversation that followed was productive in a new way.</p>
+<p>Leo realized why he and Jordan often clashed in planning discussions: Leo wanted to explore possibilities first, while Jordan wanted a locked-down plan before anyone got excited. Neither was wrong — they had different <em>starting points</em>. Understanding this, they agreed that Leo would pitch ideas early, and Jordan would then structure the best ones into a plan before the team committed to anything.</p>
+<p>Sam noted something worth remembering: although her Analyzer score was lower, she had developed strong fact-checking skills from a previous experience. She volunteered to help Mia verify the budget numbers. The team acknowledged that thinking style scores describe preferences, not limits — a lower score doesn't mean you can't do something, it just means it may not come as naturally at first.</p>
+<p>This honest, reflective conversation is what separates high-performing teams from average ones. The profile gave the team a shared language to talk about how they each think — without making it personal.</p>
+</div>
+<div class="proj-box proj-2">
+<div class="proj-box-header">
+<span>💻</span>
+<span class="proj-title">Example — Two-Person Programming Project: Discovering Styles Through Conversation</span>
+</div>
+<p>Two teammates about to work on a programming challenge didn't have time for a formal ranking activity before their session — so they used a different technique: direct conversation. In the first five minutes, they each answered one question: "How do you usually approach a new programming problem?"</p>
+<p>Partner A said: "I like to think through all the cases before I start typing — I want to know what could go wrong first." (Analyzer tendency.) Partner B said: "I usually just start writing something to see how it feels, then fix it." (Visionary tendency.) Neither approach was wrong; together they were actually well-matched. Partner A's careful thinking up front would reduce errors. Partner B's willingness to start quickly would prevent the pair from over-planning and running out of time.</p>
+<p>From this brief conversation, they assigned their starting roles: Partner A would lead the design and planning phase; Partner B would take over at the keyboard once the approach was established, and push hard on testing improvements. Knowing this about each other in advance made the rest of their session significantly smoother than if they'd simply started without any shared self-awareness.</p>
+</div>
+<div class="activity act-discuss">
+<div class="act-label">🗣️ Reflection</div>
+<div class="act-q">Share your top thinking style with a partner or your team. Does it match how they see you? Do you agree with their results when they share theirs?</div>
+</div>
+<a class="btt" href="#top">↑ Back to top</a>
+</div>
+<!-- SECTION 3: TEAMWORK -->
+<div class="section" id="teamwork">
+<div class="section-header">
+<div class="sec-icon" style="background:#E8F5E9">🏗️</div>
+<div>
+<div class="sec-title">Building an Effective Team</div>
+<div class="sec-sub">Section 3</div>
+</div>
+</div>
+<p>Good teams don't happen by accident. They are <strong>intentionally built</strong> and actively maintained. The same five steps apply whether the team has two members or twenty:</p>
+<ol>
+<li><strong>Select members who complement each other</strong> — Match thinking styles and technical skills so the team covers all bases. Consider different perspectives and technical skills so important needs are not overlooked.</li>
+<li><strong>Develop a shared vision</strong> — Everyone should agree on what "success" looks like at the end. Without a shared vision, team members optimize for different outcomes and pull in different directions.</li>
+<li><strong>Agree on a shared objective</strong> — Define specific, measurable goals and a timeline. Vision is the "why"; objectives are the concrete "what" and "by when."</li>
+<li><strong>Create an execution plan together</strong> — Assign clear roles, responsibilities, and deliverable deadlines. Ambiguity about who owns what is one of the most common causes of team failure.</li>
+<li><strong>Evaluate and adjust</strong> — Regularly check how the team is performing and adapt as needed. Circumstances change; a good team updates its plan rather than rigidly following an outdated one.</li>
+</ol>
+<div class="callout callout-tip">
+<span class="callout-icon">💡</span>
+<div class="callout-body">A typical engineering project team includes people from multiple functions: customers, design, testing, manufacturing, quality, finance, and regulatory. Engineers must work effectively with all of them — which means adapting communication style to reach people who think very differently.</div>
+</div>
+<div class="proj-box proj-4">
+<div class="proj-box-header">
+<span>👥</span>
+<span class="proj-title">Example — Four-Person Project: Building the Team Structure</span>
+</div>
+<p>Once the four teammates understood their thinking styles, they applied the five team-building steps to their project setup.</p>
+<p><strong>Step 1 (Complementary members):</strong> The team confirmed their composition covered all four styles — a deliberate choice. They noted the potential blind spot if Leo's Visionary ideas ran without Mia's Analyzer check on costs and time.</p>
+<p><strong>Step 2 (Shared vision):</strong> They drafted a shared vision together: <em>"We will create a well-researched, realistic plan that everyone in our group genuinely supports — not just a plan that works on paper."</em> This gave everyone a common definition of success.</p>
+<p><strong>Step 3 (Shared objective):</strong> Jordan drafted their concrete objective: choose an activity option that fits within $200, ends by 5:00 PM, and includes a backup plan. Everyone reviewed and agreed.</p>
+<p><strong>Step 4 (Execution plan):</strong> Roles were assigned based on thinking style strengths: Mia checked costs and travel times; Jordan tracked the schedule; Sam made sure everyone shared their opinion before a decision was made; Leo proposed a creative addition to the plan and a backup when circumstances changed.</p>
+<p><strong>Step 5 (Evaluate):</strong> Midway through, Jordan noticed they were running over time. He flagged it, the team briefly adjusted their discussion format, and they got back on track — exactly what Step 5 looks like in a short collaborative session.</p>
+</div>
+<div class="proj-box proj-2">
+<div class="proj-box-header">
+<span>💻</span>
+<span class="proj-title">Example — Two-Person Programming Project: Building the Team Structure</span>
+</div>
+<p>Two-person teams follow the same principles — just with fewer people and faster communication loops. Before writing a single line of code, the pair follows the five steps in condensed form.</p>
+<p>They confirm their complementary styles (Analyzer + Visionary), establish a shared vision (<em>"Both of us will be able to explain the final program — this isn't one person's code."</em>), and agree on a shared objective: satisfy all program requirements, pass all five test cases, and complete within the session time.</p>
+<p>They create an execution plan: Partner A starts typing while Partner B reviews; they switch at the halfway point; they test together after both rounds. They also set one ground rule — their most important team norm: <em>"When ideas differ, compare them against the requirements, not against each other."</em></p>
+<p>This intentional five-minute setup — before anyone touches the keyboard — can help the pair work efficiently and reduce misunderstandings.</p>
+</div>
+<a class="btt" href="#top">↑ Back to top</a>
+</div>
+<!-- SECTION 3.1: STAGES -->
+<div class="section" id="stages">
+<div class="section-header">
+<div class="sec-icon" style="background:#EBF5FF">📈</div>
+<div>
+<div class="sec-title">The 4 Stages of Team Development</div>
+<div class="sec-sub">Section 3.1 · Tuckman's Model</div>
+</div>
+</div>
+<p>Every team goes through predictable stages as it develops. Knowing these stages helps you understand what's happening right now — and what's coming next. These stages were identified by psychologist <strong>Bruce Tuckman</strong>. The key insight: <em>conflict and awkwardness in early stages are completely normal</em>. Don't mistake Storming for failure — it is one possible part of collaboration.</p>
+<div class="stages">
+<div class="stage stage-forming">
+<h3>⚪ Stage 1: Forming — "Getting to Know You"</h3>
+<p>Team members are polite and cautious. Everyone is figuring out the team's purpose, each other's roles, and what behavior is acceptable. Productivity is low — and that's expected. People are cautious and rarely voice concerns. Leadership is unclear and everyone is deferential.</p>
+</div>
+<div class="stage stage-storming">
+<h3>🔴 Stage 2: Storming — "Working Through Conflict"</h3>
+<p>Team members start testing limits and challenging each other. Disagreements and personality clashes are common. This stage is uncomfortable — but it is necessary. Teams that skip conflict never learn to resolve it and remain fragile. The goal is not to avoid Storming but to navigate through it constructively.</p>
+</div>
+<div class="stage stage-norming">
+<h3>🔵 Stage 3: Norming — "Finding Our Rhythm"</h3>
+<p>The team has worked through its conflicts and established shared norms. Members support each other, roles are clear, and productivity increases significantly. Most high-functioning teams operate at this level. Communication becomes more direct and trust builds steadily.</p>
+</div>
+<div class="stage stage-performing">
+<h3>🟢 Stage 4: Performing — "Peak Teamwork"</h3>
+<p>A rare stage where team members fully trust each other, seamlessly cover each other's weaknesses, and produce exceptional results. Disagreements are resolved quickly because the team has strong norms and high mutual respect. This level takes time and intentional effort to reach.</p>
+</div>
+</div>
+<div class="proj-box proj-4">
+<div class="proj-box-header">
+<span>👥</span>
+<span class="proj-title">Example — Four-Person Project: Moving Through the Stages</span>
+</div>
+<p><strong>Forming:</strong> At their first meeting to plan the trip, all four members were polite and enthusiastic. They agreed quickly on the general direction without much debate. No one challenged anyone else's ideas yet. On the surface it looked productive — but no one had actually disagreed, which meant underlying tensions hadn't surfaced.</p>
+<p><strong>Storming:</strong> Friction emerged during the options discussion. Leo kept proposing creative additions (a surprise detour, a unique food stop) that excited him but worried Mia, who was tracking costs carefully. Jordan felt the group was getting off-schedule. Sam was trying to make sure everyone felt heard but was struggling to facilitate as the discussion became louder. This was Storming — uncomfortable, but real. The team's conflict wasn't a sign of failure; it was a sign that people cared enough to push back.</p>
+<p><strong>Norming:</strong> Sam called a brief pause and suggested the team revisit their shared objective: stay within budget and return by 5:00 PM. That shared standard gave everyone a neutral referee. Leo's creative ideas were evaluated against it, not against Jordan's preferences. Two ideas fit; one didn't. The team chose one and moved forward. With these norms operating, the rest of the session was more efficient and the group felt more cohesive.</p>
+<p><strong>Approaching Performing:</strong> When the activity they chose became unavailable mid-plan (a simulated change of circumstances), the team responded quickly. Leo immediately suggested a backup. Mia checked the backup option's cost. Jordan confirmed the schedule still worked. Sam confirmed everyone was comfortable. Nobody had to coordinate who would do what — they each took their natural role without being asked. Brief though the project was, they touched the edge of Performing.</p>
+</div>
+<div class="proj-box proj-2">
+<div class="proj-box-header">
+<span>💻</span>
+<span class="proj-title">Example — Two-Person Programming Project: Stages in a Single Session</span>
+</div>
+<p>Even in a short 35-minute work session, teams move through recognizable stages.</p>
+<p><strong>Forming (minutes 0–5):</strong> The pair introduced their approaches, clarified the program requirements, agreed on a goal, set their communication ground rule, and decided who would start at the keyboard. Pure Forming — polite, careful, productive at setting up, but not yet producing code.</p>
+<p><strong>Storming (around minute 12):</strong> Partner A had structured the loop logic one way; Partner B disagreed with how the zero-skip case was being handled. Rather than letting it escalate, they invoked their ground rule: compare against the requirements, not against each other. Partner B's approach handled one edge case better; Partner A's approach was cleaner for the main loop. They combined both. This is what healthy Storming looks like — not avoiding disagreement, but channeling it productively toward a better outcome.</p>
+<p><strong>Norming (minutes 15 onward):</strong> After the role switch at minute 15, communication became more direct and confident. Feedback was given and accepted without defensiveness. Both partners were actively contributing and catching each other's errors in real time. They had found their rhythm.</p>
+<p><strong>Brief Performing (during testing):</strong> While testing together, the pair finished each other's thoughts and caught issues before the other noticed. Short-lived — but a real glimpse of what Performing feels like even for a two-person team in a single session.</p>
+</div>
+<div class="activity act-think">
+<div class="act-label">🤔 Reflect</div>
+<div class="act-q">Think of a group project you've been part of — in school, work, sports, or anywhere. Which stage did that team reach? What kept it from going further?</div>
+</div>
+<a class="btt" href="#top">↑ Back to top</a>
+</div>
+<!-- SECTION 3.2: TOOLS -->
+<div class="section" id="tools">
+<div class="section-header">
+<div class="sec-icon" style="background:#EBF5FF">🛠️</div>
+<div>
+<div class="sec-title">Tools for Managing Teams</div>
+<div class="sec-sub">Section 3.2</div>
+</div>
+</div>
+<p>Good teams use specific tools to stay organized and on track. These are standard in professional engineering environments and scale from two-person pairs to large cross-functional teams:</p>
+<table class="comm-table">
+<thead><tr><th>Tool</th><th>What It Does</th><th>Why It Matters</th></tr></thead>
+<tbody>
+<tr><td><strong>Mission Statement</strong></td><td>A 1–2 sentence description of the team's purpose and goals</td><td>Keeps everyone pointed in the same direction; the shared vision made concrete</td></tr>
+<tr><td><strong>Project Plan &amp; Timeline</strong></td><td>List of tasks, who owns them, and deadlines</td><td>Prevents missed deadlines and duplicate work</td></tr>
+<tr><td><strong>Role Definitions</strong></td><td>Clear statement of each member's responsibilities</td><td>Prevents confusion about who does what</td></tr>
+<tr><td><strong>Ground Rules</strong></td><td>Agreed-upon norms for how the team operates</td><td>Reduces conflict and sets expectations early; especially important during Storming</td></tr>
+<tr><td><strong>Meeting Agendas</strong></td><td>Pre-planned list of topics for each meeting</td><td>Keeps meetings focused and efficient; respects everyone's time</td></tr>
+<tr><td><strong>Task &amp; Issues List</strong></td><td>Running log of to-dos and outstanding problems</td><td>Nothing falls through the cracks; progress is visible to all</td></tr>
+</tbody>
+</table>
+<div class="proj-box proj-4">
+<div class="proj-box-header">
+<span>👥</span>
+<span class="proj-title">Example — Four-Person Project: Tools in Practice</span>
+</div>
+<p>Jordan created a simple shared tracking sheet at the start: what option they were considering, who owned each evaluation task, and the budget and time constraints as standing reference. The team's ground rules (drafted by Sam) were equally simple: evaluate ideas against the requirements first, let everyone finish speaking before responding, and if the group is stuck, return to the shared objective.</p>
+<p>When circumstances changed and the original activity became unavailable, the team's issues list had a direct answer: Leo's creative backup option, already proposed and noted earlier in the session, was ready to evaluate. Without that record, the team would have had to restart from scratch under time pressure. With it, they simply checked the backup against the budget and schedule and confirmed it worked.</p>
+<p>These lightweight tools — a shared reference sheet, clear roles, and stated ground rules — made the difference between a group that spins in circles and a team that makes decisions efficiently.</p>
+</div>
+<div class="proj-box proj-2">
+<div class="proj-box-header">
+<span>💻</span>
+<span class="proj-title">Example — Two-Person Programming Project: Lightweight Tools</span>
+</div>
+<p>Even in a short two-person session, the same tools appear in lightweight form. The pair's mission was stated at the start: <em>"Build a program that handles all requirements and that both of us can explain."</em> Their ground rule — compare ideas against requirements, not against each other — was their most important team tool.</p>
+<p>A simple checklist of program requirements served as their task and issues list. Before finishing, they ran through each requirement together and confirmed it worked. This structured review — rather than hoping everything was correct — is the same quality-control mindset professional engineers apply on projects of any scale.</p>
+</div>
+<a class="btt" href="#top">↑ Back to top</a>
+</div>
+<!-- SECTION 4: COMMUNICATION -->
+<div class="section" id="communication">
+<div class="section-header">
+<div class="sec-icon" style="background:#FFF3E0">📡</div>
+<div>
+<div class="sec-title">Communication</div>
+<div class="sec-sub">Section 4 · Sending messages that actually land</div>
+</div>
+</div>
+<div class="callout callout-warn">
+<span class="callout-icon">⚡</span>
+<div class="callout-body" style="font-size:1rem"><strong>"The single biggest problem in communication is the assumption that it has taken place."</strong><br/><span style="font-size:.85rem;color:var(--mid)">— George Bernard Shaw</span></div>
+</div>
+<p>Just because you said something doesn't mean the other person understood it the way you intended. Effective communication means <strong>verifying that your message was received correctly</strong> — not just that you delivered it.</p>
+<p>Every communication has a <strong>sender</strong> and a <strong>receiver</strong>. Between them are <strong>filters</strong> — the receiver's background, experiences, assumptions, and emotions all color how they interpret your message. The same sentence can mean different things to different people.</p>
+<p>Communication also has two layers:</p>
+<ul>
+<li><strong>Formal (verbal/written)</strong> — the actual words you say or write</li>
+<li><strong>Informal (non-verbal)</strong> — body language, tone, facial expressions, pacing</li>
+</ul>
+<div class="callout callout-tip">
+<span class="callout-icon">📊</span>
+<div class="callout-body">Research suggests that in face-to-face communication, <strong>non-verbal cues</strong> carry more of the message than the actual words. Being aware of this makes you a much better communicator — especially during tense moments in Storming.</div>
+</div>
+<h2>Adapting to Your Audience's Thinking Style</h2>
+<p>Once you know how your audience thinks, you can adapt your message to reach them more effectively. The same information, framed differently, lands very differently:</p>
+<table class="comm-table">
+<thead>
+<tr><th>Thinking Style</th><th>What They Need</th><th>How to Communicate</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="badge badge-A">A — Analyzer</span></td>
+<td>"Give me data and logic"</td>
+<td>Provide evidence, cite sources, show comparisons. Keep emotion out of it. Be precise.</td>
+</tr>
+<tr>
+<td><span class="badge badge-M">M — Manager</span></td>
+<td>"Give me a plan I can follow"</td>
+<td>Show a detailed, proven approach. Cover risks and contingencies. Be organized and specific.</td>
+</tr>
+<tr>
+<td><span class="badge badge-V">V — Visionary</span></td>
+<td>"Show me something new"</td>
+<td>Frame the idea as exciting and forward-looking. Emphasize what's innovative or different.</td>
+</tr>
+<tr>
+<td><span class="badge badge-P">P — Partner</span></td>
+<td>"Tell me how this affects people"</td>
+<td>Connect the idea to people and relationships. Be personal and empathetic. Focus on shared values.</td>
+</tr>
+</tbody>
+</table>
+<div class="proj-box proj-4">
+<div class="proj-box-header">
+<span>👥</span>
+<span class="proj-title">Example — Four-Person Project: Communication Adapted to Style</span>
+</div>
+<p>During the group discussion, Sam needed to raise a concern: some team members' preferences hadn't been heard yet, and she felt the group was moving toward a decision before everyone had spoken. She communicated this concern differently to each teammate.</p>
+<p><strong>To Mia (Analyzer):</strong> "We've only heard from two people so far, and three options are still on the table. We might be missing data." <strong>To Jordan (Manager):</strong> "If we decide now and someone disagrees later, we'll have to redo this. A two-minute round of input from everyone will save time." <strong>To Leo (Visionary):</strong> "What if someone has an idea we haven't considered yet? Let's make space for it."</p>
+<p>Same concern. Three different framings. All three responded positively — not because Sam was being manipulative, but because she took the time to speak to what each person actually valued. That is effective communication in a team setting.</p>
+</div>
+<div class="proj-box proj-2">
+<div class="proj-box-header">
+<span>💻</span>
+<span class="proj-title">Example — Two-Person Programming Project: Communication as a Skill</span>
+</div>
+<p>In a two-person programming session, communication is constant and the filters are very real. When Partner B said "I think this loop is wrong," the delivery mattered as much as the words. Said with a dismissive tone, it could trigger defensiveness. Said with genuine curiosity — "walk me through how you're thinking about this" — it invited explanation instead.</p>
+<p>The pair made a deliberate practice of explaining decisions out loud while typing. "I'm handling the zero case here because the requirement says not to count it toward the total." This narration kept both partners in sync, gave Partner B a chance to catch errors in real time, and prevented the most common communication failure in pairs: one person builds something in silence and the other doesn't understand it until it's tested.</p>
+<p>When disagreements arose, both partners used a specific technique: <strong>restate the other person's position before giving your own</strong>. "So you're saying we should handle the error inside the loop — I understand that. My concern is…" This habit reduced the number of times either person felt unheard and significantly sped up their decision-making.</p>
+</div>
+<div class="activity act-think">
+<div class="act-label">🤔 Predict</div>
+<div class="act-q">You need to convince your team to adopt a new approach to your project. One teammate is a strong Analyzer; another is a strong Partner. How would you frame the same idea differently for each?</div>
+<details>
+<summary>▶ See example answers</summary>
+<div class="solution-body">
+<strong>For an Analyzer:</strong> "I looked at how three similar teams handled this and compared outcomes. The data shows this approach reduced errors by 40% while adding only 20 minutes to the timeline. Here's the comparison…"<br/><br/>
+<strong>For a Partner:</strong> "I think this approach would make it easier for everyone to contribute equally — right now the workload feels uneven and I've noticed some people seem frustrated. This change would give each of us a clearer role and make the work feel fairer for the group."
+      </div>
+</details>
+</div>
+<a class="btt" href="#top">↑ Back to top</a>
+</div>
+<!-- SECTION 4.1: NEGOTIATION -->
+<div class="section" id="nego">
+<div class="section-header">
+<div class="sec-icon" style="background:#FFEBEE">🤜🤛</div>
+<div>
+<div class="sec-title">Negotiation</div>
+<div class="sec-sub">Section 4.1 · The art of reaching agreement</div>
+</div>
+</div>
+<p>Negotiation isn't just for business deals. You negotiate every day — when dividing project tasks, deciding on a deadline, choosing an approach to a problem, or working through a disagreement with a teammate. There are three types, and they lead to very different outcomes:</p>
+<div class="nego-grid">
+<div class="nego-card nc-soft">
+<h3>😔 Soft Negotiation</h3>
+<p style="font-size:.85rem">One side gives in — usually because they feel less powerful, want to avoid conflict, or prioritize the relationship over the outcome.</p>
+<div class="result">Result: Short-term peace, long-term resentment. The conceding party stores up frustration that surfaces later.</div>
+</div>
+<div class="nego-card nc-hard">
+<h3>💥 Hard Negotiation</h3>
+<p style="font-size:.85rem">Both sides dig in. Neither wants to give ground. The focus is on "winning" rather than on the best outcome for the group.</p>
+<div class="result">Result: Conflict and counter-productive behavior. Issues get exposed but rarely resolved well.</div>
+</div>
+<div class="nego-card nc-win" style="grid-column:1/-1">
+<h3>🌟 Win-Win (Principled) Negotiation — The Goal</h3>
+<p style="font-size:.85rem">Both sides approach as equals. Decisions are made on merit — based on requirements, evidence, or a shared standard — not on who has more power or persistence. The goal is to maximize benefit for both parties.</p>
+<div class="result">Result: Can support durable agreements and trust when participants work from shared criteria. It may require additional discussion, and not every difference can be fully resolved.</div>
+</div>
+</div>
+<div class="proj-box proj-4">
+<div class="proj-box-header">
+<span>👥</span>
+<span class="proj-title">Example — Four-Person Project: Three Negotiation Styles in Action</span>
+</div>
+<p>Leo wanted to add a creative detour to the trip plan that would add $15 and 45 minutes. Mia calculated this would push the group over budget and past the 5:00 PM return time. Here's how each negotiation type plays out:</p>
+<p><strong>Soft:</strong> Mia, wanting to avoid conflict with Leo, says "sure, let's include it." She doesn't really think it works. During the final review, the numbers don't add up. The group has to backtrack. The plan gets rushed. Mia is quietly frustrated that she didn't speak up.</p>
+<p><strong>Hard:</strong> Leo insists the detour is essential; Mia insists the budget constraint is non-negotiable. Neither budges. The meeting stalls. Jordan and Sam feel stuck in the middle. Time runs out without a decision and the group submits an incomplete plan.</p>
+<p><strong>Win-Win:</strong> The team returns to the shared objective — stay within $200, return by 5:00 PM. Leo's detour doesn't fit as proposed. But Leo then asks: "Is there a smaller version?" He identifies a five-minute version of the same idea that costs $8 and adds only 15 minutes. Mia confirms the numbers work. Both leave satisfied because the decision was made against shared criteria, not against each other's preferences.</p>
+</div>
+<div class="proj-box proj-2">
+<div class="proj-box-header">
+<span>💻</span>
+<span class="proj-title">Example — Two-Person Programming Project: Negotiating Implementation Choices</span>
+</div>
+<p>During the build phase, Partner A and Partner B disagreed about how to handle the session-skip logic (when the user enters 0). Partner A wanted to handle it inside the main loop; Partner B wanted a separate check before the loop. Both approaches work — they just had different instincts.</p>
+<p>Rather than giving in (Soft) or arguing until one person wore the other down (Hard), they returned to the requirements. The requirement said the program must handle 0 as a skip — it didn't specify how. They evaluated both approaches against readability, correctness, and ease of testing. Partner B's approach was slightly cleaner for the overall structure; Partner A's approach was simpler at their current skill level. They chose Partner A's approach with a clear comment explaining the logic — a decision both could explain and defend.</p>
+<p>This is Win-Win at the code level: criteria-based, equal, and focused on the best outcome for the program rather than who wins the debate.</p>
+</div>
+<a class="btt" href="#top">↑ Back to top</a>
+</div>
+<!-- SECTION 4.2: PRESENTATIONS -->
+<div class="section" id="presentation">
+<div class="section-header">
+<div class="sec-icon" style="background:#EBF5FF">🎤</div>
+<div>
+<div class="sec-title">Group Presentations</div>
+<div class="sec-sub">Section 4.2 · Presenting like a professional</div>
+</div>
+</div>
+<p>Presentations are a professional skill you'll use throughout your career. Group presentations add complexity: you're not just communicating clearly as an individual, you're presenting as a unified team. Here's what professionals know:</p>
+<h2>Before the Presentation</h2>
+<ul>
+<li><strong>Know your audience</strong> — What do they care about? What do they already know? Adapt your content (use those HBDM styles!)</li>
+<li><strong>Focus on 3–5 main points only</strong> — Your audience can only remember a few things. Make them count.</li>
+<li><strong>Practice until you don't need notes</strong> — Practice to the point where you can maintain eye contact and respond naturally to questions</li>
+<li><strong>Time yourself</strong> — Always design for the time allowed, with a buffer for transitions and questions</li>
+<li><strong>Plan transitions between speakers</strong> — Awkward handoffs undermine credibility. Plan exactly how each speaker introduces the next</li>
+</ul>
+<h2>During the Presentation</h2>
+<ul>
+<li><strong>Command attention from the start</strong> — Open with something interesting: a question, a surprising fact, or a scenario</li>
+<li><strong>Stand up straight, make eye contact</strong> — Confidence is communicated before you speak</li>
+<li><strong>Project energy</strong> — Speak clearly. Slow down. Pause. Silence is more powerful than rushing</li>
+<li><strong>Use visuals to emphasize, not replace your words</strong> — Slides should support you, not be read aloud</li>
+<li><strong>Reinforce key points</strong> — Tell them what you'll tell them, tell them, then tell them what you told them</li>
+</ul>
+<div class="callout callout-info">
+<span class="callout-icon">🔁</span>
+<div class="callout-body"><strong>The Rule of Three:</strong> Tell them what you'll tell them → Tell them → Tell them what you told them. This structure isn't redundant — it's how the human brain consolidates information into memory.</div>
+</div>
+<div class="proj-box proj-4">
+<div class="proj-box-header">
+<span>👥</span>
+<span class="proj-title">Example — Four-Person Project: Presenting the Plan</span>
+</div>
+<p>When the four-person team presented their trip plan to the group, their thinking-style profiles shaped their speaking roles naturally. Leo (Visionary) opened — his energy and big-picture framing set an engaging tone and drew the audience in immediately. Mia (Analyzer) presented the numbers: cost breakdown, time analysis, and why their option best satisfied the constraints. Jordan (Manager) walked through the step-by-step schedule, showing exactly how the day would flow from departure to return. Sam (Partner) closed with the group's reasoning — framed around what each team member valued and how the choice honored everyone's preferences.</p>
+<p>Each speaker transitioned to the next with a linking statement. Leo to Mia: "That's the vision — now let's look at whether the numbers actually support it." Mia to Jordan: "The math works; here's exactly how the day unfolds." Jordan to Sam: "And here's why this plan worked for everyone." The audience experienced a unified argument, not four separate contributions.</p>
+<p>They also prepared for questions by thinking about who on their team was best positioned to answer each type: Mia handled budget questions, Jordan handled schedule questions, Sam handled preference and fairness questions, and Leo handled creative alternatives. Readiness for questions is a mark of a professional presentation team.</p>
+</div>
+<a class="btt" href="#top">↑ Back to top</a>
+</div>
+<!-- SECTION 4.3: TECHNICAL REPORT -->
+<div class="section" id="report">
+<div class="section-header">
+<div class="sec-icon" style="background:#EBF5FF">📄</div>
+<div>
+<div class="sec-title">Written Technical Reports</div>
+<div class="sec-sub">Section 4.3 · Writing for engineers</div>
+</div>
+</div>
+<p>A technical report is a <strong>structured communication tool</strong> designed to clearly convey a problem, analysis, and recommendation to a reader who may be busy. Every professional engineering report follows this structure:</p>
+<table class="comm-table">
+<thead><tr><th>Section</th><th>What Goes Here</th></tr></thead>
+<tbody>
+<tr><td><strong>Cover Page / Executive Summary</strong></td><td>Title, author(s), date, and a 1–2 paragraph summary. This is the most-read section — your problem and recommendation must be clear on their own.</td></tr>
+<tr><td><strong>Problem Definition</strong></td><td>What exactly is the problem? What's in scope, what's out? What are the constraints? A well-defined problem is already half solved.</td></tr>
+<tr><td><strong>Research</strong></td><td>What did you find? Published sources, experiments, expert input, data collected. Show your work.</td></tr>
+<tr><td><strong>Analysis</strong></td><td>Apply your research to solve the problem. Show your reasoning step by step. A reader should follow your logic even without your conclusion.</td></tr>
+<tr><td><strong>Recommendation / Conclusion</strong></td><td>What is your recommended solution? A reader who followed your analysis should reach the same conclusion.</td></tr>
+<tr><td><strong>Issues / Dependencies</strong></td><td>What is unresolved? What assumptions did you make? What could change and affect your recommendation? Honesty about limitations builds credibility.</td></tr>
+</tbody>
+</table>
+<div class="callout callout-tip">
+<span class="callout-icon">✍️</span>
+<div class="callout-body">The executive summary is the most-read part of any report. Busy decision-makers often read <em>only</em> the executive summary. Make it complete on its own — someone should be able to make a decision from it without reading the rest of the report.</div>
+</div>
+<div class="proj-box proj-4">
+<div class="proj-box-header">
+<span>👥</span>
+<span class="proj-title">Example — Four-Person Project: Documenting the Plan</span>
+</div>
+<p>After finalizing their trip plan, the team produced a written record of their decision. Their document followed the technical report structure in brief form:</p>
+<p><strong>Executive Summary:</strong> "Our team selected the Park Picnic and Nature Walk option for a group of four, total cost $100, returning by 4:30 PM — within the $200 budget and 5:00 PM deadline with a comfortable margin. Our backup option is the Museum and Café, at $176 total."</p>
+<p><strong>Problem Definition:</strong> "Plan a one-day trip for four people within $200, departing 9:00 AM and returning by 5:00 PM, including transportation, activity, and lunch."</p>
+<p><strong>Research:</strong> Three options were evaluated with full cost and travel time data.</p>
+<p><strong>Analysis:</strong> All three options were checked against budget and schedule constraints. Option 1 met all requirements with the lowest cost. Option 2 fit within budget with less margin. Option 3 exceeded budget.</p>
+<p><strong>Recommendation:</strong> Option 1, with Leo's creative addition of a brief nature photography stop (cost: $0, time: 10 minutes).</p>
+<p><strong>Issues:</strong> The nature walk depends on weather. Backup plan: Museum and Café (Option 2), which is weather-independent and within budget.</p>
+</div>
+<div class="proj-box proj-2">
+<div class="proj-box-header">
+<span>💻</span>
+<span class="proj-title">Example — Two-Person Programming Project: Individual Written Reflection</span>
+</div>
+<p>After completing their program, each partner wrote a short individual reflection answering five structured questions — a lightweight version of the Issues and Lessons Learned section of a technical report:</p>
+<p><strong>Contribution:</strong> What did you personally build or improve? <strong>Collaboration:</strong> How did your partner improve the result? <strong>Communication:</strong> Describe one moment of disagreement and how it was resolved. <strong>Team stage:</strong> Which stage best describes your team today? <strong>Next step:</strong> What is one thing that would improve your next collaboration?</p>
+<p>Writing individually before discussing prevented one person's perspective from dominating. Partner A noted they'd assumed large numbers wouldn't be entered — a boundary case they'd overlooked. Partner B noted the role-switch at minute 15 felt abrupt; a 60-second handover summary would have helped. Both observations were valid. Both would make the next session better.</p>
+<p>This kind of honest, structured written reflection — even brief — is how professionals learn from each project rather than simply finishing it and moving on.</p>
+</div>
+<div class="activity act-try">
+<div class="act-label">✏️ Mini Practice</div>
+<div class="act-q">Write a 3-sentence executive summary for this scenario: <em>"Your team was asked to recommend whether the school's computer lab should upgrade its software."</em> Include: what the problem is, what you found, and what you recommend.</div>
+<details>
+<summary>▶ See example</summary>
+<div class="solution-body">The school's computer lab is running software that is 4 years out of date, causing compatibility issues with student assignments and frequent crashes. We evaluated three upgrade options across cost, compatibility, and ease of transition. We recommend upgrading to the mid-tier academic license, which meets all student needs at 60% of the cost of the premium option.</div>
+</details>
+</div>
+<a class="btt" href="#top">↑ Back to top</a>
+</div>
+<!-- SECTION 5: QUIZ -->
+<div class="section" id="quiz">
+<div class="section-header">
+<div class="sec-icon" style="background:#EBF5FF">✅</div>
+<div>
+<div class="sec-title">Knowledge Check</div>
+<div class="sec-sub">Section 5 · 10 questions</div>
+</div>
+</div>
+<p>Answer each question on your own before checking the answer.</p>
+<div class="quiz-wrap" id="qwrap">
+<div class="q-item" id="qi1">
+<div class="q-stem">1. An engineer who always asks "Where's the data?" and loves logical analysis is likely which thinking type?</div>
+<div class="q-opts" id="qo1">
+<div class="q-opt" onclick="ans(1,'a','a')"><span class="q-letter">A</span> Analyzer</div>
+<div class="q-opt" onclick="ans(1,'b','a')"><span class="q-letter">B</span> Manager</div>
+<div class="q-opt" onclick="ans(1,'c','a')"><span class="q-letter">C</span> Partner</div>
+<div class="q-opt" onclick="ans(1,'d','a')"><span class="q-letter">D</span> Visionary</div>
+</div>
+<div class="q-fb" id="qf1"></div>
+</div>
+<div class="q-item" id="qi2">
+<div class="q-stem">2. A team where everyone has the same thinking style will most likely:</div>
+<div class="q-opts" id="qo2">
+<div class="q-opt" onclick="ans(2,'a','b')"><span class="q-letter">A</span> Be the most innovative and creative</div>
+<div class="q-opt" onclick="ans(2,'b','b')"><span class="q-letter">B</span> Have less conflict but generate fewer new ideas</div>
+<div class="q-opt" onclick="ans(2,'c','b')"><span class="q-letter">C</span> Always outperform diverse teams</div>
+<div class="q-opt" onclick="ans(2,'d','b')"><span class="q-letter">D</span> Reach the Performing stage fastest</div>
+</div>
+<div class="q-fb" id="qf2"></div>
+</div>
+<div class="q-item" id="qi3">
+<div class="q-stem">3. Which team development stage is characterized by conflict and members testing each other's limits?</div>
+<div class="q-opts" id="qo3">
+<div class="q-opt" onclick="ans(3,'a','b')"><span class="q-letter">A</span> Forming</div>
+<div class="q-opt" onclick="ans(3,'b','b')"><span class="q-letter">B</span> Storming</div>
+<div class="q-opt" onclick="ans(3,'c','b')"><span class="q-letter">C</span> Norming</div>
+<div class="q-opt" onclick="ans(3,'d','b')"><span class="q-letter">D</span> Performing</div>
+</div>
+<div class="q-fb" id="qf3"></div>
+</div>
+<div class="q-item" id="qi4">
+<div class="q-stem">4. "The single biggest problem in communication is the assumption that it has taken place." This means:</div>
+<div class="q-opts" id="qo4">
+<div class="q-opt" onclick="ans(4,'a','c')"><span class="q-letter">A</span> Communication is always successful if you use the right words</div>
+<div class="q-opt" onclick="ans(4,'b','c')"><span class="q-letter">B</span> Written communication is always better than verbal</div>
+<div class="q-opt" onclick="ans(4,'c','c')"><span class="q-letter">C</span> Just because you said something doesn't mean it was understood as intended</div>
+<div class="q-opt" onclick="ans(4,'d','c')"><span class="q-letter">D</span> Face-to-face is the only effective communication method</div>
+</div>
+<div class="q-fb" id="qf4"></div>
+</div>
+<div class="q-item" id="qi5">
+<div class="q-stem">5. You need to pitch a new project idea to a Partner-style colleague. The best approach is to:</div>
+<div class="q-opts" id="qo5">
+<div class="q-opt" onclick="ans(5,'a','b')"><span class="q-letter">A</span> Show a detailed data comparison of three alternatives</div>
+<div class="q-opt" onclick="ans(5,'b','b')"><span class="q-letter">B</span> Emphasize how the project helps people and builds relationships</div>
+<div class="q-opt" onclick="ans(5,'c','b')"><span class="q-letter">C</span> Focus on how exciting and new the idea is</div>
+<div class="q-opt" onclick="ans(5,'d','b')"><span class="q-letter">D</span> Present a step-by-step implementation plan</div>
+</div>
+<div class="q-fb" id="qf5"></div>
+</div>
+<div class="q-item" id="qi6">
+<div class="q-stem">6. In Win-Win (Principled) negotiation, decisions are made based on:</div>
+<div class="q-opts" id="qo6">
+<div class="q-opt" onclick="ans(6,'a','c')"><span class="q-letter">A</span> Who has more authority or power</div>
+<div class="q-opt" onclick="ans(6,'b','c')"><span class="q-letter">B</span> Who speaks the loudest or most persistently</div>
+<div class="q-opt" onclick="ans(6,'c','c')"><span class="q-letter">C</span> Merit and maximizing benefit for both parties</div>
+<div class="q-opt" onclick="ans(6,'d','c')"><span class="q-letter">D</span> The first person to make a concession</div>
+</div>
+<div class="q-fb" id="qf6"></div>
+</div>
+<div class="q-item" id="qi7">
+<div class="q-stem">7. How many main points can an audience typically remember from a presentation?</div>
+<div class="q-opts" id="qo7">
+<div class="q-opt" onclick="ans(7,'a','b')"><span class="q-letter">A</span> 1–2</div>
+<div class="q-opt" onclick="ans(7,'b','b')"><span class="q-letter">B</span> 3–5</div>
+<div class="q-opt" onclick="ans(7,'c','b')"><span class="q-letter">C</span> 7–10</div>
+<div class="q-opt" onclick="ans(7,'d','b')"><span class="q-letter">D</span> As many as you include</div>
+</div>
+<div class="q-fb" id="qf7"></div>
+</div>
+<div class="q-item" id="qi8">
+<div class="q-stem">8. Which section of a technical report would a busy executive most likely read first?</div>
+<div class="q-opts" id="qo8">
+<div class="q-opt" onclick="ans(8,'a','a')"><span class="q-letter">A</span> Executive Summary</div>
+<div class="q-opt" onclick="ans(8,'b','a')"><span class="q-letter">B</span> Research section</div>
+<div class="q-opt" onclick="ans(8,'c','a')"><span class="q-letter">C</span> Analysis section</div>
+<div class="q-opt" onclick="ans(8,'d','a')"><span class="q-letter">D</span> Issues / Dependencies</div>
+</div>
+<div class="q-fb" id="qf8"></div>
+</div>
+<div class="q-item" id="qi9">
+<div class="q-stem">9. A team is working smoothly, roles are clear, and they consistently meet their goals — but haven't reached peak performance. Which stage are they in?</div>
+<div class="q-opts" id="qo9">
+<div class="q-opt" onclick="ans(9,'a','c')"><span class="q-letter">A</span> Forming</div>
+<div class="q-opt" onclick="ans(9,'b','c')"><span class="q-letter">B</span> Storming</div>
+<div class="q-opt" onclick="ans(9,'c','c')"><span class="q-letter">C</span> Norming</div>
+<div class="q-opt" onclick="ans(9,'d','c')"><span class="q-letter">D</span> Performing</div>
+</div>
+<div class="q-fb" id="qf9"></div>
+</div>
+<div class="q-item" id="qi10">
+<div class="q-stem">10. What is the PRIMARY purpose of using thinking style profiles when forming a team?</div>
+<div class="q-opts" id="qo10">
+<div class="q-opt" onclick="ans(10,'a','d')"><span class="q-letter">A</span> To rank teammates by intelligence</div>
+<div class="q-opt" onclick="ans(10,'b','d')"><span class="q-letter">B</span> To assign roles based on personality only</div>
+<div class="q-opt" onclick="ans(10,'c','d')"><span class="q-letter">C</span> To avoid conflict by grouping similar thinkers together</div>
+<div class="q-opt" onclick="ans(10,'d','d')"><span class="q-letter">D</span> To build a team with diverse, complementary thinking strengths</div>
+</div>
+<div class="q-fb" id="qf10"></div>
+</div>
+</div>
+<div id="final-result" style="display:none;background:linear-gradient(135deg,#003767,#0074B7);border-radius:14px;padding:2rem;text-align:center;color:#fff;margin-top:1rem">
+<div style="font-size:.85rem;font-family:'DM Mono',monospace;letter-spacing:.06em;opacity:.8;margin-bottom:.4rem">FINAL SCORE</div>
+<div id="final-score" style="font-size:3rem;font-weight:700;margin:.4rem 0"></div>
+<div id="final-msg" style="color:#A8C8E8;font-size:.95rem;margin-top:.5rem;background:rgba(255,255,255,.1);border-radius:8px;padding:.7rem 1rem"></div>
+<button onclick="resetQuiz()" style="margin-top:1.2rem;background:#fff;color:#003767;border:none;padding:.6rem 1.8rem;border-radius:8px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">↺ Try Again</button>
+</div>
+<a class="btt" href="#top" style="margin-top:1rem;display:inline-block">↑ Back to top</a>
+</div>
+</div><!-- /page -->
+<script>
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  document.getElementById('prog').style.width=pct+'%';
+  document.querySelectorAll('.sidenav a').forEach(a=>{
+    const target=document.querySelector(a.getAttribute('href'));
+    if(target){
+      const r=target.getBoundingClientRect();
+      if(r.top<=150&&r.bottom>0)a.classList.add('active');
+      else a.classList.remove('active');
+    }
+  });
+});
+
+const explanations={
+  1:{a:'✅ Correct! Analyzers want facts, data, and logical reasoning — they always ask "where\'s the evidence?"',b:'❌ Managers love plans and structure — they ask "what\'s the step-by-step?"',c:'❌ Partners focus on people and relationships.',d:'❌ Visionaries love new ideas and big-picture innovation.'},
+  2:{a:'❌ Diverse teams actually generate more creative ideas — sameness leads to fewer breakthroughs.',b:'✅ Correct! Same-style teams communicate easily but generate fewer new ideas — this is the "Area of Agreement" problem.',c:'❌ Research shows diverse-thinking teams consistently outperform uniform ones.',d:'❌ Reaching Performing depends on conflict resolution and trust, not similarity.'},
+  3:{a:'❌ Forming is about getting to know each other — polite and cautious.',b:'✅ Correct! Storming is the conflict stage. It\'s uncomfortable but necessary to move forward.',c:'❌ Norming is when teams have resolved conflicts and found their rhythm.',d:'❌ Performing is peak teamwork — rare and exceptional.'},
+  4:{a:'❌ Words alone don\'t guarantee understanding — the receiver\'s filters change the message.',b:'❌ Neither format is guaranteed to succeed without verification.',c:'✅ Correct! Effective communicators verify that understanding happened, not just that words were exchanged.',d:'❌ Even face-to-face communication can fail if the sender assumes understanding without checking.'},
+  5:{a:'❌ Data and comparisons resonate with Analyzers, not Partners.',b:'✅ Correct! Partners need to see how an idea connects to people and relationships.',c:'❌ Excitement and novelty appeal most to Visionaries.',d:'❌ Detailed plans appeal most to Managers.'},
+  6:{a:'❌ That\'s power-based negotiation — the opposite of Win-Win.',b:'❌ That\'s a Hard negotiation tactic.',c:'✅ Correct! Win-Win negotiation focuses on merit and maximizing total benefit — decisions are made on shared criteria, not pressure.',d:'❌ Making the first concession is a Soft negotiation behavior.'},
+  7:{a:'❌ Audiences can hold a bit more than 1–2 points.',b:'✅ Correct! Research shows audiences can remember 3–5 main points, especially when reinforced using the Rule of Three.',c:'❌ Far too many. Presenting 10 points guarantees most will be forgotten.',d:'❌ More content doesn\'t mean more retention — it usually means less.'},
+  8:{a:'✅ Correct! The executive summary is the most-read section. Many busy readers stop there — which is why it must be complete on its own.',b:'❌ The research section is too detailed for a first read.',c:'❌ Analysis requires reading the research first to make sense.',d:'❌ Issues section comes after the main recommendation.'},
+  9:{a:'❌ Forming is the polite introductory stage.',b:'❌ Storming is the conflict stage.',c:'✅ Correct! Norming teams have clear roles, resolve conflict constructively, and deliver results consistently. Most teams operate here.',d:'❌ Performing is the rare stage of exceptional, seemingly effortless results.'},
+  10:{a:'❌ Thinking styles have nothing to do with ranking intelligence.',b:'❌ Technical skills and experience also matter for role assignment.',c:'❌ That\'s the wrong goal — similar thinkers reduce creativity and create blind spots.',d:'✅ Correct! The goal is to build teams where different thinking strengths complement each other, covering the blind spots each style has alone.'},
+};
+
+let answered={},correct=0;
+
+function ans(qNum,chosen,rightAns){
+  if(answered[qNum])return;
+  answered[qNum]=chosen;
+  const isRight=chosen===rightAns;
+  if(isRight)correct++;
+  const opts=document.querySelectorAll('#qo'+qNum+' .q-opt');
+  const letters=['a','b','c','d'];
+  opts.forEach((o,i)=>{
+    o.classList.add('locked');
+    o.removeAttribute('onclick');
+    const l=letters[i];
+    if(l===rightAns)o.classList.add('correct');
+    else if(l===chosen)o.classList.add('wrong');
+  });
+  const fb=document.getElementById('qf'+qNum);
+  fb.textContent=explanations[qNum][chosen];
+  fb.className='q-fb show '+(isRight?'ok':'bad');
+  if(Object.keys(answered).length===10)showResult();
+}
+
+function showResult(){
+  let msg='';
+  if(correct<=4)msg='Review the material and try again — every attempt teaches you something!';
+  else if(correct<=6)msg='Good effort! Re-read the sections on the topics you missed.';
+  else if(correct<=8)msg='Solid work! You understand most of the key concepts.';
+  else msg='Excellent! You have a strong grasp of teamwork and communication.';
+  document.getElementById('final-score').textContent=correct+' / 10';
+  document.getElementById('final-msg').textContent=msg;
+  document.getElementById('final-result').style.display='block';
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth'});
+}
+
+function resetQuiz(){
+  answered={};correct=0;
+  const correctMap={1:'a',2:'b',3:'b',4:'c',5:'b',6:'c',7:'b',8:'a',9:'c',10:'d'};
+  for(let i=1;i<=10;i++){
+    const opts=document.querySelectorAll('#qo'+i+' .q-opt');
+    const letters=['a','b','c','d'];
+    opts.forEach((o,idx)=>{
+      o.classList.remove('correct','wrong','locked');
+      o.setAttribute('onclick','ans('+i+',"'+letters[idx]+'","'+correctMap[i]+'")');
+    });
+    const fb=document.getElementById('qf'+i);
+    fb.className='q-fb';fb.textContent='';
+  }
+  document.getElementById('final-result').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
