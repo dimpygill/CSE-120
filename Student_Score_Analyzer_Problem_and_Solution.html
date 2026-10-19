@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Student Score Analyzer — Problem &amp; Solution</title><style>
+:root{color-scheme:light;--ink:#18304b;--muted:#536579;--accent:#176b87;--line:#d8e5ec;--bg:#f5f9fc}*{box-sizing:border-box}body{margin:0;background:var(--bg);font:16px/1.6 system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:var(--ink)}main{max-width:950px;margin:36px auto;padding:0 20px 45px}.hero{background:linear-gradient(115deg,#e6f3fa,#f5f9ff);border:1px solid #d3e6f0;border-radius:16px;padding:29px 33px;margin-bottom:20px}h1{font-size:2rem;line-height:1.2;margin:0 0 8px}h2{font-size:1.3rem;margin:0 0 14px}p{margin:9px 0}section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px 30px;margin:17px 0;box-shadow:0 3px 12px #223c5a08}.eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;font-weight:700;color:var(--accent)}.subtitle{color:var(--muted)}ol{padding-left:24px}li{margin:7px 0}.note{border-left:4px solid #2585a2;background:#f0f9fc;padding:11px 16px;border-radius:0 8px 8px 0;margin-top:15px}pre{white-space:pre;overflow-x:auto;background:#f4f7fa;color:#1c3149;border:1px solid #dce6ed;border-radius:10px;padding:18px;font:13.5px/1.55 Consolas,'Courier New',monospace;tab-size:4}code{font-family:Consolas,'Courier New',monospace}.code{background:#f8fafc}table{width:100%;border-collapse:collapse;margin:12px 0}th,td{border:1px solid var(--line);padding:10px 12px;text-align:left}th{background:#eaf4fa}footer{color:var(--muted);font-size:.88rem;text-align:center;margin-top:25px}@media print{body{background:white}main{margin:0;max-width:none;padding:0}.hero,section{box-shadow:none;break-inside:avoid}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:10px}.code{break-inside:auto}}@media(max-width:600px){h1{font-size:1.65rem}.hero,section{padding:20px 18px}}
+</style></head><body><main>
+<header class="hero"><div class="eyebrow">Python programming • Problem and reference solution</div><h1>Student Score Analyzer</h1><p class="subtitle">Practice input, variables, conditions, <code>while</code>, <code>break</code>, <code>continue</code>, and string concatenation — without lists or arrays.</p></header>
+<section><div class="eyebrow">Part 1</div><h2>Programming Problem</h2><p>Write a Python program called <strong>Student Score Analyzer</strong>. The program asks the user to enter student scores, accepts <strong>up to five valid scores</strong>, and reports how many scores are passing or failing.</p><h3>Requirements</h3><ol>
+<li>Prompt for a score repeatedly using a <strong><code>while</code> loop</strong>, stopping after five valid scores.</li>
+<li>Accept <strong>whole-number scores from 0 to 100 inclusive</strong>. Assume the user enters integers; handling nonnumeric input is not required.</li>
+<li>If the user enters <strong>-1</strong>, immediately stop accepting scores using <code>break</code>. Do not count -1 as a score.</li>
+<li>If the score is <strong>below 0 or above 100</strong> (other than -1), print an error message and use <code>continue</code> to request another score. Invalid scores do not count toward the five.</li>
+<li>Count valid scores and calculate a running total.</li>
+<li>Build a <strong>comma-separated display of the valid scores</strong> by adding each value to a string variable during the loop. <strong>Do not use lists or arrays.</strong></li>
+<li>Count a score of <strong>60 or higher</strong> as a pass; a score below 60 is a failure.</li>
+<li>After input ends, display the valid scores, total number of valid scores, number of passes, and number of failures. If there are no valid scores, display <strong>None</strong>.</li>
+<li>Include comments explaining the purpose of the major steps.</li>
+</ol><div class="note"><strong>Explore multiple scenarios:</strong> Try normal scores, boundary values (0, 60, 100), invalid scores (-5, 120), stopping immediately with -1, stopping after some valid scores, and entering five valid scores.</div></section>
+<section><div class="eyebrow">Example</div><h2>Sample Input and Expected Output</h2><p>This is only one example. Your program should work for other valid and invalid input sequences too.</p><pre>Enter a score (or -1 to stop): 85
+Enter a score (or -1 to stop): 45
+Enter a score (or -1 to stop): 120
+Invalid score. Enter a score from 0 to 100.
+Enter a score (or -1 to stop): 60
+Enter a score (or -1 to stop): 70
+Enter a score (or -1 to stop): -1
+
+--- Student Score Report ---
+Valid scores: 85, 45, 60, 70
+Total valid scores: 4
+Passes: 3
+Failures: 1</pre></section>
+<section><div class="eyebrow">Part 2</div><h2>Reference Solution (With Comments)</h2><p>This is one correct approach. It processes each score as soon as it is entered, without storing scores in a list.</p><pre class="code"><code># Student Score Analyzer: Reference Solution
+
+total = 0
+valid_count = 0
+passes = 0
+failures = 0
+score_list = ""  # Store scores as text for display.
+
+# Continue until five valid scores are entered.
+while valid_count &lt; 5:
+
+    score = int(input("Enter a score (or -1 to stop): "))
+
+    # Stop when the user enters -1.
+    if score == -1:
+        break
+
+    # Reject scores outside the valid range.
+    if score &lt; 0 or score &gt; 100:
+        print("Invalid score. Enter a score from 0 to 100.")
+        continue  # Skip this score and repeat the loop.
+
+    # Count the valid score.
+    valid_count += 1
+
+    # Add the score to the running total.
+    total += score
+
+    # Add the score to the text for display.
+    if score_list == "":
+        score_list = str(score)
+    else:
+        score_list += ", " + str(score)
+
+    # Check whether the score is passing or failing.
+    if score &gt;= 60:
+        passes += 1
+    else:
+        failures += 1
+
+# Display the final report.
+print("\n--- Student Score Report ---")
+
+if valid_count &gt; 0:
+    print("Valid scores:", score_list)
+else:
+    print("Valid scores: None")
+
+print("Total valid scores:", valid_count)
+print("Passes:", passes)
+print("Failures:", failures)</code></pre></section>
+<section><div class="eyebrow">Part 3</div><h2>How the Solution Works</h2><table><thead><tr><th>Code / concept</th><th>Purpose</th></tr></thead><tbody>
+<tr><td><code>while valid_count &lt; 5</code></td><td>Repeats until five valid scores have been accepted.</td></tr>
+<tr><td><code>break</code></td><td>Stops the loop immediately when the user enters -1.</td></tr>
+<tr><td><code>continue</code></td><td>Skips invalid scores and moves to the next input.</td></tr>
+<tr><td><code>valid_count += 1</code></td><td>Counts only valid scores.</td></tr>
+<tr><td><code>total += score</code></td><td>Maintains a running total of valid scores; the total is not displayed in this report.</td></tr>
+<tr><td><code>score_list += ", " + str(score)</code></td><td>Adds each new valid score to a string, with commas between scores.</td></tr>
+<tr><td><code>if score &gt;= 60</code></td><td>Counts passing scores; all other valid scores are failures.</td></tr>
+</tbody></table><div class="note"><strong>Why use a string?</strong> Since lists have not been introduced, <code>score_list</code> stores the display text rather than a collection of numbers. <code>str(score)</code> converts the integer to text before concatenation.</div></section>
+</main></body></html>
